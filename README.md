@@ -1,4 +1,3 @@
 # PREP-labyrinth
 Students contest 2016
-
-https://travis-ci.org/jirfag/PREP-labyrinth.svg?branch=master
+[![Build Status](https://travis-ci.org/jirfag/PREP-labyrinth.svg?branch=master)](https://travis-ci.org/jirfag/PREP-labyrinth)
