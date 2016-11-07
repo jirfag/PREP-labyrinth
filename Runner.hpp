@@ -6,7 +6,6 @@
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
-
 class Runner: public RunnerBase {
 public:
     Runner() : currDirection(Direction::RIGHT){};
@@ -23,5 +22,7 @@ public:
 
 private:
     Direction currDirection;
+
 };
+
 #endif //LABYRINTH_RUNNER_HPP
