@@ -146,5 +146,3 @@ bool Runner::isExitUp() {
 bool Runner::isExitRight() {
     return current_status.right == BlockType::EXIT;
 }
-
-
