@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include "utils.hpp"
 
+
 Direction Runner::step() {
     switch (currDirection) {
         case Direction::UP:
