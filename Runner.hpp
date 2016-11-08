@@ -1,7 +1,3 @@
-//
-// Created by tsv on 09.05.16.
-//
-
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
