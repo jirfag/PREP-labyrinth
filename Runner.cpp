@@ -11,9 +11,7 @@ Direction Runner::step()
 {
     BlockType stat_ex = BlockType::EXIT;
     const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    std::cout << "step" << std::endl;
+
     if(current_status.left == stat_ex){
         delete turn_coord;
         return directions[2];
@@ -55,13 +53,11 @@ Direction Runner::step()
         return turn_directions();
     }
 
-    //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    //return directions[std::rand() % directions.size()];
 }
 
 
 
-Status *Runner::turn(int angle)
+inline Status *Runner::turn(int angle)
 {
     delete turn_coord;
     Status *temp = new Status;
@@ -93,7 +89,7 @@ Status *Runner::turn(int angle)
 }
 
 
-void Runner::set_angle(int new_angle)
+inline void Runner::set_angle(int new_angle)
 {
     if(angle == 0)
         angle = new_angle;
@@ -116,7 +112,7 @@ void Runner::set_angle(int new_angle)
 }
 
 
-Direction Runner::turn_directions()
+inline Direction Runner::turn_directions()
 {
     const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
     if(angle == 0)
