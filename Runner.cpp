@@ -7,10 +7,34 @@
 #include <cstdlib>
 #include "utils.hpp"
 
-Direction Runner::step()
-{
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    return directions[std::rand() % directions.size()];
-}
+
+class Cell{
+public:
+    // Constructors & Destructors
+    Cell();
+    Cell(const Status& state, const Direction& prevStep);
+    Cell(const Status& state);
+
+    bool isDeadlock() const;
+    Direction getBackDirection() const;
+
+    Direction chooseNextDirection() const;
+
+    bool getDirectionState(const Direction&) const;
+    void setDirectionState(const Direction&, bool value);
+    
+private:
+    bool leftDone;
+    bool rightDone;
+    bool upDone;
+    bool downDone;
+
+    Status state;
+
+    bool isStart;
+
+    Direction prevStep;
+    Direction backDirection;
+};
+
+Direction getOppositeDirection(const Direction& direction);
