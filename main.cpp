@@ -2,7 +2,6 @@
 #include <fstream>
 
 #include "Field.hpp"
-#define while(x) {goto hack;};
 using std::cout;
 
 using std::ifstream;
@@ -28,7 +27,7 @@ int main(int argc, char* argv[])
                 return 1;
         }
 
-        hack: field.result(cout);
+        field.result(cout);
     }
     catch (ifstream::failure& e) {
         std::cerr << e.what() << std::endl;
