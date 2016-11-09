@@ -12,6 +12,7 @@ Direction getOppositeDirection(const Direction& direction){
 		case Direction::LEFT:  return Direction::RIGHT;
 		case Direction::RIGHT: return Direction::LEFT;
 	}
+	return Direction::UP;
 }
 
 // Constructors & Destructors
@@ -55,6 +56,7 @@ bool Cell::getDirectionState(const Direction& direction) const{
 		case Direction::LEFT  : return leftDone;
 		case Direction::RIGHT : return rightDone;
 	}
+	return upDone;
 }
 
 void Cell::setDirectionState(const Direction& direction, bool value){
