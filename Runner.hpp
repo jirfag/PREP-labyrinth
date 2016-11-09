@@ -5,25 +5,6 @@
 #include <algorithm>
 #include "RunnerBase.hpp"
 
-class Runner: public RunnerBase {
-public:
-    Runner() : currDirection(Direction::RIGHT){};
-    Direction step();
-    bool isFreeUp();
-    bool isFreeDown();
-    bool isFreeLeft();
-    bool isFreeRight();
-
-    bool isExitLeft();
-    bool isExitDown();
-    bool isExitUp();
-    bool isExitRight();
-
-private:
-    Direction currDirection;
-
-};
-
 class Cell{
 public:
     // Constructors & Destructors
@@ -51,6 +32,25 @@ private:
 
     Direction prevStep;
     Direction backDirection;
+};
+
+class Runner: public RunnerBase {
+public:
+    Runner() : currDirection(Direction::RIGHT){};
+    Direction step();
+    bool isFreeUp();
+    bool isFreeDown();
+    bool isFreeLeft();
+    bool isFreeRight();
+
+    bool isExitLeft();
+    bool isExitDown();
+    bool isExitUp();
+    bool isExitRight();
+
+private:
+    Direction currDirection;
+
 };
 
 Direction getOppositeDirection(const Direction& direction);
