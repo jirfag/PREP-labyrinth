@@ -15,15 +15,15 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner() {angle = 0; turn_coord = new Status; *turn_coord = current_status;}
+    Runner() {angle = 0; turn_coord = current_status;}
     Direction step();
-    void set_angle(int new_angle);
-    Status *turn(int angle);
+    void set_angle(short int new_angle);
+    void turn();
     Direction turn_directions();
 private:
     BlockType stat_ex = BlockType::EXIT;
-    int angle;
-    Status *turn_coord;
+    short int angle;
+    Status turn_coord;
 };
 
 
