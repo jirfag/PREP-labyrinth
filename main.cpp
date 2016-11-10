@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
             if (!field.tic())
                 return 1;
         }
-
+        
         field.result(cout);
     }
     catch (ifstream::failure& e) {
