@@ -62,7 +62,7 @@ Direction Runner::step() {
 //    MyDirection md;
 //    Status st;
 
-    //проверить на тупик
+    //проверить на тупик?
     if ( current_status.left == BlockType::EXIT ) {
         return Direction::LEFT;
     }
@@ -75,46 +75,46 @@ Direction Runner::step() {
     if ( current_status.down == BlockType::EXIT ) {
         return Direction::DOWN;
     }
-    //по очереди проверять свободен ли проход справа и ходил ли я в него YJ RFR 'NJ CLTKFNM&
+    //по очереди проверять свободен ли проход справа и ходил ли я в него YJ RFR 'NJ CLTKFNM&?
 
     if ( PrevStep == Direction::UP ) {
-        if ( current_status.right == BlockType::FREE ) {
-            PrevStep = Direction::RIGHT;
-            return Direction::RIGHT;
-        } else if ( current_status.up == BlockType::FREE ) {
-            PrevStep = Direction::UP;
-            return Direction::UP;
-        } else if ( current_status.left == BlockType::FREE ) {
-            PrevStep = Direction::LEFT;
-            return Direction::LEFT;
-        } else {
-            PrevStep = Direction::DOWN;
-            return Direction::DOWN;
-        }
-    } else if ( PrevStep == Direction::RIGHT ) {
-        if ( current_status.down == BlockType::FREE ) {
-            PrevStep = Direction::DOWN;
-            return Direction::DOWN;
-        } else if ( current_status.right == BlockType::FREE ) {
-            PrevStep = Direction::RIGHT;
-            return Direction::RIGHT;
-        } else if ( current_status.up == BlockType::FREE ) {
-            PrevStep = Direction::UP;
-            return Direction::UP;
-        } else {
-            PrevStep = Direction::LEFT;
-            return Direction::LEFT;
-        }
-    } else if ( PrevStep == Direction::DOWN ) {
         if ( current_status.left == BlockType::FREE ) {
             PrevStep = Direction::LEFT;
             return Direction::LEFT;
-        } else if ( current_status.down == BlockType::FREE ) {
-            PrevStep = Direction::DOWN;
-            return Direction::DOWN;
+        } else if ( current_status.up == BlockType::FREE ) {
+            PrevStep = Direction::UP;
+            return Direction::UP;
         } else if ( current_status.right == BlockType::FREE ) {
             PrevStep = Direction::RIGHT;
             return Direction::RIGHT;
+        } else {
+            PrevStep = Direction::DOWN;
+            return Direction::DOWN;
+        }
+    } else if ( PrevStep == Direction::LEFT ) {
+        if ( current_status.down == BlockType::FREE ) {
+            PrevStep = Direction::DOWN;
+            return Direction::DOWN;
+        } else if ( current_status.left == BlockType::FREE ) {
+            PrevStep = Direction::LEFT;
+            return Direction::LEFT;
+        } else if ( current_status.up == BlockType::FREE ) {
+            PrevStep = Direction::UP;
+            return Direction::UP;
+        } else {
+            PrevStep = Direction::RIGHT;
+            return Direction::RIGHT;
+        }
+    } else if ( PrevStep == Direction::DOWN ) {
+        if ( current_status.right == BlockType::FREE ) {
+            PrevStep = Direction::RIGHT;
+            return Direction::RIGHT;
+        } else if ( current_status.down == BlockType::FREE ) {
+            PrevStep = Direction::DOWN;
+            return Direction::DOWN;
+        } else if ( current_status.left == BlockType::FREE ) {
+            PrevStep = Direction::LEFT;
+            return Direction::LEFT;
         } else {
             PrevStep = Direction::UP;
             return Direction::UP;
@@ -123,15 +123,15 @@ Direction Runner::step() {
         if ( current_status.up == BlockType::FREE ) {
             PrevStep = Direction::UP;
             return Direction::UP;
-        } else if ( current_status.left == BlockType::FREE ) {
-            PrevStep = Direction::LEFT;
-            return Direction::LEFT;
+        } else if ( current_status.right == BlockType::FREE ) {
+            PrevStep = Direction::RIGHT;
+            return Direction::RIGHT;
         } else if ( current_status.down == BlockType::FREE ) {
             PrevStep = Direction::DOWN;
             return Direction::DOWN;
         } else {
-            PrevStep = Direction::RIGHT;
-            return Direction::RIGHT;
+            PrevStep = Direction::LEFT;
+            return Direction::LEFT;
         }
     }
 }
