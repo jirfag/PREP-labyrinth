@@ -4,172 +4,258 @@
 #include "utils.hpp"
 
 
-Runner::Runner(){
-    isForwardDirection = true;
-    x = 0;
-    y = 0;
-}
-
-Direction Runner::step(){ ;
-
-    // current cell must be at the top of history
-    if (isForwardDirection) { ;
-
-        // if forward direction it adds new Cell
-        if (history.size()){
-            Cell currCell = Cell(current_status, lastChoice);
-            history.push(currCell);
-        } else {
-            Cell currCell = Cell(current_status);
-            history.push(currCell);
-        }
-    } else {
-
-
-        // if backward direction do nothing
-        // current cell already at the top
-    }
-
-
-    // handling current cell
-    Cell& c = history.top();
-
-
-    // choose new direction
-    Direction nextDirection;
-    bool haveChoice = false;
-
-    while (!haveChoice){
-        if (c.isDeadlock()) {
-            // if deadlock new direction is backward
-
-            nextDirection = c.getBackDirection();
-            haveChoice = true;
-
-            history.pop();
-            isForwardDirection = false;
-        } else {
-            // if not try to choose new forward direction
-
-            nextDirection = c.chooseNextDirection();
-            c.setDirectionState(nextDirection, true);
-
-
-            haveChoice = !checkForDeadlock(nextDirection);
-            isForwardDirection = true;
-        }
-    }
-
-    if (c.isDeadlock()){
-        addDeadlock(x, y);
-    }
-
-    // setting new state
-    x = x - 2*(nextDirection == Direction::LEFT) + 2*(nextDirection == Direction::RIGHT);
-    y = y - 1*(nextDirection == Direction::UP) + 1*(nextDirection == Direction::DOWN);
-    lastChoice = nextDirection;
-
-
-    return nextDirection;
-}
-
-bool Runner::checkForDeadlock(int x, int y) const{
-    return std::find(deadlocks.crbegin(), deadlocks.crend(), std::make_pair(x, y)) != deadlocks.crend();
-}
-
-bool Runner::checkForDeadlock(const Direction& direction) const{
-    int nx = x - 2*(direction == Direction::LEFT) + 2*(direction == Direction::RIGHT);
-    int ny = y - (direction == Direction::UP) + (direction == Direction::DOWN);
-
-    return checkForDeadlock(nx, ny);
-}
-
-void Runner::addDeadlock(int x, int y){
-    deadlocks.push_back(std::make_pair(x, y));
-}
-
-
-Direction getOppositeDirection(const Direction& direction){
-    switch (direction){
-        case Direction::UP:    return Direction::DOWN;
-        case Direction::DOWN:  return Direction::UP;
-        case Direction::LEFT:  return Direction::RIGHT;
-        case Direction::RIGHT: return Direction::LEFT;
-    }
-    return Direction::LEFT;
-}
-
-
-Cell::Cell(){
-
-}
-
-Cell::Cell(const Status& status, const Direction& prevDirection)
-        : Cell(status){
-    prevStep = prevDirection;
-    backDirection = getOppositeDirection(prevStep);
-
-    isStart = false;
-    setDirectionState(backDirection, true);
-}
-
-Cell::Cell(const Status& status){
-    state = status;
-
-    upDone   = state.up == BlockType::WALL;
-    downDone  = state.down == BlockType::WALL;
-    leftDone  = state.left == BlockType::WALL;
-    rightDone = state.right == BlockType::WALL;
-
-    isStart = true;
-}
-
-
-bool Cell::isDeadlock() const{
-    return upDone && downDone && leftDone && rightDone;
-}
-
-Direction Cell::getBackDirection() const{
-    return backDirection;
-}
-
-bool Cell::getDirectionState(const Direction& direction) const{
-    switch (direction){
-        case Direction::UP    : return upDone;
-        case Direction::DOWN  : return downDone;
-        case Direction::LEFT  : return leftDone;
-        case Direction::RIGHT : return rightDone;
-    }
-    return true;
-}
-
-void Cell::setDirectionState(const Direction& direction, bool value){
-    switch (direction){
+Direction Runner::step() {
+    switch (currDirection) {
         case Direction::UP:
-            upDone = value;
-            break;
+            return nowUDirectionLEFT();
         case Direction::DOWN:
-            downDone = value;
-            break;
+            return nowDDirectionLEFT();
         case Direction::LEFT:
-            leftDone = value;
-            break;
+            return nowLDirectionLEFT();
         case Direction::RIGHT:
-            rightDone = value;
-            break;
+            return nowRDirectionLEFT();
+        default:
+            return Direction ::RIGHT;
     }
 }
 
-Direction Cell::chooseNextDirection() const{
-    if (state.up    == BlockType::EXIT) return Direction::UP;
-    if (state.down  == BlockType::EXIT) return Direction::DOWN;
-    if (state.left  == BlockType::EXIT) return Direction::LEFT;
-    if (state.right == BlockType::EXIT) return Direction::RIGHT;
+bool Runner::isFreeUp() {
+    return current_status.up != BlockType::WALL;
+}
 
-    if (!rightDone) return Direction::RIGHT;
-    if (!downDone)  return Direction::DOWN;
-    if (!upDone)    return Direction::UP;
-    if (!leftDone)  return Direction::LEFT;
+bool Runner::isFreeDown() {
+    return current_status.down != BlockType::WALL;
+}
 
-    return backDirection;
+bool Runner::isFreeLeft() {
+    return current_status.left != BlockType::WALL;
+}
+
+bool Runner::isFreeRight() {
+    return current_status.right != BlockType::WALL;
+}
+
+bool Runner::isExitLeft() {
+    return current_status.left == BlockType::EXIT;
+}
+
+bool Runner::isExitDown() {
+    return current_status.down == BlockType::EXIT;
+}
+
+bool Runner::isExitUp() {
+    return current_status.up == BlockType::EXIT;
+}
+
+bool Runner::isExitRight() {
+    return current_status.right == BlockType::EXIT;
+}
+
+Direction Runner::nowDirectionD() {
+    if (isExitRight()) {
+        return Direction::RIGHT;
+    }
+    else if (isExitDown()) {
+        return Direction::DOWN;
+    }
+    else if (isExitLeft())
+        return Direction::LEFT;
+
+    if (isFreeLeft()) {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+    else if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else if (isFreeRight()) {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
+    else {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+}
+
+Direction Runner::nowDirectionU() {
+    if (isExitLeft()) {
+        return Direction::LEFT;
+    }
+    else if (isExitUp()) {
+        return Direction::UP;
+    }
+
+    if (isFreeRight()) {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
+    else if (isFreeUp()) {
+        return Direction::UP;
+    }
+    else if (isFreeLeft()) {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+    else {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+}
+
+Direction Runner::nowDirectionR() {
+    if (isExitUp()) {
+        return Direction::UP;
+    }
+    else if (isExitRight()) {
+        return Direction::RIGHT;
+    }
+    //
+    if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else if (isFreeRight()) {
+        return Direction::RIGHT;
+    }
+    else if (isFreeUp()) {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+    else {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+}
+
+Direction Runner::nowDirectionL() {
+    if (isExitDown()) {
+        return Direction::DOWN;
+    }
+    else if (isExitLeft())
+        return Direction::LEFT;
+
+    if (isFreeUp()) {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+    else if (isFreeLeft()) {
+        return Direction::LEFT;
+    }
+    else if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
+}
+
+
+
+Direction Runner::nowUDirectionLEFT() {
+    if (isExitLeft()) {
+        return Direction::LEFT;
+    }
+    else if (isExitUp()) {
+        return Direction::UP;
+    }
+
+    if (isFreeLeft()) {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+    else if (isFreeUp()) {
+        return Direction::UP;
+    }
+    else if (isFreeRight()) {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
+    else {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+}
+
+Direction Runner::nowRDirectionLEFT() {
+    if (isExitUp()) {
+        return Direction::UP;
+    }
+    else if (isExitRight()) {
+        return Direction::RIGHT;
+    }
+    else if (isExitDown()) {
+        return Direction::DOWN;
+    }
+    //
+    if (isFreeUp()) {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+    else if (isFreeRight()) {
+        return Direction::RIGHT;
+    }
+    else if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+}
+
+Direction Runner::nowDDirectionLEFT() {
+    if (isExitRight()) {
+        return Direction::RIGHT;
+    }
+    else if (isExitDown()) {
+        return Direction::DOWN;
+    }
+    else if (isExitLeft())
+        return Direction::LEFT;
+
+    if (isFreeRight()) {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
+    else if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else if (isFreeLeft()) {
+        currDirection = Direction::LEFT;
+        return Direction::LEFT;
+    }
+    else {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+}
+
+Direction Runner::nowLDirectionLEFT() {
+    if (isExitUp()) {
+        return Direction::UP;
+    }
+    else if (isExitLeft())
+        return Direction::LEFT;
+
+    if (isFreeDown()) {
+        currDirection = Direction::DOWN;
+        return Direction::DOWN;
+    }
+    else if (isFreeLeft()) {
+        return Direction::LEFT;
+    }
+    else if (isFreeUp()) {
+        currDirection = Direction::UP;
+        return Direction::UP;
+    }
+    else {
+        currDirection = Direction::RIGHT;
+        return Direction::RIGHT;
+    }
 }
