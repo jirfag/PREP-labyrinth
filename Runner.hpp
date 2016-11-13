@@ -10,7 +10,7 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner():angle(0) {}
+    Runner(){angle = 0;}
     Direction step();
     void set_angle(char new_angle);
     void turn(char);
