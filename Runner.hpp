@@ -12,7 +12,7 @@ class Runner: public RunnerBase {
 public:
     Runner(){angle = 0;}
     Direction step();
-    void set_angle(char new_angle);
+    void set_angle(signed char new_angle);
     void turn(char);
     Direction turn_directions();
 private:

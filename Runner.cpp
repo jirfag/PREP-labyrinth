@@ -81,7 +81,7 @@ inline void Runner::turn(char angle)
 }
 
 
-inline void Runner::set_angle(char new_angle)
+inline void Runner::set_angle(signed char new_angle)
 {
     angle = (angle + new_angle);
     if (angle <= _180 && angle >= _m90);
