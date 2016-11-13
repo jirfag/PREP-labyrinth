@@ -2,7 +2,7 @@
 // Created by tsv on 09.05.16.
 //
 
-#define DEBUG 0
+#define DEBUG 1
 
 #include "Runner.hpp"
 #include "utils.hpp"
@@ -40,8 +40,8 @@ Runner::Runner(): directions {
 
 Direction Runner::step() {
 #if DEBUG
-    char ch;
-    std::cin >> std::noskipws >> ch;
+    //char ch;
+    //std::cin >> std::noskipws >> ch;
 #endif
 
     incrementCurrentPositionPassagesCount();
