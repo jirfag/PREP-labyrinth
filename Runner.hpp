@@ -6,7 +6,6 @@
 #define LABYRINTH_RUNNER_HPP
 
 #include <map>
-#include <vector>
 
 #include "RunnerBase.hpp"
 

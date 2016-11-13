@@ -6,6 +6,8 @@
 
 #include "Runner.hpp"
 #include "utils.hpp"
+#include <algorithm>
+#include <vector>
 
 #if DEBUG
 #include <iostream>
