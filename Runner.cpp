@@ -5,7 +5,6 @@
 #include "Runner.hpp"
 #include "utils.hpp"
 
-#include <unistd.h>
 #define R 1
 #define D 2
 #define L 3
