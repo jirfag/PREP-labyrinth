@@ -3,10 +3,10 @@
 //
 
 #include "Runner.hpp"
-#define _0 49
-#define _90 50
-#define _m90 48
-#define _180 51
+#define _0 0
+#define _90 1
+#define _m90 -1
+#define _180 2
 
 Direction Runner::step()
 {
@@ -83,8 +83,8 @@ inline void Runner::turn(char angle)
 
 inline void Runner::set_angle(char new_angle)
 {
-    angle = (angle + new_angle -_0);
-    if (angle <= _180 && angle >= _0);
+    angle = (angle + new_angle);
+    if (angle <= _180 && angle >= _m90);
     else
         angle = angle + (angle > _180 ? (-4) : (+4));
 }
