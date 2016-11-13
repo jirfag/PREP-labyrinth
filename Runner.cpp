@@ -6,7 +6,7 @@
 #include "utils.hpp"
 
 
-int napravlenie = 1;
+short int napravlenie = 1;
 
 Direction Runner::step()
 {	
