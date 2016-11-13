@@ -5,24 +5,19 @@
 #include <vector>
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
-#define UP W
-#define DOWN S
-#define RIGHT D
-#define LEFT A
-
 
 #include "RunnerBase.hpp"
 
 class Runner: public RunnerBase {
 public:
-    Runner() {angle = 0; turn_coord = current_status;}
+    Runner() : angle('1') {}
     Direction step();
-    void set_angle(short int new_angle);
-    void turn(short int);
+    void set_angle(char new_angle);
+    void turn(char);
     Direction turn_directions();
 private:
-    BlockType stat_ex = BlockType::EXIT;
-    short int angle;
+    //BlockType stat_ex = BlockType::EXIT;
+    char angle;
     Status turn_coord;
     const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
 };

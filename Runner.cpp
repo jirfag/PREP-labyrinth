@@ -3,25 +3,29 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
-#include "utils.hpp"
+#define _0 49
+#define _90 50
+#define _m90 48
+#define _180 51
 
 Direction Runner::step()
 {
-
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-
-    if(current_status.left == stat_ex){
+    if(current_status.left != BlockType::EXIT && current_status.right != BlockType::EXIT
+       && current_status.up != BlockType::EXIT && current_status.down != BlockType::EXIT);
+    else if(current_status.left == BlockType::EXIT){
+        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
         return directions[2];
     }
-    if(current_status.right == stat_ex) {
+    else if(current_status.right == BlockType::EXIT) {
+        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
         return directions[3];
     }
-    if (current_status.up == stat_ex){
+    else if (current_status.up == BlockType::EXIT){
+        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
         return directions[0];
     }
-    if (current_status.down == stat_ex){
+    else if (current_status.down == BlockType::EXIT){
+        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
         return directions[1];
     }
 
@@ -29,50 +33,46 @@ Direction Runner::step()
 
     if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::FREE)
         return turn_directions();
-
     else if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::WALL && turn_coord.right == BlockType ::FREE){
-        set_angle(-90);
+        set_angle(_m90);
         turn(angle);
         return turn_directions();
     }
-
     else if(turn_coord.left == BlockType::FREE) {
-        set_angle(90);
+        set_angle(_90);
         turn(angle);
         return turn_directions();
     }
-
     else {
-        set_angle(180);
+        set_angle(_180);
         turn(angle);
         return turn_directions();
     }
 }
 
 
-
-void Runner::turn(short int angle)
+inline void Runner::turn(char angle)
 {
-    if(angle == 0)
+    if(angle == _0)
     {
         turn_coord.left = current_status.left;
         turn_coord.right = current_status.right;
         turn_coord.down = current_status.down;
         turn_coord.up = current_status.up;
     }
-    else if(angle == 90){
+    else if(angle == _90){
         turn_coord.up = current_status.left;
         turn_coord.left = current_status.down;
         turn_coord.down = current_status.right;
         turn_coord.right= current_status.up;
     }
-    else if(angle == -90){
+    else if(angle == _m90){
         turn_coord.up = current_status.right;
         turn_coord.left = current_status.up;
         turn_coord.down  = current_status.left;
         turn_coord.right = current_status.down;
     }
-    else if(angle == 180){
+    else if(angle == _180){
         turn_coord.up  = current_status.down;
         turn_coord.left = current_status.right;
         turn_coord.down = current_status.up;
@@ -81,13 +81,13 @@ void Runner::turn(short int angle)
 }
 
 
-inline void Runner::set_angle(short int new_angle)
+inline void Runner::set_angle(char new_angle)
 {
-    angle = (angle + new_angle);
-    if(angle <= 180 && angle >=-90)
-        ;
+    angle = (angle + new_angle -_0);
+    if (angle <= _180 && angle >= _0);
     else
-        angle = angle + (angle > 180 ? -360 : 360);
+        angle = angle + (angle > _180 ? (-4) : (+4));
+}
 //        angle = angle - 360;
 //    else
 //        angle = angle + 360;
@@ -109,16 +109,15 @@ inline void Runner::set_angle(short int new_angle)
 //        angle = 0;
 //    else
 //        std::cout << "ERROR ANGLE" << new_angle << angle << std::endl;
-}
 
 
 inline Direction Runner::turn_directions()
 {
-    if(angle == 0)
+    if(angle == _0)
         return directions[0];
-    else if(angle == 90)
+    else if(angle == _90)
         return directions[2];
-    else if(angle == -90)
+    else if(angle == _m90)
         return directions[3];
     else
         return directions[1];
