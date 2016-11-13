@@ -60,7 +60,7 @@ Direction Runner::step() {
 Direction Runner::getNextDirection() {
     std::vector<Direction> possibleDirections;
 
-    const BlockType const blocks[] = {
+    const BlockType blocks[] = {
         Runner::current_status.up,
         Runner::current_status.down,
         Runner::current_status.left,
