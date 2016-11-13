@@ -8,7 +8,6 @@
 #include "RunnerBase.hpp"
 
 class Runner: public RunnerBase {
-    Direction PrevStep = Direction::UP;
     public:
         Direction step();
 };
