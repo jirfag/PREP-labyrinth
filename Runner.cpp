@@ -1,10 +1,11 @@
 //
-// Created by Andrey Richter (Savosin) on 13.11.16.
+// Created by Andrey Richter (Savosin) on 14.11.16.
 //
 
 #include "Runner.hpp"
 #include "utils.hpp"
 
+#include <unistd.h>
 #define R 1
 #define D 2
 #define L 3
@@ -18,15 +19,15 @@ Direction Runner::step()
 	{
 		case R: 
 		{
-			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
-			{
-				napravlenie = U;
-				return Direction::UP;
-			}
-			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
 				napravlenie = R;
 				return Direction::RIGHT;
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+			{
+				napravlenie = U;
+				return Direction::UP;
 			}
 			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
@@ -41,15 +42,15 @@ Direction Runner::step()
 		}
 		case D: 
 		{
-			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
-			{
-				napravlenie = R;
-				return Direction::RIGHT;
-			}
-			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
 				napravlenie = D;
 				return Direction::DOWN;
+			}
+			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			{
+				napravlenie = R;
+				return Direction::RIGHT;
 			}
 			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
@@ -64,17 +65,17 @@ Direction Runner::step()
 		}
 		case L: 
 		{
-			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
-			{
-				napravlenie = D;
-				return Direction::DOWN;
-			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
 				napravlenie = L;
 				return Direction::LEFT;
 			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				napravlenie = D;
+				return Direction::DOWN;
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
 			{
 				napravlenie = U;
 				return Direction::UP;
@@ -87,15 +88,15 @@ Direction Runner::step()
 		}
 		default: 
 		{
-			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
-			{
-				napravlenie = L;
-				return Direction::LEFT;
-			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
 			{
 				napravlenie = U;
 				return Direction::UP;
+			}
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			{
+				napravlenie = L;
+				return Direction::LEFT;
 			}
 			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
