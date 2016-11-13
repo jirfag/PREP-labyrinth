@@ -19,20 +19,20 @@ Direction Runner::step()
 	{
 		case R: 
 		{
-			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
 			{
-				napravlenie = D;
-				return Direction::DOWN;
+				napravlenie = U;
+				return Direction::UP;
 			}
 			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
 				napravlenie = R;
 				return Direction::RIGHT;
 			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
-				napravlenie = U;
-				return Direction::UP;
+				napravlenie = D;
+				return Direction::DOWN;
 			}
 			else
 			{
@@ -42,20 +42,20 @@ Direction Runner::step()
 		}
 		case D: 
 		{
-			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				napravlenie = L;
-				return Direction::LEFT;
+				napravlenie = R;
+				return Direction::RIGHT;
 			}
 			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
 				napravlenie = D;
 				return Direction::DOWN;
 			}
-			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
-				napravlenie = R;
-				return Direction::RIGHT;
+				napravlenie = L;
+				return Direction::LEFT;
 			}
 			else
 			{
@@ -65,20 +65,20 @@ Direction Runner::step()
 		}
 		case L: 
 		{
-			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
-				napravlenie = U;
-				return Direction::UP;
+				napravlenie = D;
+				return Direction::DOWN;
 			}
 			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
 				napravlenie = L;
 				return Direction::LEFT;
 			}
-			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
 			{
-				napravlenie = D;
-				return Direction::DOWN;
+				napravlenie = U;
+				return Direction::UP;
 			}
 			else
 			{
@@ -88,20 +88,20 @@ Direction Runner::step()
 		}
 		default: 
 		{
-			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
-				napravlenie = R;
-				return Direction::RIGHT;
+				napravlenie = L;
+				return Direction::LEFT;
 			}
 			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
 			{
 				napravlenie = U;
 				return Direction::UP;
 			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				napravlenie = L;
-				return Direction::LEFT;
+				napravlenie = R;
+				return Direction::RIGHT;
 			}
 			else
 			{
