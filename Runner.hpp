@@ -8,6 +8,9 @@
 #include "RunnerBase.hpp"
 
 class Runner: public RunnerBase {
+private:
+    Direction PrevStep = Direction::LEFT;
+
     public:
         Direction step();
 };
