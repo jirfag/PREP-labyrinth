@@ -86,7 +86,7 @@ Direction Runner::getNextDirection() {
     }
 
     std::sort(possibleDirections.begin(), possibleDirections.end(),
-        [this](Direction &lhs, Direction &rhs) -> bool {
+        [this](Direction lhs, Direction rhs) -> bool {
             unsigned int lhsPassagesCount = 0;
             if (labyrinthMap.count(getDirectionPoint(lhs)) > 0) {
                 lhsPassagesCount = labyrinthMap[getDirectionPoint(lhs)];
