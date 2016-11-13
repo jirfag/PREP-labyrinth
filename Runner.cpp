@@ -1,16 +1,20 @@
 #include "Runner.hpp"
 
-Direction PrevStep = Direction::DOWN;
-
 Direction Runner::step() {
 
     if ( current_status.left == BlockType::EXIT ) {
         return Direction::LEFT;
-    } else if ( current_status.right == BlockType::EXIT ) {
+    }
+
+    if ( current_status.right == BlockType::EXIT ) {
         return Direction::RIGHT;
-    } else if ( current_status.up == BlockType::EXIT ) {
+    }
+
+    if ( current_status.up == BlockType::EXIT ) {
         return Direction::UP;
-    } else if ( current_status.down == BlockType::EXIT ) {
+    }
+
+    if ( current_status.down == BlockType::EXIT ) {
         return Direction::DOWN;
     }
 
