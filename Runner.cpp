@@ -1,5 +1,6 @@
 #include "Runner.hpp"
 
+Direction PrevStep = Direction::DOWN;
 
 Direction Runner::step() {
 
