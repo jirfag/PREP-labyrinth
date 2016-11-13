@@ -1,111 +1,106 @@
 //
-// Created by Andrey Richter (Savosin) on 14.11.16.
+// Created by Andrey Richter (Savosin) on 13.11.16.
 //
 
 #include "Runner.hpp"
 #include "utils.hpp"
 
-#include <unistd.h>
-#define R 1
-#define D 2
-#define L 3
-#define U 4
 
-int napravlenie = R;
+int napravlenie = 1;
 
 Direction Runner::step()
 {	
 	switch (napravlenie)
 	{
-		case R: 
+		case 1: 
 		{
-			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
 			{
-				napravlenie = R;
-				return Direction::RIGHT;
-			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
-			{
-				napravlenie = U;
+				napravlenie = 4;
 				return Direction::UP;
-			}
-			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
-			{
-				napravlenie = D;
-				return Direction::DOWN;
-			}
-			else
-			{
-				napravlenie = L;
-				return Direction::LEFT;
-			}
-		}
-		case D: 
-		{
-			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
-			{
-				napravlenie = D;
-				return Direction::DOWN;
 			}
 			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				napravlenie = R;
+				napravlenie = 1;
 				return Direction::RIGHT;
-			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
-			{
-				napravlenie = L;
-				return Direction::LEFT;
-			}
-			else
-			{
-				napravlenie = U;
-				return Direction::UP;
-			}
-		}
-		case L: 
-		{
-			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
-			{
-				napravlenie = L;
-				return Direction::LEFT;
 			}
 			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
-				napravlenie = D;
+				napravlenie = 2;
 				return Direction::DOWN;
 			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+			else
 			{
-				napravlenie = U;
+				napravlenie = 3;
+				return Direction::LEFT;
+			}
+		}
+		case 2: 
+		{
+			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			{
+				napravlenie = 1;
+				return Direction::RIGHT;
+			}
+			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				napravlenie = 2;
+				return Direction::DOWN;
+			}
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			{
+				napravlenie = 3;
+				return Direction::LEFT;
+			}
+			else
+			{
+				napravlenie = 4;
+				return Direction::UP;
+			}
+		}
+		case 3: 
+		{
+			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				napravlenie = 2;
+				return Direction::DOWN;
+			}
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			{
+				napravlenie = 3;
+				return Direction::LEFT;
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			{
+				napravlenie = 4;
 				return Direction::UP;
 			}
 			else
 			{
-				napravlenie = R;
+				napravlenie = 1;
 				return Direction::RIGHT;
 			}
 		}
 		default: 
 		{
-			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
-				napravlenie = U;
-				return Direction::UP;
-			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
-			{
-				napravlenie = L;
+				napravlenie = 3;
 				return Direction::LEFT;
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			{
+				napravlenie = 4;
+				return Direction::UP;
 			}
 			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				napravlenie = R;
+				napravlenie = 1;
 				return Direction::RIGHT;
 			}
 			else
 			{
-				napravlenie = D;
+				napravlenie = 2;
 				return Direction::DOWN;
 			}
 		}
