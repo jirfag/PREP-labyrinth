@@ -28,8 +28,7 @@ Direction Runner::step() {
         }
         case Direction::LEFT: {
             if ( ( current_status.down == BlockType::FREE ) | ( current_status.down == BlockType::EXIT ) ) {
-                PrevStep = Direction::DOWN;
-                return Direction::DOWN;
+                return PrevStep = Direction::DOWN;
             } else if ( ( current_status.left == BlockType::FREE ) | ( current_status.left == BlockType::EXIT ) ) {
                 return PrevStep = Direction::LEFT;
             } else if ( ( current_status.up == BlockType::FREE ) | ( current_status.up == BlockType::EXIT ) ) {
