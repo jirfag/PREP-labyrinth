@@ -53,35 +53,21 @@ Direction Runner::step() {
             break;
         }
     }
-    switch(turn_coord.left) {
-        case BlockType::WALL: {
-            if (turn_coord.up == BlockType::FREE) {
-                if (angle == _0)
-                    return Direction::UP;
-                else if (angle == _90)
-                    return Direction::LEFT;
-                else if (angle == _m90)
-                    return Direction::RIGHT;
-                else
-                    return Direction::DOWN;
-            }
-            else if (turn_coord.up == BlockType::WALL && turn_coord.right == BlockType::FREE) {
-                angle = (angle + _m90);
-                if (angle <= _180 && angle >= _m90);
-                else
-                    angle = angle + (angle > _180 ? (-4) : (+4));
-                if (angle == _0)
-                    return Direction::UP;
-                else if (angle == _90)
-                    return Direction::LEFT;
-                else if (angle == _m90)
-                    return Direction::RIGHT;
-                else
-                    return Direction::DOWN;
-            }
+
+
+    if (turn_coord.left == BlockType::WALL) {
+        if (turn_coord.up == BlockType::FREE) {
+            if (angle == _0)
+                return Direction::UP;
+            else if (angle == _90)
+                return Direction::LEFT;
+            else if (angle == _m90)
+                return Direction::RIGHT;
+            else
+                return Direction::DOWN;
         }
-        case BlockType::FREE: {
-            angle = (angle + _90);
+        else if (turn_coord.up == BlockType::WALL && turn_coord.right == BlockType::FREE) {
+            angle = (angle + _m90);
             if (angle <= _180 && angle >= _m90);
             else
                 angle = angle + (angle > _180 ? (-4) : (+4));
@@ -94,8 +80,20 @@ Direction Runner::step() {
             else
                 return Direction::DOWN;
         }
-        default:
-            break;
+    }
+    if (turn_coord.left == BlockType::FREE) {
+        angle = (angle + _90);
+        if (angle <= _180 && angle >= _m90);
+        else
+            angle = angle + (angle > _180 ? (-4) : (+4));
+        if (angle == _0)
+            return Direction::UP;
+        else if (angle == _90)
+            return Direction::LEFT;
+        else if (angle == _m90)
+            return Direction::RIGHT;
+        else
+            return Direction::DOWN;
     }
         angle = (angle + _180);
         if (angle <= _180 && angle >= _m90);
