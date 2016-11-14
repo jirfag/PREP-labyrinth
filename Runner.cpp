@@ -52,7 +52,7 @@ Direction Runner::step() {
               << "(" << getDirectionPoint(nextDirection).x << "; " << getDirectionPoint(nextDirection).y << ")"
               << std::endl;
 #endif
-
+    previousPosition = currentPosition;
     currentPosition = getDirectionPoint(nextDirection);
     return nextDirection;
 }
@@ -87,6 +87,10 @@ Direction Runner::getNextDirection() {
 
     std::sort(possibleDirections.begin(), possibleDirections.end(),
         [this](Direction lhs, Direction rhs) -> bool {
+            if (getDirectionPoint(rhs).x == previousPosition.x && getDirectionPoint(rhs).y == previousPosition.y) {
+                return 1;
+            }
+
             unsigned int lhsPassagesCount = 0;
             if (labyrinthMap.count(getDirectionPoint(lhs)) > 0) {
                 lhsPassagesCount = labyrinthMap[getDirectionPoint(lhs)];
@@ -96,7 +100,7 @@ Direction Runner::getNextDirection() {
             if (labyrinthMap.count(getDirectionPoint(rhs)) > 0) {
                 rhsPassagesCount = labyrinthMap[getDirectionPoint(rhs)];
             }
-
+            
             return lhsPassagesCount < rhsPassagesCount;
         }
     );

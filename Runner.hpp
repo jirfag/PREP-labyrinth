@@ -41,6 +41,7 @@ private:
 
     const Direction directions[4];
     Point currentPosition = {0, 0};
+    Point previousPosition = {0, 0};
     std::map<Point, unsigned short, PointCompare> labyrinthMap;
 };
 
