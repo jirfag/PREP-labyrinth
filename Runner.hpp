@@ -12,11 +12,11 @@ class Runner: public RunnerBase {
 public:
     Runner(){angle = 0;}
     Direction step();
-    void set_angle(signed char new_angle);
-    void turn(char);
-    Direction turn_directions();
+//    void set_angle(signed char new_angle);
+//    void turn(char);
+//    Direction turn_directions();
 private:
-    signed char angle;
+    short int angle;
     Status turn_coord;
     //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
 };

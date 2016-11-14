@@ -24,28 +24,28 @@ Direction Runner::step() {
     }
 
     switch(angle) {
-        case _0: {
+        case 0: {
             turn_coord.left = current_status.left;
             turn_coord.right = current_status.right;
             turn_coord.down = current_status.down;
             turn_coord.up = current_status.up;
             break;
         }
-        case _90: {
+        case 90: {
             turn_coord.up = current_status.left;
             turn_coord.left = current_status.down;
             turn_coord.down = current_status.right;
             turn_coord.right = current_status.up;
             break;
         }
-        case _m90: {
+        case -90: {
         turn_coord.up = current_status.right;
         turn_coord.left = current_status.up;
         turn_coord.down = current_status.left;
         turn_coord.right = current_status.down;
             break;
         }
-        case _180: {
+        case 180: {
         turn_coord.up = current_status.down;
         turn_coord.left = current_status.right;
         turn_coord.down = current_status.up;
@@ -58,104 +58,105 @@ Direction Runner::step() {
     switch(turn_coord.left) {
         case BlockType::WALL: {
             if (turn_coord.up == BlockType::FREE) {
-                if (angle == _0)
+                if (angle == 0)
                     return Direction::UP;
-                else if (angle == _90)
+                else if (angle == 90)
                     return Direction::LEFT;
-                else if (angle == _m90)
+                else if (angle == -90)
                     return Direction::RIGHT;
                 else
                     return Direction::DOWN;
             } else if (turn_coord.up == BlockType::WALL && turn_coord.right == BlockType::FREE) {
-                angle = (angle + _m90);
-                if (angle <= _180 && angle >= _m90);
+                angle = (angle + -90);
+                if (angle <= 180 && angle >= -90);
                 else
-                    angle = angle + (angle > _180 ? (-4) : (+4));
-                if (angle == _0)
+                    angle = angle + (angle > 180 ? (-360) : (360));
+                if (angle == 0)
                     return Direction::UP;
-                else if (angle == _90)
+                else if (angle == 90)
                     return Direction::LEFT;
-                else if (angle == _m90)
+                else if (angle == -90)
                     return Direction::RIGHT;
                 else
                     return Direction::DOWN;
             }
             else
-                angle = (angle + _180);
-            if (angle <= _180 && angle >= _m90);
+                angle = (angle + 180);
+            if (angle <= 180 && angle >= -90);
             else
-                angle = angle + (angle > _180 ? (-4) : (+4));
-            if (angle == _0)
+                angle = angle + (angle > 180 ? (-360) : (360));
+            if (angle == 0)
                 return Direction::UP;
-            else if (angle == _90)
+            else if (angle == 90)
                 return Direction::LEFT;
-            else if (angle == _m90)
+            else if (angle == -90)
                 return Direction::RIGHT;
             else
                 return Direction::DOWN;
 
         }
         case BlockType::FREE: {
-            angle = (angle + _90);
-            if (angle <= _180 && angle >= _m90);
+            angle = (angle + 90);
+            if (angle <= 180 && angle >= -90);
             else
-                angle = angle + (angle > _180 ? (-4) : (+4));
-            if (angle == _0)
+                angle = angle + (angle > 180 ? (-360) : (360));
+            if (angle == 0)
                 return Direction::UP;
-            else if (angle == _90)
+            else if (angle == 90)
                 return Direction::LEFT;
-            else if (angle == _m90)
+            else if (angle == -90)
                 return Direction::RIGHT;
             else
                 return Direction::DOWN;
         }
         case BlockType::ENTER: {
-            if (turn_coord.up == BlockType::FREE) {
-                if (angle == _0)
-                    return Direction::UP;
-                else if (angle == _90)
-                    return Direction::LEFT;
-                else if (angle == _m90)
-                    return Direction::RIGHT;
-                else
-                    return Direction::DOWN;
-            } else if (turn_coord.up == BlockType::WALL && turn_coord.right == BlockType::FREE) {
-                angle = (angle + _m90);
-                if (angle <= _180 && angle >= _m90);
-                else
-                    angle = angle + (angle > _180 ? (-4) : (+4));
-                if (angle == _0)
-                    return Direction::UP;
-                else if (angle == _90)
-                    return Direction::LEFT;
-                else if (angle == _m90)
-                    return Direction::RIGHT;
-                else
-                    return Direction::DOWN;
-            }
+//            if (turn_coord.up == BlockType::FREE) {
+//                if (angle == 0)
+//                    return Direction::UP;
+//                else if (angle == 90)
+//                    return Direction::LEFT;
+//                else if (angle == -90)
+//                    return Direction::RIGHT;
+//                else
+//                    return Direction::DOWN;
+//            } else if (turn_coord.up == BlockType::WALL && turn_coord.right == BlockType::FREE) {
+//                angle = (angle - 90);
+//                if (angle <= 180 && angle >= -90);
+//                else
+//                    angle = angle + (angle > 180 ? (-360) : (360));
+//                if (angle == 0)
+//                    return Direction::UP;
+//                else if (angle == 90)
+//                    return Direction::LEFT;
+//                else if (angle == -90)
+//                    return Direction::RIGHT;
+//                else
+//                    return Direction::DOWN;
+//            }
         }
         case BlockType::EXIT: {
-            if (angle == _0)
-                return Direction::LEFT;
-            else if (angle == _90)
-                return Direction::DOWN;
-            else if (angle == _m90)
-                return Direction::UP;
-            else
-                return Direction::RIGHT;
+            ;
+//            if (angle == 0)
+//                return Direction::LEFT;
+//            else if (angle == 90)
+//                return Direction::DOWN;
+//            else if (angle == -90)
+//                return Direction::UP;
+//            else
+//                return Direction::RIGHT;
         }
     }
-    std::cout<< "fwf"<<std::endl;
-        angle = (angle + _180);
-        if (angle <= _180 && angle >= _m90);
-        else
-            angle = angle + (angle > _180 ? (-4) : (+4));
-        if (angle == _0)
-            return Direction::UP;
-        else if (angle == _90)
-            return Direction::LEFT;
-        else if (angle == _m90)
-            return Direction::RIGHT;
-        else
+//    std::cout<< "fwf"<<std::endl;
+//        angle = (angle + _180);
+//        if (angle <= _180 && angle >= _m90);
+//        else
+//            angle = angle + (angle > _180 ? (-4) : (+4));
+//        if (angle == _0)
+//            return Direction::UP;
+//        else if (angle == _90)
+//            return Direction::LEFT;
+//        else if (angle == _m90)
+//            return Direction::RIGHT;
+//        else
             return Direction::DOWN;
 }
