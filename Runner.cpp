@@ -5,224 +5,181 @@
 #include "Runner.hpp"
 #include "utils.hpp"
 
+#define R 1
+#define D 2
+#define L 3
+#define U 4
 
-short int napravlenie = 1;
+int napravlenie = R;
 
 Direction Runner::step()
 {	
 	switch (napravlenie)
 	{
-		case 1: 
+		case R: 
 		{
-			switch (current_status.up)  
+			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
 			{
-				case BlockType::FREE:
+				if (current_status.right == BlockType::EXIT)
 				{
-					napravlenie = 4;
-					return Direction::UP;
-				}
-				case BlockType::EXIT:
-				{
-					napravlenie = 4;
-					return Direction::UP;
-				}
-				default:	
-				{
-					switch (current_status.right)  
-					{
-						case BlockType::FREE:
-						{
-							napravlenie = 1;
-							return Direction::RIGHT;
-						}
-						case BlockType::EXIT:
-						{
-							napravlenie = 1;
-							return Direction::RIGHT;
-						}
-						default:	
-						{
-							switch (current_status.down)  
-							{
-								case BlockType::FREE:
-								{
-									napravlenie = 2;
-									return Direction::DOWN;
-								}
-								case BlockType::EXIT:
-								{
-									napravlenie = 2;
-									return Direction::DOWN;
-								}
-								default:	
-								{
-									napravlenie = 3;
-									return Direction::LEFT;
-								}
-							}
-						}	
-					}
-				}
-			}
-		}
-		case 2: 
-		{
-			switch (current_status.right)  
-			{
-				case BlockType::FREE:
-				{
-					napravlenie = 1;
 					return Direction::RIGHT;
 				}
-				case BlockType::EXIT:
+				else if (current_status.down == BlockType::EXIT)
 				{
-					napravlenie = 1;
-					return Direction::RIGHT;
+					return Direction::DOWN;
 				}
-				default:	
+				else
 				{
-					switch (current_status.down)  
-					{
-						case BlockType::FREE:
-						{
-							napravlenie = 2;
-							return Direction::DOWN;
-						}
-						case BlockType::EXIT:
-						{
-							napravlenie = 2;
-							return Direction::DOWN;
-						}
-						default:	
-						{
-							switch (current_status.left)  
-							{
-								case BlockType::FREE:
-								{
-									napravlenie = 3;
-									return Direction::LEFT;
-								}
-								case BlockType::EXIT:
-								{
-									napravlenie = 3;
-									return Direction::LEFT;
-								}
-								default:	
-								{
-									napravlenie = 4;
-									return Direction::UP;
-								}
-							}
-						}	
-					}
+					napravlenie = U;
+					return Direction::UP;
 				}
 			}
-		}
-		case 3: 
-		{
-			switch (current_status.down)  
+			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				case BlockType::FREE:
+				if (current_status.down == BlockType::EXIT)
 				{
-					napravlenie = 2;
 					return Direction::DOWN;
 				}
-				case BlockType::EXIT:
+				else
 				{
-					napravlenie = 2;
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+			}
+			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				napravlenie = D;
+				return Direction::DOWN;
+			}
+			else
+			{
+				napravlenie = L;
+				return Direction::LEFT;
+			}
+		}
+		case D: 
+		{
+			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			{
+				if (current_status.down == BlockType::EXIT)
+				{
 					return Direction::DOWN;
 				}
-				default:	
+				else if (current_status.left == BlockType::EXIT)
 				{
-					switch (current_status.left)  
-					{
-						case BlockType::FREE:
-						{
-							napravlenie = 3;
-							return Direction::LEFT;
-						}
-						case BlockType::EXIT:
-						{
-							napravlenie = 3;
-							return Direction::LEFT;
-						}
-						default:	
-						{
-							switch (current_status.up)  
-							{
-								case BlockType::FREE:
-								{
-									napravlenie = 4;
-									return Direction::UP;
-								}
-								case BlockType::EXIT:
-								{
-									napravlenie = 4;
-									return Direction::UP;
-								}
-								default:	
-								{
-									napravlenie = 1;
-									return Direction::RIGHT;
-								}
-							}
-						}	
-					}
+					return Direction::LEFT;
 				}
+				else
+				{	
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+			}
+			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				if (current_status.left == BlockType::EXIT)
+				{
+					return Direction::LEFT;
+				}
+				else
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+			}
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			{
+				napravlenie = L;
+				return Direction::LEFT;
+			}
+			else
+			{
+				napravlenie = U;
+				return Direction::UP;
+			}
+		}
+		case L: 
+		{
+			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			{
+				if (current_status.left == BlockType::EXIT)
+				{
+					return Direction::LEFT;
+				}
+				else if (current_status.up == BlockType::EXIT)
+				{
+					return Direction::UP;
+				}
+				else
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+			}
+			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			{
+				if (current_status.up == BlockType::EXIT)
+				{
+					return Direction::UP;
+				}
+				else
+				{
+					napravlenie = L;
+					return Direction::LEFT;
+				}
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			{
+				napravlenie = U;
+				return Direction::UP;
+			}
+			else
+			{
+				napravlenie = R;
+				return Direction::RIGHT;
 			}
 		}
 		default: 
 		{
-			switch (current_status.left)  
+			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
-				case BlockType::FREE:
+				if (current_status.up == BlockType::EXIT)
 				{
-					napravlenie = 3;
+					return Direction::UP;
+				}
+				else if (current_status.right == BlockType::EXIT)
+				{
+					return Direction::RIGHT;
+				}
+				else
+				{
+					napravlenie = L;
 					return Direction::LEFT;
 				}
-				case BlockType::EXIT:
+			}
+			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			{
+				if (current_status.right == BlockType::EXIT)
 				{
-					napravlenie = 3;
-					return Direction::LEFT;
+					return Direction::RIGHT;
 				}
-				default:	
+				else
 				{
-					switch (current_status.up)  
-					{
-						case BlockType::FREE:
-						{
-							napravlenie = 4;
-							return Direction::UP;
-						}
-						case BlockType::EXIT:
-						{
-							napravlenie = 4;
-							return Direction::UP;
-						}
-						default:	
-						{
-							switch (current_status.right)  
-							{
-								case BlockType::FREE:
-								{
-									napravlenie = 1;
-									return Direction::RIGHT;
-								}
-								case BlockType::EXIT:
-								{
-									napravlenie = 1;
-									return Direction::RIGHT;
-								}
-								default:	
-								{
-									napravlenie = 2;
-									return Direction::DOWN;
-								}
-							}
-						}	
-					}
+					napravlenie = U;
+					return Direction::UP;
 				}
+			}
+			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			{
+				napravlenie = R;
+				return Direction::RIGHT;
+			}
+			else
+			{
+				napravlenie = D;
+				return Direction::DOWN;
 			}
 		}
 	}
 }
+
