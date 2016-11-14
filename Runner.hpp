@@ -5,7 +5,7 @@
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 #include <iostream>

@@ -2,6 +2,11 @@
 // Created by tsv on 09.05.16.
 //
 
+<<<<<<< HEAD
+=======
+#define DEBUG 1
+
+>>>>>>> origin/algorithm1
 #include "Runner.hpp"
 #include "utils.hpp"
 #include <algorithm>
@@ -34,6 +39,7 @@ Runner::Runner(): directions {
 }
 
 #if DEBUG
+<<<<<<< HEAD
 Runner::~Runner() {
     steps.close();
 }
@@ -43,6 +49,10 @@ Direction Runner::step() {
 #if 0
     char ch;
     std::cin >> std::noskipws >> ch;
+=======
+    //char ch;
+    //std::cin >> std::noskipws >> ch;
+>>>>>>> origin/algorithm1
 #endif
 
     incrementCurrentPositionPassagesCount();
