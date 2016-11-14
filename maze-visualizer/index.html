@@ -5,7 +5,8 @@
     <script type="text/javascript" src="frontend.js"></script>
     <style type="text/css">
         * {
-            font-family: Menlo
+            font-family: Menlo, Monaco, monospace;
+            margin: 0;
         }
 
         table {
@@ -29,15 +30,15 @@
             background-color: white;
         }
         .i2 {
-            background-color: yellow !important;
-            color: black !important;
+            background-color: blue !important;
+            color: white !important;
         }
         .i1 {
             background-color: black;
             border: 1px solid black;
         }
         .i3 {
-            background-color: green !important;
+            background-color: purple !important;
         }
         .i4 {
             background-color: grey;
@@ -45,10 +46,10 @@
     </style>
 </head>
 <body>
-    <table></table>
     <div id="buttons">
-        <button id="previuous" onclick="previous()">Previous</button>
+        <button id="solve" onclick="solve()">Solve</button>
         <button id="next" onclick="next();">Next</button>
     </div>
+    <table></table>
 </body>
 </html>

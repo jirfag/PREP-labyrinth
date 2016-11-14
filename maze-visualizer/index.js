@@ -4,7 +4,7 @@ var fs = require('fs');
 const readline = require('readline');
 
 const stepsFile = "../steps.txt";
-const mazeFile = "../test_labs/maze1.txt";
+const mazeFile = "../test_labs/test_lvl_5.txt";
 var map = [];
 var steps = [];
 var rows, columns;

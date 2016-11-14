@@ -55,32 +55,51 @@ function handleStepsFile() {
             alert(xhr.status + ': ' + xhr.statusText);
         } else {
             steps = JSON.parse(xhr.responseText);
-            console.log(steps);
         }
 
     }
 }
 
 var j = 0;
-function previous() {
-    if (j) {
-        --j;
-    }
-    
-    var id = (parseInt(startPoint[0]) + parseInt(steps[j][0])) + ":" + (parseInt(startPoint[1]) + parseInt(steps[j][1]));
-    console.log(id + ":" + steps[j][2]);
-    document.getElementById(id).innerHTML = "";
-    document.getElementById(id).style.backgroundColor = "white";
-    document.getElementById(id).style.color = "black";
 
+function solve() {
+    var i = j;
+    var timeId = setInterval(function() {
+        var id = (parseInt(startPoint[0]) + parseInt(steps[i][0])) + ":" + (parseInt(startPoint[1]) + parseInt(steps[i][1]));
+
+        document.getElementById(id).innerHTML = steps[i][2];
+
+        if (steps[i][2] == 1) {
+            document.getElementById(id).style.backgroundColor = "green";
+            document.getElementById(id).style.color = "white";
+        } else if (steps[i][2] == 2) {
+            document.getElementById(id).style.backgroundColor = "yellow";
+            document.getElementById(id).style.color = "black";
+        } else {
+            document.getElementById(id).style.backgroundColor = "red";
+            document.getElementById(id).style.color = "white";
+        }
+
+        ++i;
+        if (i == steps.length)
+            clearInterval(timeId);
+
+    }, 100);
 }
 
 function next() {
     var id = (parseInt(startPoint[0]) + parseInt(steps[j][0])) + ":" + (parseInt(startPoint[1]) + parseInt(steps[j][1]));
-    console.log(id + ":" + steps[j][2]);
     document.getElementById(id).innerHTML = steps[j][2];
-    document.getElementById(id).style.backgroundColor = "purple";
-    document.getElementById(id).style.color = "white";
+    if (steps[j][2] == 1) {
+        document.getElementById(id).style.backgroundColor = "green";
+        document.getElementById(id).style.color = "white";
+    } else if (steps[j][2] == 2) {
+        document.getElementById(id).style.backgroundColor = "yellow";
+        document.getElementById(id).style.color = "black";
+    } else {
+        document.getElementById(id).style.backgroundColor = "red";
+        document.getElementById(id).style.color = "white";
+    }
 
     ++j;
 }
