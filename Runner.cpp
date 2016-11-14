@@ -13,46 +13,22 @@ Direction Runner::step()
     if(current_status.left != BlockType::EXIT && current_status.right != BlockType::EXIT
        && current_status.up != BlockType::EXIT && current_status.down != BlockType::EXIT);
     else if(current_status.left == BlockType::EXIT){
-        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return directions[2];
+       // const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::LEFT;
     }
     else if(current_status.right == BlockType::EXIT) {
-        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return directions[3];
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::RIGHT;
     }
     else if (current_status.up == BlockType::EXIT){
-        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return directions[0];
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::UP;
     }
     else if (current_status.down == BlockType::EXIT){
-        const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return directions[1];
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::DOWN;
     }
 
-    turn(angle);
-
-    if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::FREE)
-        return turn_directions();
-    else if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::WALL && turn_coord.right == BlockType ::FREE){
-        set_angle(_m90);
-        turn(angle);
-        return turn_directions();
-    }
-    else if(turn_coord.left == BlockType::FREE) {
-        set_angle(_90);
-        turn(angle);
-        return turn_directions();
-    }
-    else {
-        set_angle(_180);
-        turn(angle);
-        return turn_directions();
-    }
-}
-
-
-inline void Runner::turn(char angle)
-{
     if(angle == _0)
     {
         turn_coord.left = current_status.left;
@@ -78,47 +54,59 @@ inline void Runner::turn(char angle)
         turn_coord.down = current_status.up;
         turn_coord.right = current_status.left;
     }
-}
 
+    if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::FREE) {
+        if(angle == _0)
+            return Direction::UP;
+        else if(angle == _90)
+            return Direction::LEFT;
+        else if(angle == _m90)
+            return Direction::RIGHT;
+        else
+            return Direction::DOWN;
+    }
+    else if(turn_coord.left == BlockType::WALL && turn_coord.up == BlockType::WALL && turn_coord.right == BlockType ::FREE){
+        angle = (angle + _m90);
+        if (angle <= _180 && angle >= _m90);
+        else
+            angle = angle + (angle > _180 ? (-4) : (+4));
 
-inline void Runner::set_angle(signed char new_angle)
-{
-    angle = (angle + new_angle);
-    if (angle <= _180 && angle >= _m90);
-    else
-        angle = angle + (angle > _180 ? (-4) : (+4));
-}
-//        angle = angle - 360;
-//    else
-//        angle = angle + 360;
-//    if(angle == 0)
-//        angle = new_angle;
-//    else if(angle == 90 && (new_angle == 90 || new_angle == -90))
-//        angle = angle + new_angle;
-//    else if(angle == 180 && new_angle == 90)
-//        angle = -90;
-//    else if(angle == 180 && new_angle == -90)
-//        angle = 90;
-//    else if(angle == -90 && (new_angle == 90))
-//        angle = 0;
-//    else if(angle == -90 && new_angle == -90)
-//        angle = 180;
-//    else if(new_angle == 180 && (angle == 90 || angle == -90))
-//        angle = -angle;
-//    else if(new_angle == 180 && angle == 180)
-//        angle = 0;
-//    else
-//        std::cout << "ERROR ANGLE" << new_angle << angle << std::endl;
+        if(angle == _0)
+            return Direction::UP;
+        else if(angle == _90)
+            return Direction::LEFT;
+        else if(angle == _m90)
+            return Direction::RIGHT;
+        else
+            return Direction::DOWN;
+    }
+    else if(turn_coord.left == BlockType::FREE) {
+        angle = (angle + _90);
+        if (angle <= _180 && angle >= _m90);
+        else
+            angle = angle + (angle > _180 ? (-4) : (+4));
+        if(angle == _0)
+            return Direction::UP;
+        else if(angle == _90)
+            return Direction::LEFT;
+        else if(angle == _m90)
+            return Direction::RIGHT;
+        else
+            return Direction::DOWN;
+    }
+    else {
+        angle = (angle + _180);
+        if (angle <= _180 && angle >= _m90);
+        else
+            angle = angle + (angle > _180 ? (-4) : (+4));
 
-
-inline Direction Runner::turn_directions()
-{
-    if(angle == _0)
-        return directions[0];
-    else if(angle == _90)
-        return directions[2];
-    else if(angle == _m90)
-        return directions[3];
-    else
-        return directions[1];
+        if(angle == _0)
+            return Direction::UP;
+        else if(angle == _90)
+            return Direction::LEFT;
+        else if(angle == _m90)
+            return Direction::RIGHT;
+        else
+            return Direction::DOWN;
+    }
 }

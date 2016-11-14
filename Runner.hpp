@@ -16,10 +16,9 @@ public:
     void turn(char);
     Direction turn_directions();
 private:
-    //BlockType stat_ex = BlockType::EXIT;
     signed char angle;
     Status turn_coord;
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+    //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
 };
 
 
