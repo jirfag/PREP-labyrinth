@@ -2,16 +2,10 @@
 // Created by tsv on 09.05.16.
 //
 
-#define DEBUG 0
-
 #include "Runner.hpp"
 #include "utils.hpp"
 #include <algorithm>
 #include <vector>
-
-#if DEBUG
-#include <iostream>
-#endif
 
 bool PointCompare::operator() (const Point& lhs, const Point& rhs) const {
    if (lhs.x < rhs.x) {
@@ -32,14 +26,21 @@ Runner::Runner(): directions {
     Direction::RIGHT
 }  {
 #if DEBUG
+    steps.open("steps.txt", std::ofstream::out);
     std::cout << "Current" << "\t\t"
               << "Next"
               << std::endl;
 #endif
 }
 
-Direction Runner::step() {
 #if DEBUG
+Runner::~Runner() {
+    steps.close();
+}
+#endif
+
+Direction Runner::step() {
+#if 0
     char ch;
     std::cin >> std::noskipws >> ch;
 #endif
@@ -48,6 +49,8 @@ Direction Runner::step() {
     Direction nextDirection = getNextDirection();
 
 #if DEBUG
+    
+    steps << currentPosition.x << ' ' << currentPosition.y << ' ' << labyrinthMap[Point({currentPosition.x, currentPosition.y})] << std::endl;
     std::cout << "(" << currentPosition.x << "; " << currentPosition.y << ")" << "\t\t"
               << "(" << getDirectionPoint(nextDirection).x << "; " << getDirectionPoint(nextDirection).y << ")"
               << std::endl;

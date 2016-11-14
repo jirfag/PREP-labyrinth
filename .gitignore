@@ -9,3 +9,5 @@ CTestTestfile.cmake
 */bin/*
 */lib/*
 labyrinth
+node_modules
+steps.txt

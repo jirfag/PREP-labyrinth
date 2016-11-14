@@ -5,6 +5,13 @@
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
+#define DEBUG 1
+
+#if DEBUG
+#include <iostream>
+#include <fstream>
+#endif
+
 #include <map>
 
 #include "RunnerBase.hpp"
@@ -19,6 +26,11 @@ struct PointCompare {
 
 class Runner: public RunnerBase {
 public:
+#if DEBUG
+    std::ofstream steps;
+    ~Runner();
+#endif
+
     Runner();
     Direction step();
 
