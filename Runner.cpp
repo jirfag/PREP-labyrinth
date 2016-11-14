@@ -37,7 +37,6 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = 1;
 					return Direction::RIGHT;
 				}
 			}
@@ -78,7 +77,6 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = 2;
 					return Direction::DOWN;
 				}
 			}
@@ -119,7 +117,6 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = 3;
 					return Direction::LEFT;
 				}
 			}
@@ -160,7 +157,6 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = 4;
 					return Direction::UP;
 				}
 			}
@@ -177,5 +173,3 @@ Direction Runner::step()
 		}
 	}
 }
-
-
