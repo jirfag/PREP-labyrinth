@@ -5,18 +5,13 @@
 #include "Runner.hpp"
 #include "utils.hpp"
 
-#define R 1
-#define D 2
-#define L 3
-#define U 4
-
-int napravlenie = R;
+short int napravlenie = 1;
 
 Direction Runner::step()
 {	
 	switch (napravlenie)
 	{
-		case R: 
+		case 1: 
 		{
 			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
 			{
@@ -30,7 +25,7 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = U;
+					napravlenie = 4;
 					return Direction::UP;
 				}
 			}
@@ -42,22 +37,22 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = R;
+					napravlenie = 1;
 					return Direction::RIGHT;
 				}
 			}
 			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
-				napravlenie = D;
+				napravlenie = 2;
 				return Direction::DOWN;
 			}
 			else
 			{
-				napravlenie = L;
+				napravlenie = 3;
 				return Direction::LEFT;
 			}
 		}
-		case D: 
+		case 2: 
 		{
 			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
@@ -71,7 +66,7 @@ Direction Runner::step()
 				}
 				else
 				{	
-					napravlenie = R;
+					napravlenie = 1;
 					return Direction::RIGHT;
 				}
 			}
@@ -83,22 +78,22 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = D;
+					napravlenie = 2;
 					return Direction::DOWN;
 				}
 			}
 			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
 			{
-				napravlenie = L;
+				napravlenie = 3;
 				return Direction::LEFT;
 			}
 			else
 			{
-				napravlenie = U;
+				napravlenie = 4;
 				return Direction::UP;
 			}
 		}
-		case L: 
+		case 3: 
 		{
 			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
 			{
@@ -112,7 +107,7 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = D;
+					napravlenie = 2;
 					return Direction::DOWN;
 				}
 			}
@@ -124,18 +119,18 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = L;
+					napravlenie = 3;
 					return Direction::LEFT;
 				}
 			}
 			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
 			{
-				napravlenie = U;
+				napravlenie = 4;
 				return Direction::UP;
 			}
 			else
 			{
-				napravlenie = R;
+				napravlenie = 1;
 				return Direction::RIGHT;
 			}
 		}
@@ -153,7 +148,7 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = L;
+					napravlenie = 3;
 					return Direction::LEFT;
 				}
 			}
@@ -165,21 +160,22 @@ Direction Runner::step()
 				}
 				else
 				{
-					napravlenie = U;
+					napravlenie = 4;
 					return Direction::UP;
 				}
 			}
 			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
 			{
-				napravlenie = R;
+				napravlenie = 1;
 				return Direction::RIGHT;
 			}
 			else
 			{
-				napravlenie = D;
+				napravlenie = 2;
 				return Direction::DOWN;
 			}
 		}
 	}
 }
+
 
