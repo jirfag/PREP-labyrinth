@@ -65,18 +65,18 @@ Direction Runner::step() {
         break;
     }
 
-    if (left == BlockType::EXIT){
-        currentDirection = leftDirection;
+    if (right == BlockType::EXIT){
+        currentDirection = rightDirection;
     } else if (forward == BlockType::EXIT) {
         currentDirection = forwardDirection;
-    } else if (right == BlockType::EXIT) {
-        currentDirection = rightDirection;
-    } else if (left == BlockType::FREE || left == BlockType::ENTER){
+    } else if (left == BlockType::EXIT) {
         currentDirection = leftDirection;
+    } else if (right == BlockType::FREE || right == BlockType::ENTER){
+        currentDirection = rightDirection;
     } else if (forward == BlockType::FREE || forward == BlockType::ENTER) {
         currentDirection = forwardDirection;
-    } else if (right == BlockType::FREE || right == BlockType::ENTER) {
-        currentDirection = rightDirection;
+    } else if (left == BlockType::FREE || left == BlockType::ENTER) {
+        currentDirection = leftDirection;
     } else {
         currentDirection = backDirection;
     }
