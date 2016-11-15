@@ -12,7 +12,7 @@ bool Point::operator==(const Point& point) const {
 
 size_t PointHash::operator()(const Point &point) const {
     // Формула Кантора
-    return (point.x + point.y) * (point.x + point.y+1) / 2 + point.y;
+    return (point.x + point.y) * (point.x + point.y + 1) / 2 + point.y;
 }
 
 Runner::Runner(): directions {
