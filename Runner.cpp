@@ -5,7 +5,6 @@
 #include "Runner.hpp"
 #include "utils.hpp"
 #include <algorithm>
-#include <vector>
 
 bool PointCompare::operator() (const Point& lhs, const Point& rhs) const {
    if (lhs.x < rhs.x) {
@@ -60,7 +59,8 @@ Direction Runner::step() {
 // Возвращает массив возможных направлений, отсортированный по 
 // количеству посещений ячейки
 Direction Runner::getNextDirection() {
-    std::vector<Direction> possibleDirections;
+    Direction possibleDirections[4];
+    unsigned short size = 0;
 
     const BlockType blocks[] = {
         Runner::current_status.up,
@@ -77,7 +77,9 @@ Direction Runner::getNextDirection() {
 
             case BlockType::ENTER:
             case BlockType::FREE:
-                possibleDirections.push_back(directions[i]);
+                //possibleDirections.push_back(directions[i]);
+                possibleDirections[size] = directions[i];
+                ++size;
                 break;
 
             case BlockType::WALL:
@@ -85,7 +87,7 @@ Direction Runner::getNextDirection() {
         }
     }
 
-    std::sort(possibleDirections.begin(), possibleDirections.end(),
+    std::sort(possibleDirections, possibleDirections + size,
         [this](Direction lhs, Direction rhs) -> bool {
             if (getDirectionPoint(rhs).x == previousPosition.x && getDirectionPoint(rhs).y == previousPosition.y) {
                 return 1;
