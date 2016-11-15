@@ -77,7 +77,6 @@ Direction Runner::getNextDirection() {
 
             case BlockType::ENTER:
             case BlockType::FREE:
-                //possibleDirections.push_back(directions[i]);
                 possibleDirections[size] = directions[i];
                 ++size;
                 break;
