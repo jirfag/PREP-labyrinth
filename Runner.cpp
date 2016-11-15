@@ -3,15 +3,10 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
 #include "utils.hpp"
-#include <ctime>
-
 
 Direction Runner::step() {
     BlockType forward;
-    //BlockType back;
     BlockType left;
     BlockType right;
 
@@ -24,7 +19,6 @@ Direction Runner::step() {
 
     case Direction::UP:
         forward = current_status.up;
-        //back = current_status.down;
         left = current_status.left;
         right = current_status.right;
 
@@ -37,7 +31,6 @@ Direction Runner::step() {
 
     case Direction::DOWN:
         forward = current_status.down;
-        //back = current_status.up;
         left = current_status.right;
         right = current_status.left;
 
@@ -49,7 +42,6 @@ Direction Runner::step() {
 
     case Direction::LEFT:
         forward = current_status.left;
-        //back = current_status.right;
         left = current_status.down;
         right = current_status.up;
 
@@ -62,7 +54,6 @@ Direction Runner::step() {
 
     case Direction::RIGHT:
         forward = current_status.right;
-        //back = current_status.left;
         left = current_status.up;
         right = current_status.down;
 
