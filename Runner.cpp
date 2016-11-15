@@ -6,16 +6,13 @@
 #include "utils.hpp"
 #include <algorithm>
 
-bool PointCompare::operator() (const Point& lhs, const Point& rhs) const {
-   if (lhs.x < rhs.x) {
-        return 1;
-    } else if (lhs.x > rhs.x) {
-        return 0;
-    } else if (lhs.y < rhs.y) {
-        return 1;
-    } else {
-        return 0;
-    }
+bool Point::operator==(const Point& point) const {
+    return (point.x == this->x) && (point.y == this->y);
+}
+
+size_t PointHash::operator()(const Point &point) const {
+    // Формула Кантора
+    return (point.x + point.y) * (point.x + point.y+1) / 2 + point.y;
 }
 
 Runner::Runner(): directions {

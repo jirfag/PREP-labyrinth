@@ -12,16 +12,17 @@
 #include <fstream>
 #endif
 
-#include <map>
+#include <unordered_map>
 
 #include "RunnerBase.hpp"
 
 struct Point {
     int x, y;
+    bool operator==(const Point& point) const;
 };
 
-struct PointCompare {
-    bool operator() (const Point& lhs, const Point& rhs) const;
+struct PointHash {
+    size_t operator()(const Point& point) const;
 };
 
 class Runner: public RunnerBase {
@@ -42,7 +43,7 @@ private:
     const Direction directions[4];
     Point currentPosition = {0, 0};
     Point previousPosition = {0, 0};
-    std::map<Point, unsigned short, PointCompare> labyrinthMap;
+    std::unordered_map<Point, unsigned short, PointHash> labyrinthMap;
 };
 
 
