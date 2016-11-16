@@ -23,9 +23,6 @@ Runner::Runner(): directions {
 }  {
 #if DEBUG
     steps.open("steps.txt", std::ofstream::out);
-    std::cout << "Current" << "\t\t"
-              << "Next"
-              << std::endl;
 #endif
 }
 
@@ -42,11 +39,7 @@ Direction Runner::step() {
     Direction nextDirection = getNextDirection();
 
 #if DEBUG
-    
     steps << currentPosition.x << ' ' << currentPosition.y << ' ' << labyrinthMap[Point({currentPosition.x, currentPosition.y})] << std::endl;
-    std::cout << "(" << currentPosition.x << "; " << currentPosition.y << ")" << "\t\t"
-              << "(" << getDirectionPoint(nextDirection).x << "; " << getDirectionPoint(nextDirection).y << ")"
-              << std::endl;
 #endif
     previousPosition = currentPosition;
     currentPosition = getDirectionPoint(nextDirection);
