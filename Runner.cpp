@@ -71,11 +71,11 @@ Direction Runner::step() {
         currentDirection = forwardDirection;
     } else if (right == BlockType::EXIT) {
         currentDirection = rightDirection;
-    } else if (left == BlockType::FREE || left == BlockType::ENTER){
+    } else if (left != BlockType::WALL){
         currentDirection = leftDirection;
-    } else if (forward == BlockType::FREE || forward == BlockType::ENTER) {
+    } else if (forward != BlockType::WALL) {
         currentDirection = forwardDirection;
-    } else if (right == BlockType::FREE || right == BlockType::ENTER) {
+    } else if (right != BlockType::WALL) {
         currentDirection = rightDirection;
     } else {
         currentDirection = backDirection;
