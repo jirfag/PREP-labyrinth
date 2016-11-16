@@ -98,7 +98,7 @@ Direction Runner::getNextDirection() {
                 rhsPassagesCount = labyrinthMap[getDirectionPoint(rhs)];
             }
             
-            return lhsPassagesCount < rhsPassagesCount;
+            return lhsPassagesCount <= rhsPassagesCount;
         }
     );
 }
