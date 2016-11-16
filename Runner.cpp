@@ -53,8 +53,7 @@ Direction Runner::step() {
     return nextDirection;
 }
 
-// Возвращает массив возможных направлений, отсортированный по 
-// количеству посещений ячейки
+// Возвращает направление следующего шага
 Direction Runner::getNextDirection() {
     Direction possibleDirections[4];
     unsigned short size = 0;
