@@ -83,9 +83,9 @@ Direction Runner::getNextDirection() {
         }
     }
 
-    std::sort(possibleDirections, possibleDirections + size,
+    return *std::min_element(possibleDirections, possibleDirections + size, 
         [this](Direction lhs, Direction rhs) -> bool {
-            if (getDirectionPoint(rhs).x == previousPosition.x && getDirectionPoint(rhs).y == previousPosition.y) {
+            if (getDirectionPoint(rhs) == previousPosition) {
                 return 1;
             }
 
@@ -102,8 +102,6 @@ Direction Runner::getNextDirection() {
             return lhsPassagesCount < rhsPassagesCount;
         }
     );
-
-    return possibleDirections[0];
 }
 
 // Вычисляет координаты точки по направлению
