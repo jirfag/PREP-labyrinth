@@ -6,16 +6,59 @@
 
 Direction Runner::step() {
     switch (currDirection) {
-        case Direction::UP:
-            return nowUDirectionLEFT();
-        case Direction::DOWN:
-            return nowDDirectionLEFT();
-        case Direction::LEFT:
-            return nowLDirectionLEFT();
-        case Direction::RIGHT:
-            return nowRDirectionLEFT();
+        case Direction::UP: {
+            if (current_status.left != BlockType::WALL)
+                return currDirection = Direction::LEFT;
+
+            else if (current_status.up != BlockType::WALL)
+                return Direction::UP;
+
+            else if (current_status.right != BlockType::WALL)
+                return currDirection = Direction::RIGHT;
+
+            else
+                return currDirection = Direction::DOWN;
+        }
+        case Direction::DOWN: {
+            if (current_status.right != BlockType::WALL)
+                return currDirection = Direction::RIGHT;
+
+            else if (current_status.down != BlockType::WALL)
+                return currDirection = Direction::DOWN;
+
+            else if (current_status.left != BlockType::WALL)
+                return currDirection = Direction::LEFT;
+
+            else
+                return currDirection = Direction::UP;
+        }
+        case Direction::LEFT:{
+            if (current_status.down != BlockType::WALL)
+                return currDirection = Direction::DOWN;
+
+            else if (current_status.left != BlockType::WALL)
+                return currDirection = Direction::LEFT;
+
+            else if (isFreeUp())
+                return currDirection = Direction::UP;
+            else
+                return currDirection = Direction::RIGHT;
+        }
+        case Direction::RIGHT:{
+            if (current_status.up != BlockType::WALL)
+                return currDirection = Direction::UP;
+
+            else if (current_status.right != BlockType::WALL)
+                return Direction::RIGHT;
+
+            else if (current_status.down != BlockType::WALL)
+                return currDirection = Direction::DOWN;
+
+            else
+                return currDirection = Direction::LEFT;
+        }
         default:
-            return Direction::RIGHT;
+            return Direction ::RIGHT;
     }
 }
 
@@ -61,22 +104,14 @@ Direction Runner::nowDirectionD() {
     else if (isExitLeft())
         return Direction::LEFT;
 
-    if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
-        return Direction::LEFT;
-    }
-    else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
-        return Direction::DOWN;
-    }
-    else if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
-        return Direction::RIGHT;
-    }
-    else {
-        currDirection = Direction::UP;
-        return Direction::UP;
-    }
+    if (current_status.left != BlockType::WALL)
+        return currDirection = Direction::LEFT;
+    else if (current_status.down != BlockType::WALL)
+        return currDirection = Direction::DOWN;
+    else if (current_status.right != BlockType::WALL)
+        return currDirection = Direction::RIGHT;
+    else
+        return currDirection = Direction::UP;
 }
 
 Direction Runner::nowDirectionU() {
@@ -87,144 +122,139 @@ Direction Runner::nowDirectionU() {
         return Direction::UP;
     }
 
-    if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
-        return Direction::RIGHT;
-    }
-    else if (isFreeUp()) {
+    if (current_status.right != BlockType::WALL)
+        return currDirection = Direction::RIGHT;
+    else if (current_status.up != BlockType::WALL)
         return Direction::UP;
-    }
-    else if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
-        return Direction::LEFT;
-    }
-    else {
-        currDirection = Direction::DOWN;
-        return Direction::DOWN;
-    }
+    else if (current_status.left != BlockType::WALL)
+        return currDirection = Direction::LEFT;
+    else
+        return currDirection = Direction::DOWN;
 }
 
 Direction Runner::nowDirectionR() {
-    if (isExitUp()) {
-        currDirection = Direction::UP;
+    if (isExitUp())
         return Direction::UP;
-    }
-    else if (isExitRight()) {
-        currDirection = Direction::RIGHT;
+
+    else if (isExitRight())
         return Direction::RIGHT;
-    }
-    //
-    if (isFreeDown()) {
-        currDirection = Direction::DOWN;
-        return Direction::DOWN;
-    }
-    else if (isFreeRight()) {
+
+    if (current_status.down != BlockType::WALL)
+        return currDirection = Direction::DOWN;
+
+    else if (current_status.right != BlockType::WALL)
         return Direction::RIGHT;
-    }
-    else if (isFreeUp()) {
-        currDirection = Direction::UP;
-        return Direction::UP;
-    }
-    else {
-        currDirection = Direction::LEFT;
-        return Direction::LEFT;
-    }
+
+    else if (current_status.up != BlockType::WALL)
+        return currDirection = Direction::UP;
+
+    else
+        return currDirection = Direction::LEFT;
 }
 
 Direction Runner::nowDirectionL() {
-    if (isExitDown()) {
-        currDirection = Direction::DOWN;
+    if (isExitDown())
         return Direction::DOWN;
-    }
-    else if (isExitLeft()) {
+
+    else if (isExitLeft())
         return Direction::LEFT;
-    }
-    if (isFreeUp()) {
-        currDirection = Direction::UP;
-        return Direction::UP;
-    }
-    else if (isFreeLeft()) {
+
+    if (current_status.up != BlockType::WALL)
+        return currDirection = Direction::UP;
+
+    else if (current_status.left != BlockType::WALL)
         return Direction::LEFT;
-    }
-    else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
-        return Direction::DOWN;
-    }
-    else {
-        currDirection = Direction::RIGHT;
-        return Direction::RIGHT;
-    }
+
+    else if (current_status.down != BlockType::WALL)
+        return currDirection = Direction::DOWN;
+
+    else
+        return currDirection = Direction::RIGHT;
 }
 
 
 
 Direction Runner::nowUDirectionLEFT() {
-    
-    if (isExitUp())
-        return Direction::LEFT;
-    else if (isExitLeft())
-        return Direction::UP;
-    if (isFreeLeft())
+//    if (isExitLeft())
+//        return Direction::LEFT;
+//
+//    else if (isExitUp())
+//        return Direction::UP;
+
+    if (current_status.left != BlockType::WALL)
         return currDirection = Direction::LEFT;
-    else if (isFreeUp())
+
+    else if (current_status.up != BlockType::WALL)
         return Direction::UP;
-    else if (isFreeRight())
+
+    else if (current_status.right != BlockType::WALL)
         return currDirection = Direction::RIGHT;
-    else 
+
+    else
         return currDirection = Direction::DOWN;
 }
 
 Direction Runner::nowRDirectionLEFT() {
-    if (isExitUp())
-        return Direction::UP;
-    else if (isExitRight())
-        return Direction::RIGHT;
-    else if (isExitDown())
-        return Direction::RIGHT;
-    else if (isExitLeft())
-        return Direction::DOWN;
-    
-    if (isFreeUp())
+//    if (isExitUp())
+//        return Direction::UP;
+//
+//    else if (isExitRight())
+//        return Direction::RIGHT;
+//
+//    else if (isExitDown())
+//        return Direction::DOWN;
+
+    if (current_status.up != BlockType::WALL)
         return currDirection = Direction::UP;
-    else if (isFreeRight())
+
+    else if (current_status.right != BlockType::WALL)
         return Direction::RIGHT;
-    else if (isFreeDown())
+
+    else if (current_status.down != BlockType::WALL)
         return currDirection = Direction::DOWN;
-    else 
+
+    else
         return currDirection = Direction::LEFT;
 }
 
 Direction Runner::nowDDirectionLEFT() {
-    if (isExitRight())
-        return Direction::RIGHT;
-    else if (isExitDown())
-        return Direction::DOWN;
-    else if (isExitLeft())
-        return Direction::LEFT;
-    if (isFreeRight())
+//    if (isExitRight())
+//        return Direction::RIGHT;
+//
+//    else if (isExitDown())
+//        return Direction::DOWN;
+//
+//    else if (isExitLeft())
+//        return Direction::LEFT;
+
+    if (current_status.right != BlockType::WALL)
         return currDirection = Direction::RIGHT;
-    else if (isFreeDown())
+
+    else if (current_status.down != BlockType::WALL)
         return currDirection = Direction::DOWN;
-    else if (isFreeLeft())
+
+    else if (current_status.left != BlockType::WALL)
         return currDirection = Direction::LEFT;
-    else 
+
+    else
         return currDirection = Direction::UP;
 }
 
 Direction Runner::nowLDirectionLEFT() {
-    if (isExitDown())
-        return Direction::DOWN;
-    if (isExitUp())
-        return Direction::UP;
-    else if (isExitLeft())
-        return Direction::LEFT;
-    if (isFreeDown())
+//    if (isExitDown())
+//        return Direction::DOWN;
+//
+//    else if (isExitLeft())
+//        return Direction::LEFT;
+
+    if (current_status.down != BlockType::WALL)
         return currDirection = Direction::DOWN;
-    else if (isFreeLeft())
-        return Direction::LEFT;
+
+    else if (current_status.left != BlockType::WALL)
+        return currDirection = Direction::LEFT;
+
     else if (isFreeUp())
         return currDirection = Direction::UP;
     else
         return currDirection = Direction::RIGHT;
 }
-
