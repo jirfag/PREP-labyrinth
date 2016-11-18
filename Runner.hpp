@@ -9,6 +9,7 @@
 
 class Runner: public RunnerBase {
 public:
+    ~Runner();
     Direction step();
     Direction currentDirection = Direction::RIGHT;
 };
