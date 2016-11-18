@@ -3,21 +3,9 @@
 #include <cstdlib>
 #include "utils.hpp"
 
-
-Direction Runner::step() {
-    switch (currDirection) {
-        case Direction::UP:
-            return nowUDirectionLEFT();
-        case Direction::DOWN:
-            return nowDDirectionLEFT();
-        case Direction::LEFT:
-            return nowLDirectionLEFT();
-        case Direction::RIGHT:
-            return nowRDirectionLEFT();
-        default:
-            return Direction ::RIGHT;
-    }
-}
+Direction Runner::step(){
+    return (this->*v[currDirection])();
+};
 
 bool Runner::isFreeUp() {
     return current_status.up != BlockType::WALL;
@@ -62,19 +50,19 @@ Direction Runner::nowDirectionD() {
         return Direction::LEFT;
 
     if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
     else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
     else if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
     else {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
 }
@@ -88,18 +76,18 @@ Direction Runner::nowDirectionU() {
     }
 
     if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
     else if (isFreeUp()) {
         return Direction::UP;
     }
     else if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
     else {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
 }
@@ -113,18 +101,18 @@ Direction Runner::nowDirectionR() {
     }
     //
     if (isFreeDown()) {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
     else if (isFreeRight()) {
         return Direction::RIGHT;
     }
     else if (isFreeUp()) {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
     else {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
 }
@@ -137,18 +125,18 @@ Direction Runner::nowDirectionL() {
         return Direction::LEFT;
 
     if (isFreeUp()) {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
     else if (isFreeLeft()) {
         return Direction::LEFT;
     }
     else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
     else {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
 }
@@ -156,26 +144,26 @@ Direction Runner::nowDirectionL() {
 
 
 Direction Runner::nowUDirectionLEFT() {
-    if (isExitLeft()) {
+    if (isExitUp()) {
         return Direction::LEFT;
     }
-    else if (isExitUp()) {
+    else if (isExitLeft()) {
         return Direction::UP;
     }
 
     if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
     else if (isFreeUp()) {
         return Direction::UP;
     }
     else if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
     else {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
 }
@@ -184,26 +172,26 @@ Direction Runner::nowRDirectionLEFT() {
     if (isExitUp()) {
         return Direction::UP;
     }
-    else if (isExitRight()) {
+    else if (isExitDown()) {
         return Direction::RIGHT;
     }
-    else if (isExitDown()) {
+    else if (isExitLeft()) {
         return Direction::DOWN;
     }
     //
     if (isFreeUp()) {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
     else if (isFreeRight()) {
         return Direction::RIGHT;
     }
     else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
     else {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
 }
@@ -219,19 +207,18 @@ Direction Runner::nowDDirectionLEFT() {
         return Direction::LEFT;
 
     if (isFreeRight()) {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
     else if (isFreeDown()) {
-        currDirection = Direction::DOWN;
         return Direction::DOWN;
     }
     else if (isFreeLeft()) {
-        currDirection = Direction::LEFT;
+        currDirection = 0;
         return Direction::LEFT;
     }
     else {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
 }
@@ -244,18 +231,18 @@ Direction Runner::nowLDirectionLEFT() {
         return Direction::LEFT;
 
     if (isFreeDown()) {
-        currDirection = Direction::DOWN;
+        currDirection = 1;
         return Direction::DOWN;
     }
     else if (isFreeLeft()) {
         return Direction::LEFT;
     }
     else if (isFreeUp()) {
-        currDirection = Direction::UP;
+        currDirection = 3;
         return Direction::UP;
     }
     else {
-        currDirection = Direction::RIGHT;
+        currDirection = 2;
         return Direction::RIGHT;
     }
 }
