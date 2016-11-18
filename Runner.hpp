@@ -7,7 +7,7 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner() : currDirection(2){};
+    Runner() : currDirection(Direction::RIGHT){};
     Direction step();
     bool isFreeUp();
     bool isFreeDown();
@@ -29,13 +29,7 @@ public:
     bool isExitUp();
     bool isExitRight();
 private:
-    short currDirection;
-};
-constexpr static Direction (Runner::*v[4])()  = {
-        &Runner::nowLDirectionLEFT,
-        &Runner::nowDDirectionLEFT,
-        &Runner::nowRDirectionLEFT,
-        &Runner::nowUDirectionLEFT
+   Direction currDirection;
 };
 
 #endif //LABYRINTH_RUNNER_HPP
