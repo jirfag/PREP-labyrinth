@@ -29,7 +29,7 @@ public:
     bool isExitUp();
     bool isExitRight();
 private:
-    size_t currDirection;
+    short currDirection;
 };
 constexpr static Direction (Runner::*v[4])()  = {
         &Runner::nowLDirectionLEFT,
