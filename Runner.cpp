@@ -160,10 +160,10 @@ Direction Runner::nowDirectionL() {
 
 Direction Runner::nowUDirectionLEFT() {
     
-//     if (isExitUp())
-//         return Direction::LEFT;
-//     else if (isExitLeft())
-//         return Direction::UP;
+    if (isExitUp())
+        return Direction::LEFT;
+    else if (isExitLeft())
+        return Direction::UP;
     if (isFreeLeft())
         return currDirection = Direction::LEFT;
     else if (isFreeUp())
@@ -175,15 +175,15 @@ Direction Runner::nowUDirectionLEFT() {
 }
 
 Direction Runner::nowRDirectionLEFT() {
-//     if (isExitUp())
-//         return Direction::UP;
-//     else if (isExitRight())
-//         return Direction::RIGHT;
-//     else if (isExitDown())
-//         return Direction::RIGHT;
-//     else if (isExitLeft())
-//         return Direction::DOWN;
-    //
+    if (isExitUp())
+        return Direction::UP;
+    else if (isExitRight())
+        return Direction::RIGHT;
+    else if (isExitDown())
+        return Direction::RIGHT;
+    else if (isExitLeft())
+        return Direction::DOWN;
+    
     if (isFreeUp())
         return currDirection = Direction::UP;
     else if (isFreeRight())
@@ -195,12 +195,12 @@ Direction Runner::nowRDirectionLEFT() {
 }
 
 Direction Runner::nowDDirectionLEFT() {
-//     if (isExitRight())
-//         return Direction::RIGHT;
-//     else if (isExitDown())
-//         return Direction::DOWN;
-//     else if (isExitLeft())
-//         return Direction::LEFT;
+    if (isExitRight())
+        return Direction::RIGHT;
+    else if (isExitDown())
+        return Direction::DOWN;
+    else if (isExitLeft())
+        return Direction::LEFT;
     if (isFreeRight())
         return currDirection = Direction::RIGHT;
     else if (isFreeDown())
@@ -212,12 +212,12 @@ Direction Runner::nowDDirectionLEFT() {
 }
 
 Direction Runner::nowLDirectionLEFT() {
-//     if (isExitDown())
-//         return Direction::DOWN;
-//     if (isExitUp())
-//         return Direction::UP;
-//     else if (isExitLeft())
-//         return Direction::LEFT;
+    if (isExitDown())
+        return Direction::DOWN;
+    if (isExitUp())
+        return Direction::UP;
+    else if (isExitLeft())
+        return Direction::LEFT;
     if (isFreeDown())
         return currDirection = Direction::DOWN;
     else if (isFreeLeft())
