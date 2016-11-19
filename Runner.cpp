@@ -54,7 +54,7 @@ Direction Runner::step() {
 
         break;
 
-    case Direction::RIGHT:
+    default: // Direction::RIGHT
         forward = current_status.right;
         left = current_status.up;
         right = current_status.down;
