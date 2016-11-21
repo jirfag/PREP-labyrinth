@@ -6,7 +6,6 @@
 #include "utils.hpp"
 #include <cstdlib>
 
-#pragma GCC optimize ("O3")
 Direction Runner::step() {
     BlockType forward;
     BlockType left;
