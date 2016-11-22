@@ -5,8 +5,7 @@
 
 
 Direction Runner::step() {
- 
-    if (currDirection == 0) {
+  if (currDirection == 0) {
         if ((current_status.up == BlockType::EXIT))
             return Direction::UP;
 
@@ -39,7 +38,7 @@ Direction Runner::step() {
                 return currDirection = 3, Direction::RIGHT;
 
             if (current_status.down == BlockType::FREE)
-                return currDirection = 2, Direction::DOWN;
+                return Direction::DOWN;
 
             if (current_status.left == BlockType::FREE)
                 return currDirection = 1, Direction::LEFT;
@@ -58,12 +57,12 @@ Direction Runner::step() {
                 return currDirection = 2, Direction::DOWN;
 
             if (current_status.left == BlockType::FREE)
-                return currDirection = 1, Direction::LEFT;
+                return Direction::LEFT;
 
             if (current_status.up == BlockType::FREE)
                 return currDirection = 0, Direction::UP;
 
-                return currDirection = 2, Direction::RIGHT;
+                return currDirection = 3, Direction::RIGHT;
         }
             if (current_status.up == BlockType::EXIT)
                 return Direction::UP;
