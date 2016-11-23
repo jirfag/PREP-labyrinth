@@ -10,15 +10,15 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner(){angle = 0;}
+    Runner(){prev_directions = Direction::RIGHT;}
     Direction step();
 //    void set_angle(signed char new_angle);
 //    void turn(char);
 //    Direction turn_directions();
 private:
-    short int angle;
-    Status turn_coord;
-    //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+//    short int angle;
+//    Status turn_coord;
+    Direction prev_directions ;
 };
 
 
