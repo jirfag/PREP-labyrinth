@@ -5,26 +5,26 @@
 #include "Runner.hpp"
 
 Direction Runner::step() {
-//    if (current_status.left == BlockType::EXIT) {
-//        // const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-//        return Direction::LEFT;
-//    } else if (current_status.right == BlockType::EXIT) {
-//        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-//        return Direction::RIGHT;
-//    } else if (current_status.up == BlockType::EXIT) {
-//        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-//        return Direction::UP;
-//    } else if (current_status.down == BlockType::EXIT) {
-//        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-//        return Direction::DOWN;
-//    }
+    if (current_status.left == BlockType::EXIT) {
+        // const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::LEFT;
+    } else if (current_status.right == BlockType::EXIT) {
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::RIGHT;
+    } else if (current_status.up == BlockType::EXIT) {
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::UP;
+    } else if (current_status.down == BlockType::EXIT) {
+        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return Direction::DOWN;
+    }
 
     switch (prev_directions) {
         case Direction::UP: {
             if (current_status.left == BlockType::FREE) {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
-            } else if (current_status.up == BlockType::FREE || current_status.up == BlockType::EXIT) {
+            } else if (current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
                 return Direction::UP;
             } else if (current_status.right == BlockType::FREE) {
@@ -39,7 +39,7 @@ Direction Runner::step() {
             if (current_status.down == BlockType::FREE) {
                 prev_directions = Direction::DOWN;
                 return Direction::DOWN;
-            } else if (current_status.left == BlockType::FREE || current_status.left == BlockType::EXIT) {
+            } else if (current_status.left == BlockType::FREE) {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
             } else if (current_status.up == BlockType::FREE) {
@@ -55,7 +55,7 @@ Direction Runner::step() {
                 prev_directions = Direction::RIGHT;
                 return Direction::RIGHT;
             }
-            else if (current_status.down == BlockType::FREE || current_status.down == BlockType::EXIT) {
+            else if (current_status.down == BlockType::FREE) {
                 prev_directions = Direction::DOWN;
                 return Direction::DOWN;
             } else if (current_status.left == BlockType::FREE) {
@@ -71,7 +71,7 @@ Direction Runner::step() {
                 prev_directions = Direction::UP;
                 return Direction::UP;
             }
-            else if (current_status.right == BlockType::FREE || current_status.up == BlockType::EXIT){
+            else if (current_status.right == BlockType::FREE){
                 prev_directions = Direction::RIGHT;
                 return Direction::RIGHT;
             }
