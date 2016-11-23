@@ -9,8 +9,60 @@
 
 Direction Runner::step()
 {
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    return directions[std::rand() % directions.size()];
+    if ( current_status.left == BlockType::EXIT ) {
+        return Direction::LEFT;
+    } else if ( current_status.right == BlockType::EXIT ) {
+        return Direction::RIGHT;
+    } else if ( current_status.up == BlockType::EXIT ) {
+        return Direction::UP;
+    }else if ( current_status.down == BlockType::EXIT ) {
+        return Direction::DOWN;
+    }
+
+    switch ( course ) {
+        case Direction::UP: {
+            if ( current_status.left == BlockType::FREE ) {
+                return course = Direction::LEFT;
+            } else if ( current_status.up == BlockType::FREE ) {
+                return course = Direction::UP;
+            } else if ( current_status.right == BlockType::FREE ) {
+                return course = Direction::RIGHT;
+            } else {
+                return course = Direction::DOWN;
+            }
+        }
+        case Direction::LEFT: {
+            if ( current_status.down == BlockType::FREE ) {
+                return course = Direction::DOWN;
+            } else if ( current_status.left == BlockType::FREE ) {
+                return course = Direction::LEFT;
+            } else if ( current_status.up == BlockType::FREE ) {
+                return course = Direction::UP;
+            } else {
+                return course = Direction::RIGHT;
+            }
+        }
+        case Direction::DOWN: {
+            if ( current_status.right == BlockType::FREE ) {
+                return course = Direction::RIGHT;
+            } else if ( current_status.down == BlockType::FREE ) {
+                return course = Direction::DOWN;
+            } else if ( current_status.left == BlockType::FREE  ) {
+                return course = Direction::LEFT;
+            } else {
+                return course = Direction::UP;
+            }
+        }
+        case Direction::RIGHT: {
+            if ( current_status.up == BlockType::FREE ) {
+                return course = Direction::UP;
+            } else if ( current_status.right == BlockType::FREE ) {
+                return course = Direction::RIGHT;
+            } else if ( current_status.down == BlockType::FREE ) {
+                return course = Direction::DOWN;
+            } else {
+                return course = Direction::LEFT;
+            }
+        }
+    }
 }
