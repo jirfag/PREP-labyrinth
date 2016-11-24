@@ -15,7 +15,7 @@
 #include "Runner.hpp"
 
 Direction face = gor;
-
+int a = 1;
 
 Direction right_hand(Status &current_status) {
     switch (face) {
@@ -126,5 +126,10 @@ Direction Runner::step() {
         return gou;
     if (Down == Exit)
         return god;
-    return right_hand(current_status);
+    a++;
+    if((a)%2 == 0)
+        return right_hand(current_status);
+    else
+        return left_hand(current_status);
+
 }
