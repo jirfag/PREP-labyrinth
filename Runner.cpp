@@ -23,7 +23,7 @@ Direction right_hand(Status &current_status) {
             if (Right == Free)
                 return face = gor;
             else if (Up == Free)
-                return face = gou;
+                return gou;
             else if (Left == Free)
                 return face = gol;
             else
@@ -34,7 +34,7 @@ Direction right_hand(Status &current_status) {
             if (Up == Free)
                 return face = gou;
             else if (Left == Free)
-                return face = gol;
+                return gol;
             else if (Down == Free)
                 return face = god;
             else
@@ -45,7 +45,7 @@ Direction right_hand(Status &current_status) {
             if (Left == Free)
                 return face = gol;
             else if (Down == Free)
-                return face = god;
+                return god;
             else if (Right == Free)
                 return face = gor;
             else
@@ -56,7 +56,7 @@ Direction right_hand(Status &current_status) {
             if (Down == Free)
                 return face = god;
             else if (Right == Free)
-                return face = gor;
+                return gor;
             else if (Up == Free)
                 return face = gou;
             else
@@ -73,7 +73,7 @@ Direction left_hand(Status &current_status) {
             if (Left == Free)
                 return face = gol;
             else if (Up == Free)
-                return face = gou;
+                return gou;
             else if (Right == Free)
                 return face = gor;
             else
@@ -84,7 +84,7 @@ Direction left_hand(Status &current_status) {
             if (Down == Free)
                 return face = god;
             else if (Left == Free)
-                return face = gol;
+                return gol;
             else if (Up == Free)
                 return face = gou;
             else
@@ -95,7 +95,7 @@ Direction left_hand(Status &current_status) {
             if (Right == Free)
                 return face = gor;
             else if (Down == Free)
-                return face = god;
+                return god;
             else if (Left == Free)
                 return face = gol;
             else
@@ -106,7 +106,7 @@ Direction left_hand(Status &current_status) {
             if (Up == Free)
                 return face = gou;
             else if (Right == Free)
-                return face = gor;
+                return gor;
             else if (Down == Free)
                 return face = god;
             else
@@ -127,7 +127,7 @@ Direction Runner::step() {
     if (Down == Exit)
         return god;
     a++;
-    if ((a) % 2 == 0)
+    if ((a) % 9 == 0)
         return right_hand(current_status);
     else
         return left_hand(current_status);
