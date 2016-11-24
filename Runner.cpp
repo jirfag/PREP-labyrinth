@@ -20,48 +20,48 @@ int a = 1;
 Direction right_hand(Status &current_status) {
     switch (face) {
         case gou: {
-            if (Right == Free) {
+            if (Right == Free)
                 return face = gor;
-            } else if (Up == Free) {
+            else if (Up == Free)
                 return face = gou;
-            } else if (Left == Free) {
+            else if (Left == Free)
                 return face = gol;
-            } else {
+            else
                 return face = god;
-            }
+
         }
         case gol: {
-            if (Up == Free) {
+            if (Up == Free)
                 return face = gou;
-            } else if (Left == Free) {
+            else if (Left == Free)
                 return face = gol;
-            } else if (Down == Free) {
+            else if (Down == Free)
                 return face = god;
-            } else {
+            else
                 return face = gor;
-            }
+
         }
         case god: {
-            if (Left == Free) {
+            if (Left == Free)
                 return face = gol;
-            } else if (Down == Free) {
+            else if (Down == Free)
                 return face = god;
-            } else if (Right == Free) {
+            else if (Right == Free)
                 return face = gor;
-            } else {
+            else
                 return face = gou;
-            }
+
         }
         default: {
-            if (Down == Free) {
+            if (Down == Free)
                 return face = god;
-            } else if (Right == Free) {
+            else if (Right == Free)
                 return face = gor;
-            } else if (Up == Free) {
+            else if (Up == Free)
                 return face = gou;
-            } else {
+            else
                 return face = gol;
-            }
+
         }
     }
 
@@ -127,7 +127,7 @@ Direction Runner::step() {
     if (Down == Exit)
         return god;
     a++;
-    if((a)%2 == 0)
+    if ((a) % 2 == 0)
         return right_hand(current_status);
     else
         return left_hand(current_status);
