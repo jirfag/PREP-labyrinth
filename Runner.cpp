@@ -128,7 +128,7 @@ Direction Runner::step() {
         return god;
     a++;
     if ((a) % 16 == 0)
-        //return right_hand(current_status);
+        return right_hand(current_status);
     else
         return left_hand(current_status);
 
