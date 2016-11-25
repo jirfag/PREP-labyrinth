@@ -127,7 +127,7 @@ Direction Runner::step() {
     if (Down == Exit)
         return god;
     a++;
-    if ((a) % 2 == 0)
+    if ((a) % 3 == 0)
         return left_hand(current_status);
     else
         return right_hand(current_status);
