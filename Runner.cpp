@@ -12,6 +12,7 @@
 #define gor Direction::RIGHT
 
 
+#include <stdlib.h>
 #include "Runner.hpp"
 
 Direction face = gor;
@@ -126,11 +127,5 @@ Direction Runner::step() {
         return gou;
     if (Down == Exit)
         return god;
-    a++;
-    if ((a) % 216 == 0)
-        return right_hand(current_status);
-    else
-        return left_hand(current_status);
-
-
+    return left_hand(current_status);
 }
