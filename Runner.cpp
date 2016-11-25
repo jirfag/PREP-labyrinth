@@ -6,7 +6,7 @@ size_t i = 0;
 
 Direction Runner::step() {
     i++;
-    if((i) % 12 == 0) {
+    if((i) % 12 != 0) {
         if (currDirection == 0) {
             if ((current_status.up == BlockType::EXIT))
                 return Direction::UP;
