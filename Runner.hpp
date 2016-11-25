@@ -7,7 +7,7 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner() : currDirection(1){};
+    Runner() : currDirection(3){};
     Direction step();
 private:
    short int currDirection;
