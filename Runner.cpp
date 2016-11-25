@@ -18,9 +18,9 @@ Direction left_hand(Status &current_status) {
 
             if (current_status.left == FREE)
                 return prev_step = LEFT;
-            else if (current_status.current_status.up == FREE)
+            else if (current_status.up == FREE)
                 return UP;
-            else if (current_status.current_status.right == FREE)
+            else if (current_status.right == FREE)
                 return prev_step = RIGHT;
             else
                 return prev_step = DOWN;
@@ -28,7 +28,7 @@ Direction left_hand(Status &current_status) {
         }
         case LEFT:{
 
-            if (current_status.current_status.down == FREE)
+            if (current_status.down == FREE)
                 return prev_step = DOWN;
             else if (current_status.left == FREE)
                 return LEFT;
