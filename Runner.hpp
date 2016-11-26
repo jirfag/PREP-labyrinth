@@ -16,7 +16,7 @@ class Runner: public RunnerBase {
           path[foo(0,0)]=1;
         }
         std::string foo(int a,int b){
-          return(std::to_string(a)+std::to_string(b));
+          return(std::to_string(a)+";"+std::to_string(b));
         }
         int x,y;
         std::unordered_map<std::string,bool> path;
