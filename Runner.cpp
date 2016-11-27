@@ -22,12 +22,15 @@ Direction Runner::step() {
         case Direction::UP: {
             if ( RETURN ) {
                 if ( current_status.left == BlockType::FREE ) {
-                    if (current_status.up == BlockType::FREE || current_status.right == BlockType::FREE) {
-                        RETURN = true;
+                    if ( current_status.up == BlockType::FREE || current_status.right == BlockType::FREE ) {
+                        RETURN = false;
                     }
                     PrevStep = Direction::LEFT;
                     return Direction::LEFT;
                 } else if ( current_status.up == BlockType::FREE ) {
+                    if ( current_status.right == BlockType::FREE ) {
+                        RETURN = false;
+                    }
                     PrevStep = Direction::UP; //
                     return Direction::UP;
                 } else if ( current_status.right == BlockType::FREE ) {
@@ -57,11 +60,14 @@ Direction Runner::step() {
         case Direction::LEFT: {
             if ( RETURN ) {
                 if ( current_status.down == BlockType::FREE ) {
+                    if ( current_status.left == BlockType::FREE || current_status.up == BlockType::FREE ) {
+                        RETURN = false;
+                    }
                     PrevStep = Direction::DOWN;
                     return Direction::DOWN;
                 } else if ( current_status.left == BlockType::FREE ) {
-                    if (current_status.up == BlockType::FREE || current_status.right == BlockType::FREE) {
-                        RETURN = true;
+                    if ( current_status.up == BlockType::FREE ) {
+                        RETURN = false;
                     }
                     PrevStep = Direction::LEFT;//
                     return Direction::LEFT;
@@ -91,15 +97,18 @@ Direction Runner::step() {
             case Direction::DOWN: {
                 if ( RETURN ) {
                     if ( current_status.right == BlockType::FREE ) {
+                        if ( current_status.left == BlockType::FREE || current_status.down == BlockType::FREE ) {
+                            RETURN = false;
+                        }
                         PrevStep = Direction::RIGHT;
                         return Direction::RIGHT;
                     } else if ( current_status.down == BlockType::FREE ) {
+                        if ( current_status.left == BlockType::FREE ) {
+                            RETURN = false;
+                        }
                         PrevStep = Direction::DOWN;//
                         return Direction::DOWN;
                     } else if ( current_status.left == BlockType::FREE ) {
-                        if (current_status.up == BlockType::FREE || current_status.right == BlockType::FREE) {
-                            RETURN = true;
-                        }
                         PrevStep = Direction::LEFT;
                         return Direction::LEFT;
                     } else {
@@ -126,18 +135,21 @@ Direction Runner::step() {
             default: {
                 if ( RETURN ) {
                     if ( current_status.up == BlockType::FREE ) {
+                        if ( current_status.right == BlockType::FREE || current_status.down == BlockType::FREE ) {
+                            RETURN = false;
+                        }
                         PrevStep = Direction::UP;
                         return Direction::UP;
                     } else if ( current_status.right == BlockType::FREE ) {
+                        if ( current_status.down == BlockType::FREE ) {
+                            RETURN = false;
+                        }
                         PrevStep = Direction::RIGHT; //
                         return Direction::RIGHT;
                     } else if ( current_status.down == BlockType::FREE ) {
                         PrevStep = Direction::DOWN;
                         return Direction::DOWN;
                     } else {
-                        if (current_status.up == BlockType::FREE || current_status.right == BlockType::FREE) {
-                            RETURN = true;
-                        }
                         PrevStep = Direction::LEFT;
                         return Direction::LEFT;
                     }
