@@ -7,8 +7,8 @@
 #include <cstdlib>
 #include "utils.hpp"
 
-Direction Runner::step()
-{
+Direction Runner::step() {
+
     if ( current_status.left == BlockType::EXIT ) {
         return Direction::LEFT;
     } else if ( current_status.right == BlockType::EXIT ) {
@@ -53,16 +53,16 @@ Direction Runner::step()
                 return course = Direction::UP;
             }
         }
-        case Direction::RIGHT: {
-            if ( current_status.up == BlockType::FREE ) {
+        default: {
+            if (current_status.up == BlockType::FREE)
                 return course = Direction::UP;
-            } else if ( current_status.right == BlockType::FREE ) {
+            else if (current_status.right == BlockType::FREE)
                 return course = Direction::RIGHT;
-            } else if ( current_status.down == BlockType::FREE ) {
+            else if (current_status.down == BlockType::FREE)
                 return course = Direction::DOWN;
-            } else {
+            else
                 return course = Direction::LEFT;
-            }
         }
     }
+
 }
