@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
+#include <iostream>
 
 Direction Runner::step() {
   if ((current_status.right == BlockType::FREE ||
@@ -13,12 +14,14 @@ Direction Runner::step() {
       (!path[foo(x + 1, y)])) {
     ++x;
     path[foo(x, y)] = 1;
+    std::cout<<"works"<<std::endl;
     return Direction::RIGHT;
   }
   if ((current_status.up == BlockType::FREE ||
        current_status.up == BlockType::EXIT) &&
       (!path[foo(x, y + 1)])) {
     ++y;
+    std::cout<<"works"<<std::endl;
     path[foo(x, y)] = 1;
     return Direction::UP;
   }
@@ -51,7 +54,7 @@ Direction Runner::step() {
   } 
   if (rand_dir == Direction::LEFT) {
     --x; 
-    
+
   } 
   return rand_dir;
 };
