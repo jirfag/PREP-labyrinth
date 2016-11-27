@@ -1,7 +1,3 @@
-//
-// Created by tsv on 09.05.16.
-//
-
 #include "Runner.hpp"
 #include "utils.hpp"
 
@@ -24,15 +20,15 @@ Direction Runner::step()
     switch(direction) {
         case 0: {
             if (current_status.left == BlockType::FREE) {
-            	direction = 1;
+            	direction = 2;
                 return Direction::LEFT;
             }
             else if (current_status.up == BlockType::FREE) {
-            	direction = 1;
+            	direction = 0;
                 return Direction::UP;
             }
             else if (current_status.right == BlockType::FREE) {
-            	direction = 1;
+            	direction = 3;
                 return Direction::RIGHT;
             }
             else {
@@ -42,7 +38,7 @@ Direction Runner::step()
         }
         case 1: {
             if (current_status.right == BlockType::FREE) {
-            	direction = 4;
+            	direction = 3;
                 return Direction::RIGHT;
             }
             else if (current_status.down == BlockType::FREE) {
@@ -72,7 +68,7 @@ Direction Runner::step()
                 return Direction::UP;
             }
             else {
-            	direction = 4;
+            	direction = 3;
                 return Direction::RIGHT;
             }
         }
@@ -82,7 +78,7 @@ Direction Runner::step()
                 return Direction::UP;
             }
             else if (current_status.right == BlockType::FREE) {
-            	direction = 4;
+            	direction = 3;
                 return Direction::RIGHT;
             }
             else if (current_status.down == BlockType::FREE) {
