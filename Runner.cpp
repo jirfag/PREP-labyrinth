@@ -17,8 +17,7 @@ Direction Runner::step()
     if (current_status.right == BlockType::EXIT)
         return Direction::RIGHT;
 
-    switch(direction) {
-        case 0: {
+    if(direction == 0) {
             if (current_status.left == BlockType::FREE) {
             	direction = 2;
                 return Direction::LEFT;
@@ -36,7 +35,7 @@ Direction Runner::step()
                 return Direction::DOWN;
             }
         }
-        case 1: {
+        if(direction == 1) {
             if (current_status.right == BlockType::FREE) {
             	direction = 3;
                 return Direction::RIGHT;
@@ -54,7 +53,7 @@ Direction Runner::step()
                 return Direction::UP;
             }
         }
-        case 2: {
+        if(direction == 2) {
             if (current_status.down == BlockType::FREE) {
             	direction = 1;
                 return Direction::DOWN;
@@ -72,7 +71,6 @@ Direction Runner::step()
                 return Direction::RIGHT;
             }
         }
-        default: {
             if (current_status.up == BlockType::FREE) {
             	direction = 0;
                 return Direction::UP;
@@ -89,6 +87,4 @@ Direction Runner::step()
             	direction = 2;
                 return Direction::LEFT;
             }
-        }
-    }
 }
