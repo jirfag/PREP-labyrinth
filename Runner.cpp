@@ -33,7 +33,7 @@ Direction Runner::step() {
 
     for ( auto it = stack.end() - 1; it != stack.begin(); --it ) {
         if ( it->x == X && it->y == Y ) {
-            stack.erase( it , stack.end() );
+            stack.erase( it+1 , stack.end() );
             break;
         }
     }
@@ -46,18 +46,22 @@ Direction Runner::step() {
         switch ( stack.back().direction ) {
             case Direction::DOWN : {
                 ++stack.back().down;
+                ++Y;
                 return Direction::UP;
             }
             case Direction::RIGHT : {
                 ++stack.back().right;
+                --X;
                 return Direction::LEFT;
             }
             case Direction::LEFT : {
                 ++stack.back().left;
+                ++X;
                 return Direction::RIGHT;
             }
             default: {
                 ++stack.back().up;
+                --Y;
                 return Direction::DOWN;
             }
         }
@@ -71,7 +75,7 @@ Direction Runner::step() {
             node.y = Y;
 
             stack.push_back( node );
-
+            ++X;
             return Direction::RIGHT;
         }
 
@@ -82,7 +86,7 @@ Direction Runner::step() {
             ++node.up;
             node.x = X;
             node.y = Y;
-
+            --Y;
             stack.push_back( node );
             return Direction::DOWN;
 
@@ -95,7 +99,7 @@ Direction Runner::step() {
             ++node.right;
             node.x = X;
             node.y = Y;
-
+            --X;
             stack.push_back( node );
             return Direction::LEFT;
         }
@@ -107,7 +111,7 @@ Direction Runner::step() {
             ++node.down;
             node.x = X;
             node.y = Y;
-
+            ++Y;
             stack.push_back( node );
             return Direction::UP;
 
@@ -120,7 +124,7 @@ Direction Runner::step() {
             node.x = X;
             node.y = Y;
             stack.push_back( node );
-
+            ++X;
             return Direction::RIGHT;
         }
 
@@ -131,6 +135,7 @@ Direction Runner::step() {
             ++node.up;
             node.x = X;
             node.y = Y;
+            --Y;
             stack.push_back( node );
             return Direction::DOWN;
 
@@ -144,6 +149,7 @@ Direction Runner::step() {
             node.x = X;
             node.y = Y;
             stack.push_back( node );
+            --X;
             return Direction::LEFT;
         }
 
@@ -154,11 +160,12 @@ Direction Runner::step() {
             ++node.down;
             node.x = X;
             node.y = Y;
+            ++Y;
             stack.push_back( node );
             return Direction::UP;
 
         }
-        if ( stack.back().right == 2 && current_status.right == BlockType::FREE ) {
+/*        if ( stack.back().right == 2 && current_status.right == BlockType::FREE ) {
             ++stack.back().right;
             stack.back().direction = Direction::RIGHT;
             cell node;
@@ -169,7 +176,7 @@ Direction Runner::step() {
 
             return Direction::RIGHT;
         }
-/*
+
         if ( stack.top().down == 2 && current_status.down == BlockType::FREE ) {
             ++stack.top().down;
             stack.top().direction = Direction::DOWN;
@@ -206,5 +213,4 @@ Direction Runner::step() {
         return Direction::UP;
     }
 }
-
 
