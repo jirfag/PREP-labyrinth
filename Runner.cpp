@@ -50,7 +50,8 @@ Direction Runner::step() {
     ++x;
   } 
   if (rand_dir == Direction::LEFT) {
-    --x;
+    --x; 
+    
   } 
   return rand_dir;
 };
