@@ -2,7 +2,9 @@
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
-
+const std::vector<Direction> directions = {Direction::UP, Direction::DOWN,
+                                             Direction::LEFT, Direction::RIGHT};
+Direction rand_dir;
 Direction Runner::step() {
   if ((current_status.right == BlockType::FREE ||
        current_status.right == BlockType::EXIT) &&
@@ -32,9 +34,8 @@ Direction Runner::step() {
     path[foo(x, y)] = 1;
     return Direction::DOWN;
   }
-  const std::vector<Direction> directions = {Direction::UP, Direction::DOWN,
-                                             Direction::LEFT, Direction::RIGHT};
-  Direction rand_dir = directions[std::rand() % directions.size()];
+  
+  rand_dir = directions[std::rand() % directions.size()];
 
   if (rand_dir == Direction::UP) {
     ++y;
