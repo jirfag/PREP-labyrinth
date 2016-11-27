@@ -135,7 +135,48 @@ Direction Runner::step() {
             return Direction::UP;
 
         }
+        if ( stack.top().right == 2 && current_status.right == BlockType::FREE ) {
+            ++stack.top().right;
+            stack.top().direction = Direction::RIGHT;
+            cell node;
+            ++node.left;
+
+            stack.push( node );
+
+            return Direction::RIGHT;
+        }
+
+        if ( stack.top().down == 2 && current_status.down == BlockType::FREE ) {
+            ++stack.top().down;
+            stack.top().direction = Direction::DOWN;
+            cell node;
+            ++node.up;
+
+            stack.push( node );
+            return Direction::DOWN;
+
+        }
+
+        if ( stack.top().left == 2 && current_status.left == BlockType::FREE ) {
+            ++stack.top().left;
+            stack.top().direction = Direction::LEFT;
+            cell node;
+            ++node.right;
+
+            stack.push( node );
+            return Direction::LEFT;
+        }
+
+        if ( stack.top().up == 2 && current_status.up == BlockType::FREE ) {
+            ++stack.top().up;
+            stack.top().direction = Direction::UP;
+            cell node;
+            ++node.down;
+
+            stack.push( node );
+            return Direction::UP;
+
+        }
     }
     return Direction::UP;
 }
-
