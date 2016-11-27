@@ -3,65 +3,65 @@
 Direction PrevStep = Direction::UP;
 
 Direction Runner::step() {
-    if ( current_status.left == BlockType::EXIT ) {
-        return Direction::LEFT;
-    }
-
-    if ( current_status.right == BlockType::EXIT ) {
-        return Direction::RIGHT;
-    }
-
-    if ( current_status.up == BlockType::EXIT ) {
-        return Direction::UP;
-    }
-
-    if ( current_status.down == BlockType::EXIT ) {
-        return Direction::DOWN;
-    }
-
     switch ( PrevStep ) {
         case Direction::UP: {
-            if ( current_status.left == BlockType::FREE ) {
-                return PrevStep = Direction::LEFT;
-            } else if ( current_status.up == BlockType::FREE ) {
-                return PrevStep = Direction::UP;
-            } else if ( current_status.right == BlockType::FREE ) {
-                return PrevStep = Direction::RIGHT;
+            if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+                PrevStep = Direction::LEFT;
+                return Direction::LEFT;
+            } else if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+                PrevStep = Direction::UP; //
+                return Direction::UP;
+            } else if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+                PrevStep = Direction::RIGHT;
+                return Direction::RIGHT;
             } else {
-                return PrevStep = Direction::DOWN;
+                PrevStep = Direction::DOWN;
+                return Direction::DOWN;
             }
         }
         case Direction::LEFT: {
-            if ( current_status.down == BlockType::FREE ) {
-                return PrevStep = Direction::DOWN;
-            } else if ( current_status.left == BlockType::FREE ) {
-                return PrevStep = Direction::LEFT;
-            } else if ( current_status.up == BlockType::FREE ) {
-                return PrevStep = Direction::UP;
+            if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ) {
+                PrevStep = Direction::DOWN;
+                return Direction::DOWN;
+            } else if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+                PrevStep = Direction::LEFT;//
+                return Direction::LEFT;
+            } else if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+                PrevStep = Direction::UP;
+                return Direction::UP;
             } else {
-                return PrevStep = Direction::RIGHT;
+                PrevStep = Direction::RIGHT;
+                return Direction::RIGHT;
             }
         }
         case Direction::DOWN: {
-            if ( current_status.right == BlockType::FREE ) {
-                return PrevStep = Direction::RIGHT;
-            } else if ( current_status.down == BlockType::FREE ) {
-                return PrevStep = Direction::DOWN;
-            } else if ( current_status.left == BlockType::FREE  ) {
-                return PrevStep = Direction::LEFT;
+            if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+                PrevStep = Direction::RIGHT;
+                return Direction::RIGHT;
+            } else if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ){
+                PrevStep = Direction::DOWN;//
+                return Direction::DOWN;
+            } else if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+                PrevStep = Direction::LEFT;
+                return Direction::LEFT;
             } else {
-                return PrevStep = Direction::UP;
+                PrevStep = Direction::UP;
+                return Direction::UP;
             }
         }
         default: {
-            if ( current_status.up == BlockType::FREE ) {
-                return PrevStep = Direction::UP;
-            } else if ( current_status.right == BlockType::FREE ) {
-                return PrevStep = Direction::RIGHT;
-            } else if ( current_status.down == BlockType::FREE ) {
-                return PrevStep = Direction::DOWN;
+            if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+                PrevStep = Direction::UP;
+                return Direction::UP;
+            } else if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+                PrevStep = Direction::RIGHT; //
+                return Direction::RIGHT;
+            } else if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ) {
+                PrevStep = Direction::DOWN;
+                return Direction::DOWN;
             } else {
-                return PrevStep = Direction::LEFT;
+                PrevStep = Direction::LEFT;
+                return Direction::LEFT;
             }
         }
     }
