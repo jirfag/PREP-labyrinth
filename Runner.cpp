@@ -1,7 +1,11 @@
+//
+// Created by tsv on 09.05.16.
+//
+
 #include "Runner.hpp"
 #include "utils.hpp"
 
-Direction direction = Direction::UP;
+short int direction = 0;
 
 Direction Runner::step()
 {
@@ -18,45 +22,77 @@ Direction Runner::step()
         return Direction::RIGHT;
 
     switch(direction) {
-        case Direction::UP: {
-            if (current_status.left == BlockType::FREE)
-                return direction = Direction::LEFT;
-            else if (current_status.up == BlockType::FREE)
-                return direction = Direction::UP;
-            else if (current_status.right == BlockType::FREE)
-                return direction = Direction::RIGHT;
-            else
-                return direction = Direction::DOWN;
+        case 0: {
+            if (current_status.left == BlockType::FREE) {
+            	direction = 1;
+                return Direction::LEFT;
+            }
+            else if (current_status.up == BlockType::FREE) {
+            	direction = 1;
+                return Direction::UP;
+            }
+            else if (current_status.right == BlockType::FREE) {
+            	direction = 1;
+                return Direction::RIGHT;
+            }
+            else {
+            	direction = 1;
+                return Direction::DOWN;
+            }
         }
-        case Direction::DOWN: {
-            if (current_status.right == BlockType::FREE)
-                return direction = Direction::RIGHT;
-            else if (current_status.down == BlockType::FREE)
-                return direction = Direction::DOWN;
-            else if (current_status.left == BlockType::FREE)
-                return direction = Direction::LEFT;
-            else
-                return direction = Direction::UP;
+        case 1: {
+            if (current_status.right == BlockType::FREE) {
+            	direction = 4;
+                return Direction::RIGHT;
+            }
+            else if (current_status.down == BlockType::FREE) {
+            	direction = 1;
+                return Direction::DOWN;
+            }
+            else if (current_status.left == BlockType::FREE) {
+            	direction = 2;
+                return Direction::LEFT;
+            }
+            else {
+            	direction = 0;
+                return Direction::UP;
+            }
         }
-        case Direction::LEFT: {
-            if (current_status.down == BlockType::FREE)
-                return direction = Direction::DOWN;
-            else if (current_status.left == BlockType::FREE)
-                return direction = Direction::LEFT;
-            else if (current_status.up == BlockType::FREE)
-                return direction = Direction::UP;
-            else
-                return direction = Direction::RIGHT;
+        case 2: {
+            if (current_status.down == BlockType::FREE) {
+            	direction = 1;
+                return Direction::DOWN;
+            }
+            else if (current_status.left == BlockType::FREE) {
+            	direction = 2;
+                return Direction::LEFT;
+            }
+            else if (current_status.up == BlockType::FREE) {
+            	direction = 0;
+                return Direction::UP;
+            }
+            else {
+            	direction = 4;
+                return Direction::RIGHT;
+            }
         }
         default: {
-            if (current_status.up == BlockType::FREE)
-                return direction = Direction::UP;
-            else if (current_status.right == BlockType::FREE)
-                return direction = Direction::RIGHT;
-            else if (current_status.down == BlockType::FREE)
-                return direction = Direction::DOWN;
-            else
-                return direction = Direction::LEFT;
+            if (current_status.up == BlockType::FREE) {
+            	direction = 0;
+                return Direction::UP;
+            }
+            else if (current_status.right == BlockType::FREE) {
+            	direction = 4;
+                return Direction::RIGHT;
+            }
+            else if (current_status.down == BlockType::FREE) {
+            	direction = 1;
+                return Direction::DOWN;
+            }
+            else {
+            	direction = 2;
+                return Direction::LEFT;
+            }
         }
     }
 }
