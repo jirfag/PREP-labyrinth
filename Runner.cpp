@@ -3,8 +3,6 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
 #include "utils.hpp"
 
 Direction Runner::step() {
