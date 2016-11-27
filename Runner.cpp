@@ -1,15 +1,19 @@
 #include "Runner.hpp"
-#include <stack>
+#include <vector>
 
 struct cell { //0 - норм, 1 - был, 2 - был несколько раз
     short up = 0;
     short down = 0;
     short right = 0;
     short left = 0;
+    int x = 0;
+    int y = 0;
     Direction direction;
 };
 
-std::stack<cell> stack;
+std::vector<cell> stack;
+int X = 0;
+int Y = 0;
 
 Direction Runner::step() {
     if ( current_status.left == BlockType::EXIT ) {
@@ -24,128 +28,148 @@ Direction Runner::step() {
 
     if ( stack.empty() ) {
         cell node;
-        stack.push( node );
+        stack.push_back( node );
     }
 
-    if ( ( stack.top().right != 0 || current_status.right != BlockType::FREE ) &&
-         ( stack.top().up != 0 || current_status.up != BlockType::FREE ) &&
-         ( stack.top().left != 0 || current_status.left != BlockType::FREE ) &&
-         ( stack.top().down != 0 || current_status.down != BlockType::FREE ) ) {
-        stack.pop();
-        switch ( stack.top().direction ) {
+    for ( auto it = stack.end() - 1; it != stack.begin(); --it ) {
+        if ( it->x == X && it->y == Y ) {
+            stack.erase( it+1 , stack.end() );
+            break;
+        }
+    }
+
+    if ( ( stack.back().right != 0 || current_status.right != BlockType::FREE ) &&
+         ( stack.back().up != 0 || current_status.up != BlockType::FREE ) &&
+         ( stack.back().left != 0 || current_status.left != BlockType::FREE ) &&
+         ( stack.back().down != 0 || current_status.down != BlockType::FREE ) ) {
+        stack.pop_back();
+        switch ( stack.back().direction ) {
             case Direction::DOWN : {
-                ++stack.top().down;
+                ++stack.back().down;
                 return Direction::UP;
             }
             case Direction::RIGHT : {
-                ++stack.top().right;
+                ++stack.back().right;
                 return Direction::LEFT;
             }
             case Direction::LEFT : {
-                ++stack.top().left;
+                ++stack.back().left;
                 return Direction::RIGHT;
             }
             default: {
-                ++stack.top().up;
+                ++stack.back().up;
                 return Direction::DOWN;
             }
         }
     } else {
-        if ( stack.top().right == 0 && current_status.right == BlockType::FREE ) {
-            ++stack.top().right;
-            stack.top().direction = Direction::RIGHT;
+        if ( stack.back().right == 0 && current_status.right == BlockType::FREE ) {
+            ++stack.back().right;
+            stack.back().direction = Direction::RIGHT;
             cell node;
             ++node.left;
+            node.x = X;
+            node.y = Y;
 
-            stack.push( node );
+            stack.push_back( node );
 
             return Direction::RIGHT;
         }
 
-        if ( stack.top().down == 0 && current_status.down == BlockType::FREE ) {
-            ++stack.top().down;
-            stack.top().direction = Direction::DOWN;
+        if ( stack.back().down == 0 && current_status.down == BlockType::FREE ) {
+            ++stack.back().down;
+            stack.back().direction = Direction::DOWN;
             cell node;
             ++node.up;
+            node.x = X;
+            node.y = Y;
 
-            stack.push( node );
+            stack.push_back( node );
             return Direction::DOWN;
 
         }
 
-        if ( stack.top().left == 0 && current_status.left == BlockType::FREE ) {
-            ++stack.top().left;
-            stack.top().direction = Direction::LEFT;
+        if ( stack.back().left == 0 && current_status.left == BlockType::FREE ) {
+            ++stack.back().left;
+            stack.back().direction = Direction::LEFT;
             cell node;
             ++node.right;
+            node.x = X;
+            node.y = Y;
 
-            stack.push( node );
+            stack.push_back( node );
             return Direction::LEFT;
         }
 
-        if ( stack.top().up == 0 && current_status.up == BlockType::FREE ) {
-            ++stack.top().up;
-            stack.top().direction = Direction::UP;
+        if ( stack.back().up == 0 && current_status.up == BlockType::FREE ) {
+            ++stack.back().up;
+            stack.back().direction = Direction::UP;
             cell node;
             ++node.down;
+            node.x = X;
+            node.y = Y;
 
-            stack.push( node );
+            stack.push_back( node );
             return Direction::UP;
 
         }
-        if ( stack.top().right == 1 && current_status.right == BlockType::FREE ) {
-            ++stack.top().right;
-            stack.top().direction = Direction::RIGHT;
+        if ( stack.back().right == 1 && current_status.right == BlockType::FREE ) {
+            ++stack.back().right;
+            stack.back().direction = Direction::RIGHT;
             cell node;
             ++node.left;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
 
             return Direction::RIGHT;
         }
 
-        if ( stack.top().down == 1 && current_status.down == BlockType::FREE ) {
-            ++stack.top().down;
-            stack.top().direction = Direction::DOWN;
+        if ( stack.back().down == 1 && current_status.down == BlockType::FREE ) {
+            ++stack.back().down;
+            stack.back().direction = Direction::DOWN;
             cell node;
             ++node.up;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
             return Direction::DOWN;
 
         }
 
-        if ( stack.top().left == 1 && current_status.left == BlockType::FREE ) {
-            ++stack.top().left;
-            stack.top().direction = Direction::LEFT;
+        if ( stack.back().left == 1 && current_status.left == BlockType::FREE ) {
+            ++stack.back().left;
+            stack.back().direction = Direction::LEFT;
             cell node;
             ++node.right;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
             return Direction::LEFT;
         }
 
-        if ( stack.top().up == 1 && current_status.up == BlockType::FREE ) {
-            ++stack.top().up;
-            stack.top().direction = Direction::UP;
+        if ( stack.back().up == 1 && current_status.up == BlockType::FREE ) {
+            ++stack.back().up;
+            stack.back().direction = Direction::UP;
             cell node;
             ++node.down;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
             return Direction::UP;
 
         }
-        if ( stack.top().right == 2 && current_status.right == BlockType::FREE ) {
-            ++stack.top().right;
-            stack.top().direction = Direction::RIGHT;
+        if ( stack.back().right == 2 && current_status.right == BlockType::FREE ) {
+            ++stack.back().right;
+            stack.back().direction = Direction::RIGHT;
             cell node;
             ++node.left;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
 
             return Direction::RIGHT;
         }
-
+/*
         if ( stack.top().down == 2 && current_status.down == BlockType::FREE ) {
             ++stack.top().down;
             stack.top().direction = Direction::DOWN;
@@ -178,5 +202,9 @@ Direction Runner::step() {
 
         }
     }
-    return Direction::UP;
+    */
+        return Direction::UP;
+    }
 }
+
+
