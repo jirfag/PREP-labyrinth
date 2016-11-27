@@ -1,8 +1,6 @@
 #include "Runner.hpp"
 
-
-
-
+Direction PrevPrevStep = Direction::UP;
 Direction PrevStep = Direction::UP;
 
 
@@ -22,63 +20,159 @@ Direction Runner::step() {
 
     switch ( PrevStep ) {
         case Direction::UP: {
-            if ( current_status.left == BlockType::FREE ) {
-                PrevStep = Direction::LEFT;
-                return Direction::LEFT;
-            } else if ( current_status.up == BlockType::FREE ) {
-                PrevStep = Direction::UP; //
-                return Direction::UP;
-            } else if ( current_status.right == BlockType::FREE ) {
-                PrevStep = Direction::RIGHT;
-                return Direction::RIGHT;
+            if ( PrevPrevStep == Direction::DOWN ) {
+                if ( current_status.left == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::LEFT;
+                    return Direction::LEFT;
+                } else if ( current_status.up == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::UP; //
+                    return Direction::UP;
+                } else if ( current_status.right == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::RIGHT;
+                    return Direction::RIGHT;
+                } else {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::DOWN;
+                    return Direction::DOWN;
+                }
             } else {
-                PrevStep = Direction::DOWN;
-                return Direction::DOWN;
+                if ( current_status.up == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::UP;
+                    return Direction::UP;
+                } else if ( current_status.left == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::LEFT; //
+                    return Direction::LEFT;
+                } else if ( current_status.right == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::RIGHT;
+                    return Direction::RIGHT;
+                } else {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::DOWN;
+                    return Direction::DOWN;
+                }
             }
         }
         case Direction::LEFT: {
-            if ( current_status.down == BlockType::FREE ) {
-                PrevStep = Direction::DOWN;
-                return Direction::DOWN;
-            } else if ( current_status.left == BlockType::FREE ) {
-                PrevStep = Direction::LEFT;//
-                return Direction::LEFT;
-            } else if ( current_status.up == BlockType::FREE ) {
-                PrevStep = Direction::UP;
-                return Direction::UP;
+            if ( PrevPrevStep == Direction::RIGHT ) {
+                if ( current_status.down == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::DOWN;
+                    return Direction::DOWN;
+                } else if ( current_status.left == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::LEFT;//
+                    return Direction::LEFT;
+                } else if ( current_status.up == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::UP;
+                    return Direction::UP;
+                } else {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::RIGHT;
+                    return Direction::RIGHT;
+                }
             } else {
-                PrevStep = Direction::RIGHT;
-                return Direction::RIGHT;
+                if ( current_status.left == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::LEFT;
+                    return Direction::LEFT;
+                } else if ( current_status.down == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::DOWN;//
+                    return Direction::DOWN;
+                } else if ( current_status.up == BlockType::FREE ) {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::UP;
+                    return Direction::UP;
+                } else {
+                    PrevPrevStep = PrevStep;
+                    PrevStep = Direction::RIGHT;
+                    return Direction::RIGHT;
+                }
             }
-        }
-        case Direction::DOWN: {
-            if ( current_status.right == BlockType::FREE ) {
-                PrevStep = Direction::RIGHT;
-                return Direction::RIGHT;
-            } else if ( current_status.down == BlockType::FREE ) {
-                PrevStep = Direction::DOWN;//
-                return Direction::DOWN;
-            } else if ( current_status.left == BlockType::FREE ) {
-                PrevStep = Direction::LEFT;
-                return Direction::LEFT;
-            } else {
-                PrevStep = Direction::UP;
-                return Direction::UP;
+            case Direction::DOWN: {
+                if ( PrevPrevStep == Direction::UP ) {
+                    if ( current_status.right == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::RIGHT;
+                        return Direction::RIGHT;
+                    } else if ( current_status.down == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::DOWN;//
+                        return Direction::DOWN;
+                    } else if ( current_status.left == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::LEFT;
+                        return Direction::LEFT;
+                    } else {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::UP;
+                        return Direction::UP;
+                    }
+                } else {
+                    if ( current_status.down == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::DOWN;
+                        return Direction::DOWN;
+                    } else if ( current_status.right == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::RIGHT;//
+                        return Direction::RIGHT;
+                    } else if ( current_status.left == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::LEFT;
+                        return Direction::LEFT;
+                    } else {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::UP;
+                        return Direction::UP;
+                    }
+                }
             }
-        }
-        default: {
-            if ( current_status.up == BlockType::FREE ) {
-                PrevStep = Direction::UP;
-                return Direction::UP;
-            } else if ( current_status.right == BlockType::FREE ) {
-                PrevStep = Direction::RIGHT; //
-                return Direction::RIGHT;
-            } else if ( current_status.down == BlockType::FREE ) {
-                PrevStep = Direction::DOWN;
-                return Direction::DOWN;
-            } else {
-                PrevStep = Direction::LEFT;
-                return Direction::LEFT;
+            default: {
+                if ( PrevPrevStep == Direction::LEFT ) {
+                    if ( current_status.up == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::UP;
+                        return Direction::UP;
+                    } else if ( current_status.right == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::RIGHT; //
+                        return Direction::RIGHT;
+                    } else if ( current_status.down == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::DOWN;
+                        return Direction::DOWN;
+                    } else {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::LEFT;
+                        return Direction::LEFT;
+                    }
+                } else {
+                    if ( current_status.right == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::RIGHT;
+                        return Direction::RIGHT;
+                    } else if ( current_status.up == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::UP; //
+                        return Direction::UP;
+                    } else if ( current_status.down == BlockType::FREE ) {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::DOWN;
+                        return Direction::DOWN;
+                    } else {
+                        PrevPrevStep = PrevStep;
+                        PrevStep = Direction::LEFT;
+                        return Direction::LEFT;
+                    }
+                }
             }
         }
     }
