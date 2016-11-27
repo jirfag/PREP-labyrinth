@@ -16,7 +16,7 @@ class Runner: public RunnerBase {
 		map.resize(2001);
 		for (auto& row : map)
 			row.resize(2001);
-		map[i][j] = 2;
+		map[i][j] = 1;
 	}
 	std::vector<std::vector<int>> map;
 	int i;
