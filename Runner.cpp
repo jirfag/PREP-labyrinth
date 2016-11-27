@@ -9,7 +9,7 @@
 
 Direction Runner::step()
 {
-static Direction look = Direction::UP;
+static Direction look = Direction::LEFT;
 
 	switch(look) {
 		
