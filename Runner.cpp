@@ -3,7 +3,6 @@
 //
 
 #include "Runner.hpp"
-#include "utils.hpp"
 
 Direction Runner::step() {
 
