@@ -11,17 +11,7 @@ Runner::Runner() : prevMove(Direction::RIGHT){}
 
 Direction Runner::step()
 {
-	/*
-    if (current_status.right == BlockType::EXIT)
-        return Direction::RIGHT;
-	if(current_status.down == BlockType::EXIT)
-        return Direction::DOWN;
-    if (current_status.up == BlockType::EXIT)
-        return Direction::UP;
-    if (current_status.left == BlockType::EXIT)
-        return Direction::LEFT;
-*/
-    switch(prevMove){
+	switch(prevMove){
     	case Direction::RIGHT: {
     		if(current_status.down != BlockType::WALL){
     			prevMove = Direction::DOWN;
@@ -91,4 +81,5 @@ Direction Runner::step()
     		}
     	}
     }
+    return prevMove;
 }
