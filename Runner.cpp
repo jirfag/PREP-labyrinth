@@ -1,17 +1,34 @@
 #include "Runner.hpp"
 
+
+
+
 Direction PrevStep = Direction::UP;
 
+
 Direction Runner::step() {
+    if ( current_status.left == BlockType::EXIT ) {
+        return Direction::LEFT;
+    }
+    if ( current_status.right == BlockType::EXIT ) {
+        return Direction::RIGHT;
+    }
+    if ( current_status.up == BlockType::EXIT ) {
+        return Direction::UP;
+    }
+    if ( current_status.down == BlockType::EXIT ) {
+        return Direction::DOWN;
+    }
+
     switch ( PrevStep ) {
         case Direction::UP: {
-            if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+            if ( current_status.left == BlockType::FREE ) {
                 PrevStep = Direction::LEFT;
                 return Direction::LEFT;
-            } else if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+            } else if ( current_status.up == BlockType::FREE ) {
                 PrevStep = Direction::UP; //
                 return Direction::UP;
-            } else if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+            } else if ( current_status.right == BlockType::FREE ) {
                 PrevStep = Direction::RIGHT;
                 return Direction::RIGHT;
             } else {
@@ -20,13 +37,13 @@ Direction Runner::step() {
             }
         }
         case Direction::LEFT: {
-            if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ) {
+            if ( current_status.down == BlockType::FREE ) {
                 PrevStep = Direction::DOWN;
                 return Direction::DOWN;
-            } else if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+            } else if ( current_status.left == BlockType::FREE ) {
                 PrevStep = Direction::LEFT;//
                 return Direction::LEFT;
-            } else if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+            } else if ( current_status.up == BlockType::FREE ) {
                 PrevStep = Direction::UP;
                 return Direction::UP;
             } else {
@@ -35,13 +52,13 @@ Direction Runner::step() {
             }
         }
         case Direction::DOWN: {
-            if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+            if ( current_status.right == BlockType::FREE ) {
                 PrevStep = Direction::RIGHT;
                 return Direction::RIGHT;
-            } else if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ){
+            } else if ( current_status.down == BlockType::FREE ) {
                 PrevStep = Direction::DOWN;//
                 return Direction::DOWN;
-            } else if ( ( current_status.left == BlockType::FREE ) || ( current_status.left == BlockType::EXIT ) ) {
+            } else if ( current_status.left == BlockType::FREE ) {
                 PrevStep = Direction::LEFT;
                 return Direction::LEFT;
             } else {
@@ -50,13 +67,13 @@ Direction Runner::step() {
             }
         }
         default: {
-            if ( ( current_status.up == BlockType::FREE ) || ( current_status.up == BlockType::EXIT ) ) {
+            if ( current_status.up == BlockType::FREE ) {
                 PrevStep = Direction::UP;
                 return Direction::UP;
-            } else if ( ( current_status.right == BlockType::FREE ) || ( current_status.right == BlockType::EXIT ) ) {
+            } else if ( current_status.right == BlockType::FREE ) {
                 PrevStep = Direction::RIGHT; //
                 return Direction::RIGHT;
-            } else if ( ( current_status.down == BlockType::FREE ) || ( current_status.down == BlockType::EXIT ) ) {
+            } else if ( current_status.down == BlockType::FREE ) {
                 PrevStep = Direction::DOWN;
                 return Direction::DOWN;
             } else {
@@ -65,5 +82,4 @@ Direction Runner::step() {
             }
         }
     }
-
 }
