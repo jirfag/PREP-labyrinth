@@ -2,7 +2,6 @@
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
-size_t i = 0;
 
 Direction Runner::step() {
         if (currDirection == 0) {
