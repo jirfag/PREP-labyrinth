@@ -46,6 +46,16 @@ Direction Runner::step() {
             }
         }
     } else {
+        if ( !stack.top().down && current_status.down == BlockType::FREE ) {
+            stack.top().down = true;
+            stack.top().direction = Direction::DOWN;
+            cell node;
+            node.up = true;
+
+            stack.push( node );
+            return Direction::DOWN;
+
+        }
         if ( !stack.top().left && current_status.left == BlockType::FREE ) {
             stack.top().left = true;
             stack.top().direction = Direction::LEFT;
@@ -73,17 +83,6 @@ Direction Runner::step() {
             stack.push( node );
 
             return Direction::RIGHT;
-        }
-
-        if ( !stack.top().down && current_status.down == BlockType::FREE ) {
-            stack.top().down = true;
-            stack.top().direction = Direction::DOWN;
-            cell node;
-            node.up = true;
-
-            stack.push( node );
-            return Direction::DOWN;
-
         }
     }
     return Direction::UP;
