@@ -124,12 +124,6 @@ Direction Runner::step() {
 	}
 			
 	if (get > 2) {
-		if (current_status.up != BlockType::WALL 
-							&& map[i-1][j] == 0) {
-			map[i-1][j] = 1;
-			--i;
-			return (prev = Direction::UP);
-		}
 		
 		if (current_status.down != BlockType::WALL
 							&& map[i+1][j] == 0) {
@@ -137,17 +131,38 @@ Direction Runner::step() {
 			++i;
 			return (prev = Direction::DOWN);
 		}
+		
+		if (current_status.right != BlockType::WALL
+							&& map[i][j+1] == 0) {
+			map[i][j+1] = 1;
+			++j;
+			return (prev = Direction::RIGHT);
+		}
 
+		if (current_status.up != BlockType::WALL 
+							&& map[i-1][j] == 0) {
+			map[i-1][j] = 1;
+			--i;
+			return (prev = Direction::UP);
+		}
+		
 		if (current_status.left != BlockType::WALL
 							&& map[i][j-1] == 0) {
 			map[i][j-1] = 1;
 			--j;
 			return (prev = Direction::LEFT);
 		}
-
+		
+		if (current_status.down != BlockType::WALL
+							&& map[i+1][j] == 1) {
+			map[i+1][j] = 2;
+			++i;
+			return (prev = Direction::DOWN);
+		}
+		
 		if (current_status.right != BlockType::WALL
-							&& map[i][j+1] == 0) {
-			map[i][j+1] = 1;
+							&& map[i][j+1] == 1) {
+			map[i][j+1] = 2;
 			++j;
 			return (prev = Direction::RIGHT);
 		}
@@ -159,25 +174,12 @@ Direction Runner::step() {
 			return (prev = Direction::UP);
 		}
 		
-		if (current_status.down != BlockType::WALL
-							&& map[i+1][j] == 1) {
-			map[i+1][j] = 2;
-			++i;
-			return (prev = Direction::DOWN);
-		}
 
 		if (current_status.left != BlockType::WALL
 							&& map[i][j-1] == 1) {
 			map[i][j-1] = 2;
 			--j;
 			return (prev = Direction::LEFT);
-		}
-
-		if (current_status.right != BlockType::WALL
-							&& map[i][j+1] == 1) {
-			map[i][j+1] = 2;
-			++j;
-			return (prev = Direction::RIGHT);
 		}
 	}
 	return prev;
