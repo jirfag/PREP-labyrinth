@@ -120,12 +120,12 @@ Direction Runner::step() {
         if (current_status.left == BlockType::EXIT)
                  return Direction::LEFT;
  
-	if (i < 15000000) {
+	if (i < 60000000) {
 		++i;
-		return step_left();
+		return step_right();
 	}
 	++i;
-	if (i == 18000000) i = 0;
+	if (i == 60005000) i = 0;
 	const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
 	return directions[std::rand() % directions.size()];
 }
