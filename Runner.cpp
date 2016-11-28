@@ -7,18 +7,6 @@
 using namespace std;
 
 
-Direction Runner::step() {
-
-	if (i < 15000000) {
-		++i;
-		return step_left();
-	}
-	++i;
-	if (i == 30000000) i = 0;
-	return step_right(); 
-}
-
-
 Direction Runner::step_left() {
 	
 
@@ -119,6 +107,22 @@ Direction Runner::step_left() {
 	}
 	return Direction::DOWN;
 
+}
+
+Direction Runner::step() {
+
+	if (i < 15000000) {
+		++i;
+		return step_left();
+	}
+	if (i < 30000000) {
+		++i;
+		return step_right();
+	}
+	++i;
+	if (i == 45000000) i = 0;
+	const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+	return directions[std::rand() % directions.size()];
 }
 
 
