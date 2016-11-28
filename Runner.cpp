@@ -95,7 +95,7 @@ Direction Runner::step() {
          ( node.up != 0 || current_status.up != BlockType::FREE ) &&
          ( node.left != 0 || current_status.left != BlockType::FREE ) &&
          ( node.down != 0 || current_status.down != BlockType::FREE ) ) {
-               switch ( stack.back().direction ) {
+                      switch ( stack.back().direction ) {
             case Direction::DOWN : {
                 ++stack.back().down;
                 --stack.back().up;
