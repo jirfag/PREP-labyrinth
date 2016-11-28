@@ -188,5 +188,6 @@ Direction Runner::step() {
 				}
 			}
 	}
+	
 	return directions[std::rand() % directions.size()];
 } 
