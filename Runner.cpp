@@ -55,7 +55,7 @@ Direction Runner::step() {
         if (current_status.down == BlockType::EXIT)
             return Direction::DOWN;
 
-        if (current_status.up != BlockType:WALL)
+        if (current_status.up != BlockType::WALL)
             return currDirection = 0, Direction::UP;
         if (current_status.right != BlockType::WALL)
             return Direction::RIGHT;
