@@ -18,8 +18,8 @@ Direction Runner::step() {
 		
 		case(Direction::UP):
 
-			if (current_status.right != BlockType::WALL) {
-				look = Direction::RIGHT;
+			if (current_status.left != BlockType::WALL) {
+				look = Direction::LEFT;
 				return look;
 
 			} else {
@@ -41,8 +41,8 @@ Direction Runner::step() {
 
 		case(Direction::DOWN):
 
-			if (current_status.left != BlockType::WALL) {
-				look = Direction::LEFT;
+			if (current_status.right != BlockType::WALL) {
+				look = Direction::RIGHT;
 				return look;
 
 			} else {
@@ -50,8 +50,8 @@ Direction Runner::step() {
 					return look;
 
 				else {
-					if(current_status.right != BlockType::WALL) {
-						look = Direction::RIGHT;
+					if(current_status.left != BlockType::WALL) {
+						look = Direction::LEFT;
 						return look;
 					}
 
@@ -64,8 +64,8 @@ Direction Runner::step() {
 	
 		case(Direction::LEFT):
 
-			if (current_status.up != BlockType::WALL) {
-				look = Direction::UP;
+			if (current_status.down != BlockType::WALL) {
+				look = Direction::DOWN;
 				return look;
 
 			} else {
@@ -73,8 +73,8 @@ Direction Runner::step() {
 					return look;
 
 				else {
-					if(current_status.down != BlockType::WALL) {
-						look = Direction::DOWN;
+					if(current_status.up != BlockType::WALL) {
+						look = Direction::UP;
 						return look;
 					}
 
@@ -87,8 +87,8 @@ Direction Runner::step() {
 	
 		case(Direction::RIGHT):
 
-			if (current_status.down != BlockType::WALL) {
-				look = Direction::DOWN;
+			if (current_status.up != BlockType::WALL) {
+				look = Direction::UP;
 				return look;
 
 			} else {
@@ -96,8 +96,8 @@ Direction Runner::step() {
 					return look;
 
 				else {
-					if(current_status.up != BlockType::WALL) {
-						look = Direction::UP;
+					if(current_status.down != BlockType::WALL) {
+						look = Direction::DOWN;
 						return look;
 					}
 
@@ -109,6 +109,6 @@ Direction Runner::step() {
 			}
 
 	}
-	return Direction::UP;
+	return Direction::DOWN;
 
 }
