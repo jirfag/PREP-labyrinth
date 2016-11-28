@@ -16,9 +16,9 @@ Direction Runner::step()
     if (it != status.end())
             return directions[std::distance(status.begin(), it)];
 
-    int step = (last_step + 3) % 4;
+    int step = (last_step + 1) % 4;
     while(status[step] == BlockType::WALL){
-        step = (step + 1) % 4;
+        step = (step + 3) % 4;
     }
 
     return directions[last_step = step];
