@@ -38,15 +38,16 @@ Direction set_where(Status st)
         {
             return Direction::DOWN;
 } else
-	if (st.right == BlockType::FREE)
-	{
-		return Direction::RIGHT;
-	} 
-    else if (st.left == BlockType::FREE)
+	 if (st.left == BlockType::FREE)
 	{
 		return Direction::LEFT;
 	}
 	else
+		if (st.right == BlockType::FREE)
+	{
+		return Direction::RIGHT;
+	} 
+    else
         if (st.up == BlockType::FREE)
             {
                 return Direction::UP;
