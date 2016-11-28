@@ -40,7 +40,7 @@ Direction Runner::step() {
             stack.back().down += it.base()->down;
             stack.back().left += it.base()->left;
             stack.back().right += it.base()->right;
-         //   break;
+            break;
         }
     }
 
