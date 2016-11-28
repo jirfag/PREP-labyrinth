@@ -1,11 +1,11 @@
 //
 // Created by tsv on 09.05.16.
 //
-
 #include "Runner.hpp"
 #include "utils.hpp"
 
-Direction Runner::step() {
+Direction Runner::step() 
+{
     if (v.empty()) {
         node n;
         v.push_back(n);
