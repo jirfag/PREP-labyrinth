@@ -14,32 +14,27 @@ using namespace std;
 
 class Runner: public RunnerBase {
     public:
-	Runner(): i(10001), j(10001) {
-		map.resize(20001);
-		for (auto& row : map)
-			row.resize(20001);
-		map[i][j] = 1;
-
-		fout.open("Dungeon/lvl_3.txt");
+	Runner(): {
+		fout.open("Dungeon/lvl_2.txt");
 		if (fout.is_open()) {
-			fout << "3 2138" << endl;
+			fout << "3 5" << endl;
 			fout << "1";
 			int k = 1;
-			while (k < 2138) {
+			while (k < 5) {
 				fout << " 1";
 				++k;
 			}
 			fout << endl;
 			fout << "1 2 0";
 			k = 3;
-			while (k < 2136) {
+			while (k < 3) {
 				fout << " 0";
 				++k;
 			}
 			fout << " 3 1" << endl;
 			k = 1;
 			fout << "1";
-			while (k < 2138) {
+			while (k < 5) {
 				fout << " 1";
 				++k;
 			}
@@ -49,11 +44,6 @@ class Runner: public RunnerBase {
 		}
 			
 	}
-	ofstream fout;
-	std::vector<std::vector<int>> map;
-	int i;
-	int j;
-	Direction look;
 	Direction step();
 	~Runner() { fout.close(); }
 };
