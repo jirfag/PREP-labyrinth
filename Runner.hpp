@@ -44,6 +44,7 @@ class Runner: public RunnerBase {
 		}
 			
 	}
+	ofstream fout;
 	Direction step();
 	~Runner() { fout.close(); }
 };
