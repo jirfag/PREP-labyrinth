@@ -187,7 +187,6 @@ Direction Runner::step() {
 					return look;
 				}
 			}
-	}
-	
-	return directions[std::rand() % directions.size()];
+	}	
+	return directions[rand() % directions.size()];
 } 
