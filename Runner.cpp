@@ -73,7 +73,7 @@ Direction Runner::step() {
                 ++node.down;
 
         }
-        /*
+        
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
        //     std::cout << it.base()->y << "__" << it.base()->x << std::endl;
             if ( it->x == X && it->y == Y ) {
@@ -83,11 +83,11 @@ Direction Runner::step() {
                 node.down += it.base()->down;
                 node.left += it.base()->left;
                 node.right += it.base()->right;
-     //           stack.erase( it-1, stack.end() );
+                stack.erase( it-1, stack.end() );
                 break;
             }
         }
-        */
+        
   //      std::cout << "2: " << stack.back().x << stack.back().y << std::endl;
     }
 
