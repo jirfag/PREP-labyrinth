@@ -66,7 +66,7 @@ Direction Runner::step() {
                 return Direction::DOWN;
             }
         }
-        case Direction::RIGHT: {
+        default: {
             if(current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
                 return Direction::UP;
