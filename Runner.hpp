@@ -17,24 +17,24 @@ class Runner: public RunnerBase {
 	Runner() {
 		fout.open("Dungeon/lvl_3.txt");
 		if (fout.is_open()) {
-			fout << "3 5" << endl;
+			fout << "3 100" << endl;
 			fout << "1";
 			int k = 1;
-			while (k < 5) {
+			while (k < 100) {
 				fout << " 1";
 				++k;
 			}
 			fout << endl;
 			fout << "1 2 0";
 			k = 3;
-			while (k < 3) {
+			while (k < 98) {
 				fout << " 0";
 				++k;
 			}
 			fout << " 3 1" << endl;
 			k = 1;
 			fout << "1";
-			while (k < 5) {
+			while (k < 100) {
 				fout << " 1";
 				++k;
 			}
