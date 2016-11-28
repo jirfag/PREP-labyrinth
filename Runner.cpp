@@ -31,12 +31,18 @@ Direction Runner::step() {
         stack.push_back( node );
     }
 
-    for ( auto it = stack.end() - 1; it != stack.begin(); --it ) {
-        if ( it->x == X && it->y == Y ) {
-            stack.erase( it + 2 , stack.end() );
-            break;
+      for ( auto it = stack.end(); it != stack.begin(); --it ) {
+ //       std::cout << it->x << it->y << std::endl;
+        if ( it->x == stack.back().x && it->y == stack.back().y ) {
+     //       std::cout << "BIG_XY: "<< stack.back().x << stack.back().y << std::endl;
+    //        std::cout << "ШЕ: " << stack.back().x << stack.back().y << std::endl;
+            stack.back().up += it.base()->up;
+            stack.back().down += it.base()->down;
+            stack.back().left += it.base()->left;
+            stack.back().right += it.base()->right;
+         //   break;
         }
-    } 
+    }
 
     if ( ( stack.back().right != 0 || current_status.right != BlockType::FREE ) &&
          ( stack.back().up != 0 || current_status.up != BlockType::FREE ) &&
