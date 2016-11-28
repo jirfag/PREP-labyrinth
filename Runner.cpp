@@ -3,12 +3,11 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
 #include <cstdlib>
 #include "utils.hpp"
 
 Direction Runner::step() {
-	
+
 	static Direction look = Direction::UP;
 	switch(look) {
 		case(Direction::UP):
@@ -55,8 +54,6 @@ Direction Runner::step() {
 					return look;
 				}
 			}
-
-
 		case(Direction::DOWN):
 
 			if (current_status.left != BlockType::WALL) {
@@ -146,7 +143,6 @@ Direction Runner::step() {
 					return look;
 				}
 			}
-
 		case(Direction::RIGHT):
 
 			if (current_status.down != BlockType::WALL) {
@@ -192,6 +188,5 @@ Direction Runner::step() {
 				}
 			}
 	}
-
-	return look;
+	return directions[std::rand() % directions.size()];
 } 
