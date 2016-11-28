@@ -18,6 +18,10 @@ public:
 private:
 //    short int angle;
 //    Status turn_coord;
+BlockType up;
+    BlockType right;
+    BlockType down;
+    BlockType left;
     Direction prev_directions ;
 };
 
