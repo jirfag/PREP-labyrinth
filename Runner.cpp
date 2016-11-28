@@ -46,7 +46,7 @@ Direction Runner::step() {
         stack.push( node );
     }
 
-
+/*
     for ( auto it = pos.end(); it != pos.begin(); --it ) {
         if ( it.base()->x == X ) {
             if ( it.base()->y == Y ) {
@@ -65,7 +65,7 @@ Direction Runner::step() {
             }
         }
     }
-    
+    */
 
     position pos1( X, Y );
     pos.push_back( pos1 );
