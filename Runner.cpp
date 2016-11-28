@@ -3,14 +3,24 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
 #include "utils.hpp"
+#include <vector>
+#include <algorithm>
 
 Direction Runner::step()
 {
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    return directions[std::rand() % directions.size()];
+
+    status = {current_status.up, current_status.right, current_status.down, current_status.left};
+
+    it = std::find(status.begin(), status.end(), BlockType::EXIT);
+    if (it != status.end())
+            return directions[std::distance(status.begin(), it)];
+
+    int step = (last_step + 1) % 4;
+    while(status[step] == BlockType::WALL){
+        step = (step + 3) % 4;
+    }
+
+    return directions[last_step = step];
 }
+
