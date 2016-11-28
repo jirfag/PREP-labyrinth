@@ -9,12 +9,12 @@ using namespace std;
 
 Direction Runner::step() {
 
-	if (i < 100) {
+	if (i < 15000000) {
 		++i;
 		return step_left();
 	}
 	++i;
-	if (i == 200) i = 0;
+	if (i == 30000000) i = 0;
 	return step_right(); 
 }
 
