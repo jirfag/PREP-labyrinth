@@ -20,7 +20,7 @@ class Runner: public RunnerBase {
     private:
 
         int last_step;
-        const std::vector<Direction> directions = {Direction::UP, Direction::LEFT, Direction::DOWN, Direction::RIGHT};
+        const std::vector<Direction> directions = {Direction::UP, Direction::RIGHT, Direction::DOWN, Direction::LEFT};
         std::vector<BlockType> status;
         std::vector<BlockType>::iterator it;
 };
