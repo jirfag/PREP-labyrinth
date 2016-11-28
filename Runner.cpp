@@ -1,8 +1,8 @@
 //
 // Created by tsv on 09.05.16.
 //
-
 #include "Runner.hpp"
+#include <iostream>
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
@@ -51,7 +51,7 @@ Direction set_where(Status st)
             {
                 return Direction::UP;
             }
-
+return Direction::DOWN;
 
 }
 Direction set_where(Status st, Direction* dir, int n)
@@ -116,7 +116,7 @@ Direction set_where(Status st, Direction* dir, int n)
 			return Direction::DOWN;
 		}
 	}
-
+    return Direction::DOWN;
 }
 
 int set_kol_sv(Status st)
@@ -140,35 +140,8 @@ int set_kol_sv(Status st)
 	}
 	return kol;
 }
-std::ostream& operator <<(std::ostream& o, Direction d)
-{
-    switch(d)
-    {
-    case Direction::DOWN:
-        o << "DOWN";
-        break;
-    case Direction::LEFT:
-        o << "LEFT";
-        break;
-    case Direction::RIGHT:
-        o << "RIGHT";
-        break;
-    case Direction::UP:
-        o << "UP";
-        break;
-    }
 
-    return o;
-}
 
-void print(Direction* a, int n)
-{
-    for (int i = 0; i < n; i++)
-    { 
-        std::cout << a[i] << " ";
-    }
-    std::cout << std::endl;
-}
 
 bool is_enter(Status st, Direction& dir)
 {
@@ -341,19 +314,6 @@ Direction Runner::step_direct()
 	return ch.d_where[ch.n - 1];
 }
 
-bool ravn(Direction* a, int n)
-{
-    bool b = false;
-    for (int i = 1; i < n; i++)
-    {
-        if (a[0] == a[i])
-        {
-            b = true;
-            break;
-        }
-    }
-}
-
 Direction Runner::step_back()
 {
     cell c = know_teck();
@@ -443,65 +403,66 @@ bool Runner::add_cell(int nx, int ny, cell& c, bool v)
     int xn = x, yn = y;
 	if (nx >= 0 && ny >= 0)
 	{
-		while (nx >= quarter1.size())
+        unsigned int nnx = nx, nny = ny;
+
+        while (nnx >= quarter1.size())
 		{
 			std::vector<cell> a;
 			quarter1.push_back(a);
 		}
-		while (ny >= quarter1[nx].size())
+        while (nny >= quarter1[nnx].size())
 		{
 			cell a;
-			quarter1[nx].push_back(a);
+            quarter1[nnx].push_back(a);
 		}
-        quarter1[nx][ny] = c;
+        quarter1[nnx][nny] = c;
 	}
 	else if (nx >= 0 && ny < 0)
 	{
-		ny = abs(ny) - 1;
+        unsigned int nnx = nx, nny = abs(ny) - 1;
 
-		while (nx >= quarter4.size())
+        while (nnx >= quarter4.size())
 		{
 			std::vector<cell> a;
 			quarter4.push_back(a);
 		}
-		while (ny >= quarter4[nx].size())
+        while (nny >= quarter4[nnx].size())
 		{
 			cell a;
-			quarter4[nx].push_back(a);
+            quarter4[nnx].push_back(a);
 		}
-        quarter4[nx][ny] = c;
+        quarter4[nnx][nny] = c;
 
 	}
 	else if (nx < 0 && ny < 0)
 	{
-		ny = abs(ny) - 1;
-		nx = abs(nx) - 1;
-		while (nx >= quarter3.size())
+        unsigned int nnx = abs(nx) - 1, nny = abs(ny) - 1;
+        while (nnx >= quarter3.size())
 		{
 			std::vector<cell> a;
 			quarter3.push_back(a);
 		}
-		while (ny >= quarter3[nx].size())
+        while (nny >= quarter3[nnx].size())
 		{
 			cell a;
-			quarter3[nx].push_back(a);
+            quarter3[nnx].push_back(a);
 		}
-        quarter3[nx][ny] = c;
+        quarter3[nnx][nny] = c;
 	}
 	else
 	{
-		nx = abs(nx) - 1;
-		while (nx >= quarter2.size())
+        unsigned int nnx = abs(nx) - 1, nny = ny;
+        while (nnx >= quarter2.size())
 		{
 			std::vector<cell> a;
 			quarter2.push_back(a);
 		}
-		while (ny >= quarter2[nx].size())
+        while (nny >= quarter2[nnx].size())
 		{
 			cell a;
-			quarter2[nx].push_back(a);
+            quarter2[nnx].push_back(a);
 		}
-		quarter2[nx][ny] = c;
+        quarter2[nnx][nny] = c;
 	}
     change_xy(c.d_where[c.n - 1]);
     cell c12 = know_teck();
@@ -579,22 +540,26 @@ cell Runner::know_teck()
 {
 	if (x >= 0 && y >= 0)
 	{
-        if(quarter1.size() > x && quarter1[x].size() > y)
+        unsigned int nx = x, ny = y;
+        if(quarter1.size() > nx && quarter1[x].size() > ny)
 		return quarter1[x][y];
 	}
 	if (x >= 0 && y < 0)
 	{
-        if (quarter4.size() > x && quarter4[x].size() > abs(y) - 1)
+        unsigned int nx = x, ny = abs(y) - 1;
+        if (quarter4.size() > nx && quarter4[x].size() > ny)
 		return quarter4[x][abs(y) - 1];
 	}
 	if (x < 0 && y < 0)
 	{
-        if (quarter3.size() > (abs(x) - 1) && quarter3[abs(x) - 1].size() > abs(y) - 1)
+        unsigned int nx = abs(x) - 1, ny = abs(y) - 1;
+        if (quarter3.size() > nx && quarter3[abs(x) - 1].size() > ny)
 		return quarter3[abs(x) - 1][abs(y) - 1];
 	}
 	if (x < 0 && y >= 0)
 	{
-        if (quarter2.size() > (abs(x) - 1) && quarter2[abs(x) - 1].size() > y)
+        unsigned int nx = abs(x) - 1, ny = y;
+        if (quarter2.size() > nx && quarter2[abs(x) - 1].size() > ny)
 		return quarter2[abs(x) - 1][y];
 	}
     cell asd;
@@ -625,63 +590,69 @@ cell Runner::know_prev_q1()
 	} 
 	if (x == 0)
 	{
-		if (quarter1.size() > 1 && quarter1[1].size() > y && quarter1[1][y].kol == kol - 1)
+        unsigned int ny = y;
+        if (quarter1.size() > 1 && quarter1[1].size() > ny && quarter1[1][y].kol == kol - 1)
 		{
 			return quarter1[1][y];
 		}
-		if (quarter1.size() > 0 && quarter1[0].size() > y + 1 && quarter1[0][y + 1].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > ny + 1 && quarter1[0][y + 1].kol == kol - 1)
 		{
 			return quarter1[0][y + 1];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > y && quarter2[0][y].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > ny && quarter2[0][y].kol == kol - 1)
 		{
 			return quarter2[0][y];
 		}
-		if (quarter1.size() > 0 && quarter1[0].size() > y - 1 && quarter1[0][y - 1].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > ny - 1 && quarter1[0][y - 1].kol == kol - 1)
 		{
 			return quarter1[0][y - 1];
 		}
 	}
 	if (y == 0)
 	{
-		if (quarter1.size() > x + 1 && quarter1[x + 1].size() > 0 && quarter1[x + 1][0].kol == kol - 1)
+        unsigned int nx = x;
+        if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > 0 && quarter1[x + 1][0].kol == kol - 1)
 		{
 			return quarter1[x + 1][0];
 		}
-		if (quarter1.size() > x && quarter1[x].size() > 1 && quarter1[x][1].kol == kol - 1)
+        if (quarter1.size() > nx && quarter1[x].size() > 1 && quarter1[x][1].kol == kol - 1)
 		{
 			return quarter1[x][1];
 		}
 
-		if (quarter1.size() > x - 1 && quarter1[x - 1].size() > 0 && quarter1[x - 1][0].kol == kol - 1)
+        if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > 0 && quarter1[x - 1][0].kol == kol - 1)
 		{
 			return quarter1[x - 1][0];
 		}
-		if (quarter4.size() > x && quarter4[x].size() > 0 && quarter4[x][0].kol == kol - 1)
+        if (quarter4.size() > nx && quarter4[x].size() > 0 && quarter4[x][0].kol == kol - 1)
 		{
 			return quarter4[x][0];
 		}
 	}
-	if (quarter1.size() > x + 1 && quarter1[x + 1].size() > (y) && quarter1[x + 1][y].kol == kol - 1)
+    unsigned int ny = y;
+    unsigned int nx = x;
+    if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > (ny) && quarter1[x + 1][y].kol == kol - 1)
 	{
 		return quarter1[x + 1][y];
 	}
-	if (quarter1.size() > x && quarter1[x].size() > (y + 1) && quarter1[x][y + 1].kol == kol - 1)
+    if (quarter1.size() > nx && quarter1[x].size() > (ny + 1) && quarter1[x][y + 1].kol == kol - 1)
 	{
 		return quarter1[x][y + 1];
 	}
-	if (quarter1.size() > x - 1 && quarter1[x - 1].size() > (y) && quarter1[x - 1][y].kol == kol - 1)
+    if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > (ny) && quarter1[x - 1][y].kol == kol - 1)
 	{
 		return quarter1[x - 1][y];
 	}
-	if (quarter1.size() > x && quarter1[x].size() > (y - 1) && quarter1[x][y - 1].kol == kol - 1)
+    if (quarter1.size() > nx && quarter1[x].size() > (ny - 1) && quarter1[x][y - 1].kol == kol - 1)
 	{
 		return quarter1[x][y - 1];
 	}
+    cell asd;
+    return asd;
 }
 cell Runner::know_prev_q2()
 {
-	int nx = abs(x) - 1, ny = y;
+    unsigned int nx = abs(x) - 1, ny = y;
 	if (nx == 0 && ny == 0)
 	{
 		if (quarter1.size() > 0 && quarter1[0].size() > 0 && quarter1[0][0].kol == kol - 1)
@@ -755,10 +726,12 @@ cell Runner::know_prev_q2()
 	{
 		return quarter2[nx][ny - 1];
 	}
+    cell asd;
+    return asd;
 }
 cell Runner::know_prev_q3()
 {
-	int nx = abs(x) - 1, ny = abs(y) - 1;
+    unsigned int nx = abs(x) - 1, ny = abs(y) - 1;
 	if(nx == 0 && ny == 0)
 	{
 		if (quarter4.size() > 0 && quarter4[0].size() > 0 && quarter4[0][0].kol == kol - 1)
@@ -832,11 +805,13 @@ cell Runner::know_prev_q3()
 	{
 		return quarter3[nx][ny + 1];
 	}
+    cell asd;
+    return asd;
 }
 cell Runner::know_prev_q4()
 {
-	int nx = x;
-	int ny = abs(y) - 1;
+    unsigned int nx = x;
+    unsigned int ny = abs(y) - 1;
 	if (nx == 0 && ny == 0)
 	{
 		if (quarter4.size() > 1 && quarter4[1].size() > 0 && quarter4[1][0].kol == kol - 1)
@@ -910,5 +885,7 @@ cell Runner::know_prev_q4()
 	{
 		return quarter4[nx][ny + 1];
 	}
+    cell ad;
+    return ad;
 }
 
