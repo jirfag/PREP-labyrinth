@@ -33,7 +33,7 @@ Direction Runner::step() {
 
     for ( auto it = stack.begin(); it != stack.end() - 1; ++it ) {
         if ( it->x == X && it->y == Y ) {
-            stack.erase( it , stack.end() );
+            stack.erase( it+1 , stack.end() );
             break;
         }
     } 
