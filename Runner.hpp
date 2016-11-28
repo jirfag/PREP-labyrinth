@@ -1,29 +1,52 @@
-//
-// Created by tsv on 09.05.16.
-//
-
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
-#include <unordered_map>
-#include <string>
-#include <stack>
+#include "utils.hpp"
 
-class Runner: public RunnerBase {
-    public:
-        Direction step();
-        Runner() : x(0),y(0) {
-          path[foo(0,0)]=1;
-        }
-        std::string foo(int a,int b){
-          return(std::to_string(a)+";"+std::to_string(b));
-        }
-        int x,y;
-        Direction prev;
-        std::unordered_map<std::string,bool> path;
-        std::stack<Direction> order;
+#include <stack>
+#include <unordered_set>
+
+struct Point {
+  int x;
+  int y;
+
+  bool operator==(const Point&) const;
 };
 
+class PointHash {
+ public:
+  std::size_t operator()(const Point&) const;
 
-#endif //LABYRINTH_RUNNER_HPP
+ private:
+  std::hash<int> hasher_;
+};
+
+using Path = std::stack<Direction>;
+using PointSet = std::unordered_set<Point, PointHash>;
+
+class Runner : public RunnerBase {
+ public:
+  Runner();
+
+  Direction step();
+
+ private:
+  Path path_;
+  Point position_;
+  PointSet visited_;
+
+  bool wasHere(Direction) const;
+
+  Direction goBack();
+
+  Direction goDown(bool);
+
+  Direction goLeft(bool);
+
+  Direction goRight(bool);
+
+  Direction goUp(bool);
+};
+
+#endif
