@@ -35,6 +35,7 @@ Direction Runner::step()
     if (current_status.up == BlockType::EXIT) {
         return Direction::UP;
     }
+    else{
     if(current_status.right == BlockType::FREE && (!v.back().Right)){
         v.back().dir = Direction::RIGHT;
         v.back().Right = true;
@@ -67,7 +68,8 @@ Direction Runner::step()
         v.push_back(n);
         return Direction::UP;        
     }
-    return Direction::DOWN;
+    }
+    return Direction::RIGHT;
 }
 
 
