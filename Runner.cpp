@@ -10,15 +10,19 @@
 Direction Runner::step()
 {
 
-    status = {current_status.up, current_status.right, current_status.down, current_status.left};
+    status = {current_status.up, current_status.left, current_status.down, current_status.right};
 
     it = std::find(status.begin(), status.end(), BlockType::EXIT);
     if (it != status.end())
             return directions[std::distance(status.begin(), it)];
 
     int step = (last_step + 1) % 4;
+
     while(status[step] == BlockType::WALL){
-        step = (step + 3) % 4;
+        if(step)
+            step--;
+        else
+            step = 3;
     }
 
     return directions[last_step = step];
