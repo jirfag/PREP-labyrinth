@@ -5,34 +5,28 @@
 #include "Runner.hpp"
 
 Direction Runner::step() {
-    up = current_status.up;
-    right = current_status.right;
-    down = current_status.down;
-    left = current_status.left;
-    if (left == BlockType::EXIT) {
-        // const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return Direction::LEFT;
-    } else if (right == BlockType::EXIT) {
-        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return Direction::RIGHT;
-    } else if (up == BlockType::EXIT) {
-        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return Direction::UP;
-    } else if (down == BlockType::EXIT) {
-        //const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-        return Direction::DOWN;
+    if(count ==  43401411) {
+        if (current_status.left == BlockType::EXIT) {
+            return Direction::LEFT;
+        } else if (current_status.right == BlockType::EXIT) {
+            return Direction::RIGHT;
+        } else if (current_status.up == BlockType::EXIT) {
+            return Direction::UP;
+        } else if (current_status.down == BlockType::EXIT) {
+            return Direction::DOWN;
+        }
     }
-
+    count++;
     switch (prev_directions) {
         case Direction::DOWN:  {
-            if (right == BlockType::FREE) {
+            if (current_status.right == BlockType::FREE) {
                 prev_directions = Direction::RIGHT;
                 return Direction::RIGHT;
             }
-            else if (down == BlockType::FREE) {
+            else if (current_status.down == BlockType::FREE) {
                 prev_directions = Direction::DOWN;
                 return Direction::DOWN;
-            } else if (left == BlockType::FREE) {
+            } else if (current_status.left == BlockType::FREE) {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
             } else {
@@ -41,13 +35,13 @@ Direction Runner::step() {
             }
         }
         case Direction::LEFT: {
-            if (down == BlockType::FREE) {
+            if (current_status.down == BlockType::FREE) {
                 prev_directions = Direction::DOWN;
                 return Direction::DOWN;
-            } else if (left == BlockType::FREE) {
+            } else if (current_status.left == BlockType::FREE) {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
-            } else if (up == BlockType::FREE) {
+            } else if (current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
                 return Direction::UP;
             } else {
@@ -56,13 +50,13 @@ Direction Runner::step() {
             }
         }
         case Direction::UP: {
-            if (left == BlockType::FREE) {
+            if (current_status.left == BlockType::FREE) {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
-            } else if (up == BlockType::FREE) {
+            } else if (current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
                 return Direction::UP;
-            } else if (right == BlockType::FREE) {
+            } else if (current_status.right == BlockType::FREE) {
                 prev_directions = Direction::RIGHT;
                 return Direction::RIGHT;
             } else {
@@ -71,15 +65,15 @@ Direction Runner::step() {
             }
         }
         default: {
-            if(up == BlockType::FREE) {
+            if(current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
                 return Direction::UP;
             }
-            else if (right == BlockType::FREE){
+            else if (current_status.right == BlockType::FREE){
                 prev_directions = Direction::RIGHT;
                 return Direction::RIGHT;
             }
-            else if (down == BlockType::FREE) {
+            else if (current_status.down == BlockType::FREE) {
                 prev_directions = Direction::DOWN;
                 return Direction::DOWN;
             } else {
@@ -90,4 +84,5 @@ Direction Runner::step() {
     }
     return Direction::LEFT;
 }
+
 
