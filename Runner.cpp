@@ -73,7 +73,7 @@ Direction Runner::step() {
                 ++node.down;
 
         }
-        /*
+        
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
        //     std::cout << it.base()->y << "__" << it.base()->x << std::endl;
             if ( it->x == X && it->y == Y ) {
@@ -87,7 +87,7 @@ Direction Runner::step() {
                 break;
             }
         }
-        */
+        
   //      std::cout << "2: " << stack.back().x << stack.back().y << std::endl;
     }
 
@@ -127,7 +127,7 @@ Direction Runner::step() {
         }
 
         if ( node.down == 0 && current_status.down == BlockType::FREE ) {
-            ++node.right;
+            ++node.down;
             node.direction = Direction::DOWN;
             stack.push_back( node );
             --Y;
@@ -160,7 +160,7 @@ Direction Runner::step() {
         }
 
         if ( node.down == 1 && current_status.down == BlockType::FREE ) {
-            ++node.right;
+            ++node.down;
             node.direction = Direction::DOWN;
             stack.push_back( node );
             --Y;
@@ -195,7 +195,7 @@ Direction Runner::step() {
         }
 
         if ( node.down == 2 && current_status.down == BlockType::FREE ) {
-            ++node.right;
+            ++node.down;
             node.direction = Direction::DOWN;
             stack.push_back( node );
             --Y;
@@ -222,4 +222,3 @@ Direction Runner::step() {
         return Direction::UP;
     }
 }
-
