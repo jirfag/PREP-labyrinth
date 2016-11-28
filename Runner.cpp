@@ -35,7 +35,7 @@ Direction Runner::step()
     if (current_status.up == BlockType::EXIT) {
         return Direction::UP;
     }
-    if(current_status.right != BlockType::WALL && (!v.back().Right)){
+    if(current_status.right == BlockType::FREE && (!v.back().Right)){
         v.back().dir = Direction::RIGHT;
         v.back().Right = true;
         node n;
@@ -43,7 +43,7 @@ Direction Runner::step()
         v.push_back(n);
         return Direction::RIGHT;
     }
-    if (current_status.down != BlockType::WALL && (!v.back().Down)) {
+    if (current_status.down == BlockType::FREE && (!v.back().Down)) {
         v.back().dir = Direction::DOWN;
         v.back().Down = true;
         node n;
@@ -51,7 +51,7 @@ Direction Runner::step()
         v.push_back(n);
         return Direction::DOWN;
     }
-    if (current_status.left != BlockType::WALL && (!v.back().Left)) {
+    if (current_status.left == BlockType::FREE && (!v.back().Left)) {
         v.back().dir = Direction::LEFT;
         v.back().Left = true;
         node n;
@@ -59,7 +59,7 @@ Direction Runner::step()
         v.push_back(n);
         return Direction::LEFT;
     }
-    if (current_status.up != BlockType::WALL && (!v.back().Up)) {
+    if (current_status.up == BlockType::FREE && (!v.back().Up)) {
         v.back().dir = Direction::UP;
         v.back().Up = true;
         node n;
