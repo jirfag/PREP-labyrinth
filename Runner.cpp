@@ -47,19 +47,19 @@ Direction Runner::step() {
     }
 
     bool b = false;
-    for ( auto &&temp : pos ) {
-        if ( temp.x == X ) {
-            if ( temp.y == Y ) {
-                if ( temp.up ) {
+    for ( auto it = pos.end(); it != pos.begin(); --it ) {
+        if ( it.base()->x == X ) {
+            if ( it.base()->y == Y ) {
+                if ( it.base()->up ) {
                     stack.top().up = true;
                 }
-                if ( temp.left ) {
+                if ( it.base()->left ) {
                     stack.top().left = true;
                 }
-                if ( temp.right ) {
+                if ( it.base()->right ) {
                     stack.top().right = true;
                 }
-                if ( temp.down ) {
+                if ( it.base()->down ) {
                     stack.top().down = true;
                 }
             }
