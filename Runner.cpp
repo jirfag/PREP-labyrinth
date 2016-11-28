@@ -34,7 +34,7 @@ Direction Runner::step() {
         stack.push_back( node );
     }
      */
-
+/*
  //   int err = 0;
     for ( auto it = stack.end(); it != stack.begin(); --it ) {
  //       std::cout << it->x << it->y << std::endl;
@@ -50,7 +50,7 @@ Direction Runner::step() {
             break;
         }
     }
-    
+    */
 
     cell node;
     node.x = X;
@@ -73,7 +73,7 @@ Direction Runner::step() {
                 ++node.down;
 
         }
-        
+        /*
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
        //     std::cout << it.base()->y << "__" << it.base()->x << std::endl;
             if ( it->x == X && it->y == Y ) {
@@ -87,7 +87,7 @@ Direction Runner::step() {
                 break;
             }
         }
-        
+        */
   //      std::cout << "2: " << stack.back().x << stack.back().y << std::endl;
     }
 
