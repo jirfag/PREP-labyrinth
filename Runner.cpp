@@ -35,6 +35,21 @@ Direction Runner::step() {
                 return Direction::RIGHT;
             }
         }
+        case Direction::UP: {
+            if (current_status.left == BlockType::FREE) {
+                prev_directions = Direction::LEFT;
+                return Direction::LEFT;
+            } else if (current_status.up == BlockType::FREE) {
+                prev_directions = Direction::UP;
+                return Direction::UP;
+            } else if (current_status.right == BlockType::FREE) {
+                prev_directions = Direction::RIGHT;
+                return Direction::RIGHT;
+            } else {
+                prev_directions = Direction::DOWN;
+                return Direction::DOWN;
+            }
+        }
         case Direction::RIGHT: {
             if(current_status.up == BlockType::FREE) {
                 prev_directions = Direction::UP;
@@ -50,21 +65,6 @@ Direction Runner::step() {
             } else {
                 prev_directions = Direction::LEFT;
                 return Direction::LEFT;
-            }
-        }
-        case Direction::UP: {
-            if (current_status.left == BlockType::FREE) {
-                prev_directions = Direction::LEFT;
-                return Direction::LEFT;
-            } else if (current_status.up == BlockType::FREE) {
-                prev_directions = Direction::UP;
-                return Direction::UP;
-            } else if (current_status.right == BlockType::FREE) {
-                prev_directions = Direction::RIGHT;
-                return Direction::RIGHT;
-            } else {
-                prev_directions = Direction::DOWN;
-                return Direction::DOWN;
             }
         }
         default: {
