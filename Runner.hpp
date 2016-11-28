@@ -8,6 +8,7 @@
 #include "RunnerBase.hpp"
 #include <unordered_map>
 #include <string>
+#include <stack>
 
 class Runner: public RunnerBase {
     public:
@@ -19,7 +20,9 @@ class Runner: public RunnerBase {
           return(std::to_string(a)+";"+std::to_string(b));
         }
         int x,y;
+        Direction prev;
         std::unordered_map<std::string,bool> path;
+        std::stack<Direction> order;
 };
 
 
