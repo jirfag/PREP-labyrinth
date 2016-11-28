@@ -7,6 +7,7 @@
 #include <vector>
 #include "RunnerBase.hpp"
 
+struct node;
 
 class Runner: public RunnerBase {
 private:
