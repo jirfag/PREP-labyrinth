@@ -165,7 +165,7 @@ Direction Runner::step() {
             return Direction::UP;
 
         }
-/*        if ( stack.back().right == 2 && current_status.right == BlockType::FREE ) {
+        if ( stack.back().right == 2 && current_status.right == BlockType::FREE ) {
             ++stack.back().right;
             stack.back().direction = Direction::RIGHT;
             cell node;
@@ -209,7 +209,7 @@ Direction Runner::step() {
 
         }
     }
-    */
+    
         return Direction::UP;
     }
 }
