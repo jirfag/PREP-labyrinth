@@ -7,10 +7,90 @@
 #include <cstdlib>
 #include "utils.hpp"
 
+Runner::Runner() : prevMove(Direction::RIGHT){}
+
 Direction Runner::step()
 {
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    return directions[std::rand() % directions.size()];
+
+
+    if (current_status.up == BlockType::EXIT) {
+        return Direction::UP;
+    }else if (current_status.left == BlockType::EXIT) {
+        return Direction::LEFT;
+    }else if (current_status.right == BlockType::EXIT) {
+        return Direction::RIGHT;
+    }else if (current_status.down == BlockType::EXIT) {
+        return Direction::DOWN;
+    }
+    switch(prevMove){
+    	case Direction::UP: {
+    		if(current_status.left == BlockType::FREE){
+    			prevMove = Direction::LEFT;
+    			return Direction::LEFT;
+    		}
+            if(current_status.up==BlockType::FREE){
+                return Direction::UP;
+            }
+            if(current_status.right ==BlockType::FREE){
+                prevMove = Direction::RIGHT;
+                return Direction::RIGHT;
+            }
+    		if(current_status.down == BlockType::FREE){
+    			prevMove = Direction::DOWN;
+    			return Direction::DOWN;
+    		}
+        }
+        case Direction::LEFT: {
+            if(current_status.down == BlockType::FREE){
+                prevMove = Direction::DOWN;
+                return Direction::DOWN;
+            }
+            if(current_status.left == BlockType::FREE){
+                return Direction::LEFT;
+            }
+            if(current_status.up==BlockType::FREE){
+                prevMove = Direction::UP;
+                return Direction::UP;
+            }
+            if(current_status.right==BlockType::FREE){
+                prevMove = Direction::RIGHT;
+                return Direction::RIGHT;
+            }
+        }
+        case Direction::DOWN: {
+            if(current_status.right ==BlockType::FREE){
+                prevMove = Direction::RIGHT;
+                return Direction::RIGHT;
+            }
+            if(current_status.down == BlockType::FREE){
+                return Direction::DOWN;
+            }
+            if(current_status.left == BlockType::FREE){
+                prevMove = Direction::LEFT;
+                return Direction::LEFT;
+            }
+            if(current_status.up ==BlockType::FREE){
+                prevMove = Direction::UP;
+                return Direction::UP;
+            }
+        }
+        case Direction::RIGHT: {
+            if(current_status.up ==BlockType::FREE){
+                prevMove = Direction::UP;
+                return Direction::UP;
+            }
+            if(current_status.right ==BlockType::FREE){
+                return Direction::RIGHT;
+            }
+            if(current_status.down == BlockType::FREE){
+                prevMove = Direction::DOWN;
+                return Direction::DOWN;
+            }
+            if(current_status.left == BlockType::FREE){
+                prevMove = Direction::LEFT;
+                return Direction::LEFT;
+            }
+        }
+    }
+    return prevMove;
 }
