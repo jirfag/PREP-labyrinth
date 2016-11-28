@@ -95,28 +95,32 @@ Direction Runner::step() {
          ( node.up != 0 || current_status.up != BlockType::FREE ) &&
          ( node.left != 0 || current_status.left != BlockType::FREE ) &&
          ( node.down != 0 || current_status.down != BlockType::FREE ) ) {
-                      switch ( stack.back().direction ) {
+                     switch ( stack.back().direction ) {
             case Direction::DOWN : {
+        //        stack.pop_back();
                 ++stack.back().down;
-                --stack.back().up;
+                stack.back().direction = Direction::UP;
                 ++Y;
                 return Direction::UP;
             }
             case Direction::RIGHT : {
+        //        stack.pop_back();
                 ++stack.back().right;
-                --stack.back().left;
+                stack.back().direction = Direction::LEFT;
                 --X;
                 return Direction::LEFT;
             }
             case Direction::LEFT : {
+        //        stack.pop_back();
                 ++stack.back().left;
-                --stack.back().right;
+                stack.back().direction = Direction::RIGHT;
                 ++X;
                 return Direction::RIGHT;
             }
             default: {
+          //      stack.pop_back();
                 ++stack.back().up;
-                --stack.back().down;
+                stack.back().direction = Direction::DOWN;
                 --Y;
                 return Direction::DOWN;
             }
