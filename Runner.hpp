@@ -4,6 +4,7 @@
 
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
+
 #include <vector>
 #include "RunnerBase.hpp"
 
@@ -13,9 +14,8 @@ class Runner: public RunnerBase {
 private:
     std::vector<node> v;
 public:
-
-    bool turn_back();
     Direction step();
+    bool turn_back();
 
 };
 
