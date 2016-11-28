@@ -31,7 +31,7 @@ Direction Runner::step() {
         stack.push_back( node );
     }
 
-    for ( auto it = stack.end() - 1; it != stack.begin(); --it ) {
+    for ( auto it = stack.end(); it != stack.begin(); --it ) {
         if ( it->x == X && it->y == Y ) {
             stack.erase( it + 1 , stack.end() );
             break;
