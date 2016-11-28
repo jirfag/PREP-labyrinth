@@ -17,37 +17,22 @@ Direction Runner::step()
     if (last_step == Direction::UP){
         if((current_status.up != BlockType::WALL) && (current_status.up != BlockType::ENTER))
             return last_step;
-        else
-            return last_step = directions[1 + rand() % 3];
-
     }
     else if (last_step == Direction::LEFT){
         if((current_status.left != BlockType::WALL) && (current_status.left != BlockType::ENTER))
             return last_step;
-        else{
-            dir = directions[rand()%4];
-            while(dir == last_step){
-               dir = directions[rand()%4];
-            }
-            return last_step = dir;
-        }
     }
     else if (last_step == Direction::DOWN){
         if((current_status.down != BlockType::WALL) && (current_status.down != BlockType::ENTER))
             return last_step;
-
-        else{
-            dir = directions[rand()%4];
-            while(dir == last_step){
-               dir = directions[rand()%4];
-            }
-            return last_step = dir;
-        }
     }
     else {
         if((current_status.right != BlockType::WALL) && (current_status.right != BlockType::ENTER))
             return last_step;
-        else
-            return last_step = directions[rand()%3];
     }
+
+    do
+        dir = directions[rand() % 4];
+    while (dir == last_step);
+    return last_step = dir;
 }

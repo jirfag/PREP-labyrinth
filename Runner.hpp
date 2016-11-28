@@ -6,14 +6,14 @@
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
-#include <ctime>
-#include <cstdlib>
+//#include <ctime>
+//#include <cstdlib>
 
 class Runner: public RunnerBase {
     public:
 
         Runner(){
-            srand(time(0));
+            //srand(time(0));
             last_step = Direction::UP;
         }
 
