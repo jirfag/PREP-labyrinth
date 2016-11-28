@@ -173,42 +173,47 @@ Direction Runner::step() {
             node.x = X;
             node.y = Y;
             stack.push_back( node );
-
+            ++X;
             return Direction::RIGHT;
         }
 
-        if ( stack.top().down == 2 && current_status.down == BlockType::FREE ) {
-            ++stack.top().down;
-            stack.top().direction = Direction::DOWN;
+        if ( stack.back().down == 2 && current_status.down == BlockType::FREE ) {
+            ++stack.back().down;
+            stack.back().direction = Direction::DOWN;
             cell node;
             ++node.up;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            --Y;
+            stack.push_back( node );
             return Direction::DOWN;
 
         }
 
-        if ( stack.top().left == 2 && current_status.left == BlockType::FREE ) {
-            ++stack.top().left;
-            stack.top().direction = Direction::LEFT;
+        if ( stack.back().left == 2 && current_status.left == BlockType::FREE ) {
+            ++stack.back().left;
+            stack.back().direction = Direction::LEFT;
             cell node;
             ++node.right;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            stack.push_back( node );
+            --X;
             return Direction::LEFT;
         }
 
-        if ( stack.top().up == 2 && current_status.up == BlockType::FREE ) {
-            ++stack.top().up;
-            stack.top().direction = Direction::UP;
+        if ( stack.back().up == 2 && current_status.up == BlockType::FREE ) {
+            ++stack.back().up;
+            stack.back().direction = Direction::UP;
             cell node;
             ++node.down;
-
-            stack.push( node );
+            node.x = X;
+            node.y = Y;
+            ++Y;
+            stack.push_back( node );
             return Direction::UP;
 
         }
-    }
     
         return Direction::UP;
     }
