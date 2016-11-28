@@ -34,7 +34,7 @@ Direction Runner::step() {
         stack.push_back( node );
     }
      */
-/*
+
  //   int err = 0;
     for ( auto it = stack.end(); it != stack.begin(); --it ) {
  //       std::cout << it->x << it->y << std::endl;
@@ -50,7 +50,7 @@ Direction Runner::step() {
             break;
         }
     }
-    */
+    
 
     cell node;
     node.x = X;
