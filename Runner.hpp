@@ -14,7 +14,7 @@ using namespace std;
 
 class Runner: public RunnerBase {
     public:
-	Runner(): {
+	Runner() {
 		fout.open("Dungeon/lvl_3.txt");
 		if (fout.is_open()) {
 			fout << "3 5" << endl;
