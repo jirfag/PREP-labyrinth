@@ -12,11 +12,11 @@ using namespace std;
 
 class Runner: public RunnerBase {
     public:
-	Runner(): i(1000), j(1000),
+	Runner(): i(10000), j(10000),
 		  prev(Direction::UP), deadend(true) {
-		map.resize(2001);
+		map.resize(20001);
 		for (auto& row : map)
-			row.resize(2001);
+			row.resize(20001);
 		map[i][j] = 1;
 	}
 
