@@ -98,8 +98,8 @@ Direction Runner::step() {
 					return (prev = Direction::LEFT);
 				}
 				else {
-					return (prev = Direction::DOWN);
 					++i;
+					return (prev = Direction::DOWN);
 				}
 
 			case(Direction::DOWN):
