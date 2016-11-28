@@ -3,208 +3,82 @@
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <iostream>
-#include <cstdlib>
 #include "utils.hpp"
 
-Runner::Runner(){
-	prevMove = Direction::UP;
-	myvec.resize(10000);
-	steps = 0;
+Direction Runner::step() {
+    if (v.empty()) {
+        node n;
+        v.push_back(n);
+    }
+    if (turn_back()) {
+        v.pop_back();
+        if(v.back().dir == Direction::RIGHT)
+            return Direction::LEFT;
+        if(v.back().dir == Direction::LEFT)
+            return Direction::RIGHT;
+        if(v.back().dir == Direction::UP)
+            return Direction::DOWN;
+        if(v.back().dir == Direction::DOWN)
+            return Direction::UP;
+    }
+
+    if (current_status.left == BlockType::EXIT) {
+        return Direction::LEFT;
+    }
+    if (current_status.right == BlockType::EXIT) {
+        return Direction::RIGHT;
+    }
+    if (current_status.down == BlockType::EXIT) {
+        return Direction::DOWN;
+    }
+    if (current_status.up == BlockType::EXIT) {
+        return Direction::UP;
+    }
+    if(current_status.right != BlockType::WALL && (!v.back().Right)){
+        v.back().dir = Direction::RIGHT;
+        v.back().Right = true;
+        node n;
+        n.Left = true;
+        v.push_back(n);
+        return Direction::RIGHT;
+    }
+    if (current_status.down != BlockType::WALL && (!v.back().Down)) {
+        v.back().dir = Direction::DOWN;
+        v.back().Down = true;
+        node n;
+        n.Up = true;
+        v.push_back(n);
+        return Direction::DOWN;
+    }
+    if (current_status.left != BlockType::WALL && (!v.back().Left)) {
+        v.back().dir = Direction::LEFT;
+        v.back().Left = true;
+        node n;
+        n.Right = true;
+        v.push_back(n);
+        return Direction::LEFT;
+    }
+    if (current_status.up != BlockType::WALL && (!v.back().Up)) {
+        v.back().dir = Direction::UP;
+        v.back().Up = true;
+        node n;
+        n.Down = true;
+        v.push_back(n);
+        return Direction::UP;        
+    }
+    return Direction::DOWN;
 }
 
 
-void Runner::fill_node(node& n){
-	if(current_status.left ==BlockType::WALL){
+bool Runner::turn_back(){
+    if ((current_status.right == BlockType::FREE || current_status.right == BlockType::EXIT ) && (!v.back().Right))
+        return false;
+    if ((current_status.down == BlockType::FREE || current_status.down == BlockType::EXIT ) && (!v.back().Down))
+        return false;
+    if ((current_status.up == BlockType::FREE || current_status.up == BlockType::EXIT ) && (!v.back().Up))
+        return false;
+    if ((current_status.left == BlockType::FREE || current_status.left == BlockType::EXIT ) && (!v.back().Left))
+        return false;
 
-		n.freeWays--;
-	}
-	if(current_status.right==BlockType::WALL){
-
-		n.freeWays--;
-	}
-	if(current_status.up ==BlockType::WALL){
-
-		n.freeWays--;
-	}
-	if(current_status.down==BlockType::WALL){
-
-		n.freeWays--;
-	}
-}
-
-Direction Runner::step(){
-	node n;
-	fill_node(n);
-	if(n.freeWays==1 && goForward ==true && steps !=0){
-		goForward = false;
-	}
-	if(goForward){
-		MoveForward(prevMove, n);
-	}
-	else{
-		MoveBack(prevMove);
-	}
-	steps++;
-	//if(steps >55) {
-	//	std::cout<<std::endl;
-	//	exit(0); }
-	return prevMove;
-}
-
-void Runner::MoveBack(Direction& prevMove){
-	node new_n = myvec.back();
-	if(new_n.freeWays <= 2){
-		myvec.pop_back();
-		prevMove = new_n.reverse;
-		if(prevMove == Direction::RIGHT){
-		}
-		else if(prevMove == Direction::UP){
-		}
-		else if(prevMove == Direction::DOWN){
-		}
-		else if(prevMove == Direction::LEFT){
-		}
-	}
-	else {
-		myvec.pop_back();
-		goForward = true;
-		prevMove = new_n.right_dir;
-	}
-}
-
-
-void Runner::MoveForward(Direction& prevMove, node& n){
-	switch(prevMove){
-			case Direction::UP: {
-				if(current_status.up !=BlockType::WALL){
-					n.reverse = Direction::DOWN;
-					n.right_dir = Direction::LEFT;
-					myvec.push_back(n);
-					return;
-				}
-				if(current_status.right!=BlockType::WALL){
-					n.reverse = Direction::LEFT;
-					n.right_dir = Direction::UP;
-					myvec.push_back(n);
-                	prevMove = Direction::RIGHT;
-                	return;
-            	}
-    			if(current_status.left != BlockType::WALL){
-    				n.reverse = Direction::RIGHT;
-    				n.right_dir = Direction::DOWN;
-    				myvec.push_back(n);
-    				prevMove = Direction::LEFT;
-    				return;
-    			}
-            	if(current_status.down != BlockType::WALL){
-            		n.reverse = Direction::UP;
-            		n.right_dir = Direction::RIGHT;
-            		myvec.push_back(n);
-    				prevMove = Direction::DOWN;
-    				return;
-    			}
-			}
-			case Direction::RIGHT: {
-            	if(current_status.right !=BlockType::WALL){
-            		n.reverse = Direction::LEFT;
-            		n.right_dir = Direction::UP;
-            		myvec.push_back(n);
-            		return;
-                	//return prevMove;
-            	}
-            	if(current_status.down != BlockType::WALL){
-            		n.reverse = Direction::UP;
-            		n.right_dir = Direction::RIGHT;
-            		myvec.push_back(n);
-                	prevMove = Direction::DOWN;
-                	return;
-            	}
-            	if(current_status.up !=BlockType::WALL){
-               		prevMove = Direction::UP;
-               		n.reverse = Direction::DOWN;
-               		n.right_dir = Direction::LEFT;
-                	myvec.push_back(n);
-                	return;
-            	}
-            	if(current_status.left != BlockType::WALL){
-                	prevMove = Direction::LEFT;
-                	n.reverse = Direction::RIGHT;
-                	n.right_dir = Direction::DOWN;
-                	myvec.push_back(n);
-                	return;
-            	}
-        	}
-        	case Direction::DOWN: {
-            	if(current_status.down != BlockType::WALL){
-            		n.reverse = Direction::UP;
-            		n.right_dir = Direction::RIGHT;
-            		prevMove = Direction::DOWN;
-            		myvec.push_back(n);
-            		return;
-            	}
-	            if(current_status.left != BlockType::WALL){
-	            	n.reverse = Direction::RIGHT;
-	            	n.right_dir = Direction::DOWN;
-	            	myvec.push_back(n);
-	                prevMove = Direction::LEFT;
-	                return;
-	               // return prevMove;
-	            }
-            	if(current_status.right!=BlockType::WALL){
-            		n.reverse = Direction::LEFT;
-            		n.right_dir = Direction::UP;
-            		myvec.push_back(n);
-               		prevMove = Direction::RIGHT;
-              		return;
-               	}
-	            if(current_status.up!=BlockType::WALL){
-	            	n.reverse = Direction::DOWN;
-	            	n.right_dir = Direction::LEFT;
-	            	myvec.push_back(n);
-	                prevMove = Direction::UP;
-	                return;
-	               // return prevMove;
-            	}
-        	}
-        	case Direction::LEFT: {
-	            if(current_status.left != BlockType::WALL){
-	            	n.reverse = Direction::RIGHT;
-	            	n.right_dir = Direction::DOWN;
-	            	myvec.push_back(n);
-	     
-	            	return;
-	                
-	            }
-	            if(current_status.up!=BlockType::WALL){
-	            	n.reverse = Direction::DOWN;
-	            	n.right_dir = Direction::LEFT;
-	            	myvec.push_back(n);
-	                prevMove = Direction::UP;
-	                
-	                return;
-	                
-	            }
-	            if(current_status.down != BlockType::WALL){
-	            	n.reverse = Direction::UP;
-	            	n.right_dir = Direction::RIGHT;
-	            	myvec.push_back(n);
-	                prevMove = Direction::DOWN;
-	               
-	                return;
-	                //return prevMove;
-	            }
-	            if(current_status.right!=BlockType::WALL){
-	            	n.reverse = Direction::LEFT;
-	            	n.right_dir = Direction::UP;
-	            	myvec.push_back(n);
-	                prevMove = Direction::RIGHT;
-	                ;
-	                return;
-	                
-	            }
-        }
-	}
-
+    return true;
 }

@@ -1,32 +1,32 @@
+//
+// Created by tsv on 09.05.16.
+//
+
+
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
-#include <vector>
 
-struct node{
+#include "vector"
 
-	Direction reverse;
-	Direction right_dir;
-	int freeWays = 4;
+struct node {
+    Direction dir;
+    bool Up = false;
+    bool Down = false;
+    bool Right = false;
+    bool Left = false;
+
 };
-
-
 
 class Runner: public RunnerBase {
 private:
-	Direction prevMove;
-	std::vector <node> myvec;
-	bool goForward = true;
-	int steps;
+    std::vector<node> v;
 public:
-   	Runner();
-   	void fill_node(node& n);
-   	void MoveForward(Direction& prevMove, node&  n);
-   	void MoveBack(Direction& prevMove);
 
+    bool turn_back();
     Direction step();
 
 };
 
-#endif
+#endif //LABYRINTH_RUNNER_HPP
