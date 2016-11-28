@@ -1,6 +1,7 @@
 //
 // Created by tsv on 09.05.16.
 //
+
 #include "Runner.hpp"
 #include <iostream>
 #include <vector>
@@ -38,16 +39,15 @@ Direction set_where(Status st)
         {
             return Direction::DOWN;
 } else
-	 if (st.left == BlockType::FREE)
+	if (st.right == BlockType::FREE)
+	{
+		return Direction::RIGHT;
+	} 
+    else if (st.left == BlockType::FREE)
 	{
 		return Direction::LEFT;
 	}
 	else
-		if (st.right == BlockType::FREE)
-	{
-		return Direction::RIGHT;
-	} 
-    else
         if (st.up == BlockType::FREE)
             {
                 return Direction::UP;
@@ -345,6 +345,10 @@ Direction Runner::step_back()
         c.kol_sv = set_kol_sv(current_status);
         add_cell(x, y, c, false);
         change_xy(c);
+        if (x == 0 && y == 0)
+        {
+            first = true;
+        }
     }
     else
     if (c.kol_sv != 2 && c.n < c.kol_sv)
@@ -889,4 +893,3 @@ cell Runner::know_prev_q4()
     cell ad;
     return ad;
 }
-
