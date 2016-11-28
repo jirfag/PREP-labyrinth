@@ -83,7 +83,7 @@ Direction Runner::step() {
                 node.down += it.base()->down;
                 node.left += it.base()->left;
                 node.right += it.base()->right;
-                stack.erase( it-1, stack.end() );
+     //           stack.erase( it-1, stack.end() );
                 break;
             }
         }
