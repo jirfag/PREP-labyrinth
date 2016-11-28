@@ -58,6 +58,7 @@ class Runner: public RunnerBase {
 		cell know_prev_q2();
 		cell know_prev_q3();
 		cell know_prev_q4();
+};
 
 
 #endif //LABYRINTH_RUNNER_HPP
