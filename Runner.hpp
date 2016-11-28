@@ -18,6 +18,9 @@ class Runner: public RunnerBase {
 			row.resize(2001);
 		map[i][j] = 1;
 	}
+	const std::vector<Direction> directions = 
+	{Direction::UP, Direction::DOWN,
+	 Direction::LEFT, Direction::RIGHT};
 	std::vector<std::vector<int>> map;
 	int i;
 	int j;
