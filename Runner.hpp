@@ -33,7 +33,6 @@ public:
 class Runner: public RunnerBase {
 
     public:
-
 		std::vector<std::vector<cell> > quarter1;//x>=0 y>=0
 		std::vector<std::vector<cell> > quarter2;//x<0 y>=0
 		std::vector<std::vector<cell> > quarter3;//x<0 y<0
