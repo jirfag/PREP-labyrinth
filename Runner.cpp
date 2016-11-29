@@ -11,15 +11,6 @@ using namespace std;
 
 Direction Runner::step() {
 	
-    if (current_status.down == BlockType::EXIT)
-        return Direction::DOWN;
-    if (current_status.right == BlockType::EXIT)
-        return Direction::RIGHT;
-    if (current_status.left == BlockType::EXIT)
-        return Direction::LEFT;
-	if (current_status.up == BlockType::EXIT)
-			return Direction::UP;
-
     switch (prev) {
 
         case(Direction::UP):
