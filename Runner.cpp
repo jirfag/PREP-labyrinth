@@ -72,6 +72,36 @@ Direction set_where(Status st, Direction* dir, int n)
 			return Direction::RIGHT;
 		}
 	}
+    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (dir[i] != Direction::DOWN)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::DOWN;
+        }
+    }
+    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (dir[i] != Direction::LEFT)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::LEFT;
+        }
+    }
 	if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
 	{
 		k = 0;
@@ -87,36 +117,8 @@ Direction set_where(Status st, Direction* dir, int n)
 			return Direction::UP;
 		}
 	}
-	if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
-	{
-		k = 0;
-		for (int i = 0; i < n; i++)
-		{
-			if (dir[i] != Direction::LEFT)
-			{
-				k++;
-			}
-		}
-        if (k == n)
-		{
-			return Direction::LEFT;
-		}
-	}
-	if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-	{
-		k = 0;
-		for (int i = 0; i < n; i++)
-		{
-			if (dir[i] != Direction::DOWN)
-			{
-				k++;
-			}
-		}
-        if (k == n)
-		{
-			return Direction::DOWN;
-		}
-	}
+
+
     return Direction::DOWN;
 }
 
@@ -198,7 +200,8 @@ Direction Runner::step()
 {
 	Direction st;
 
-	if (is_enter(current_status, st))
+
+    if (is_enter(current_status, st))
 	{
 		return st;
 	}
