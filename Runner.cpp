@@ -2,7 +2,6 @@
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
-
 Direction Runner::step() {
         if (currDirection == 0) {
             if ((current_status.up == BlockType::EXIT))
