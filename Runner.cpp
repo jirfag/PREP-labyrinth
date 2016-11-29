@@ -1,76 +1,66 @@
-#include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
-#include "utils.hpp"
+#ifndef LABYRINTH_RUNNER_HPP
+#define LABYRINTH_RUNNER_HPP
 
-Direction Runner::step() {
-        if (currDirection == 0) {
-            if ((current_status.up == BlockType::EXIT))
-                return Direction::UP;
-            if (current_status.right == BlockType::EXIT)
-                return Direction::RIGHT;
-            if (current_status.left == BlockType::EXIT)
-                return Direction::LEFT;
 
-            if (current_status.left == BlockType::FREE)
-                return currDirection = 1, Direction::LEFT;
-            if (current_status.up == BlockType::FREE)
-                return Direction::UP;
-            if (current_status.right == BlockType::FREE)
-                return currDirection = 3, Direction::RIGHT;
+#include <stack>
+#include <list>
+#include <algorithm>
 
-            return currDirection = 2, Direction::DOWN;
-        }
-        if (currDirection == 2) {
-            if (current_status.down == BlockType::EXIT)
-                return Direction::DOWN;
-            if (current_status.right == BlockType::EXIT)
-                return Direction::RIGHT;
-            if (current_status.left == BlockType::EXIT)
-                return Direction::LEFT;
+#include "RunnerBase.hpp"
+class Cell;
 
-            if (current_status.right == BlockType::FREE)
-                return currDirection = 3, Direction::RIGHT;
-            if (current_status.down == BlockType::FREE)
-                return Direction::DOWN;
-            if (current_status.left == BlockType::FREE)
-                return currDirection = 1, Direction::LEFT;
+class Runner: public RunnerBase {
+public:
+    // Constructors
+    Runner();
 
-            return currDirection = 0, Direction::UP;
-        }
-        if (currDirection == 1) {
+    Direction step();
 
-            if (current_status.up == BlockType::EXIT)
-                return Direction::UP;
-            if (current_status.left == BlockType::EXIT)
-                return Direction::LEFT;
-            if (current_status.down == BlockType::EXIT)
-                return Direction::DOWN;
+private:
+    std::stack<Cell> history;
+    std::list<std::pair<int, int>> deadlocks;
 
-            if (current_status.down == BlockType::FREE)
-                return currDirection = 2, Direction::DOWN;
-            if (current_status.left == BlockType::FREE)
-                return Direction::LEFT;
-            if (current_status.up == BlockType::FREE)
-                return currDirection = 0, Direction::UP;
+    Direction lastChoice;
+    bool isForwardDirection;
 
-            return currDirection = 3, Direction::RIGHT;
-        }
-        if (current_status.up == BlockType::EXIT)
-            return Direction::UP;
-        if (current_status.right == BlockType::EXIT)
-            return Direction::RIGHT;
-        if (current_status.down == BlockType::EXIT)
-            return Direction::DOWN;
+    int x;
+    int y;
 
-        if (current_status.up == BlockType::FREE)
-            return currDirection = 0, Direction::UP;
-        if (current_status.right == BlockType::FREE)
-            return Direction::RIGHT;
-        if (current_status.down == BlockType::FREE)
-            return currDirection = 2, Direction::DOWN;
-        if (current_status.left == BlockType::FREE)
-            return currDirection = 1, Direction::LEFT;
-   
-    return Direction::LEFT;
-}
+    bool checkForDeadlock(int x, int y) const;
+    bool checkForDeadlock(const Direction&) const;
+
+    void addDeadlock(int x, int y);
+};
+
+
+class Cell{
+public:
+    Cell();
+    Cell(const Status& state, const Direction& prevStep);
+    Cell(const Status& state);
+
+    bool isDeadlock() const;
+    Direction getBackDirection() const;
+
+    Direction chooseNextDirection() const;
+
+    bool getDirectionState(const Direction&) const;
+    void setDirectionState(const Direction&, bool value);
+
+private:
+    bool leftDone;
+    bool rightDone;
+    bool upDone;
+    bool downDone;
+
+    Status state;
+
+    bool isStart;
+
+    Direction prevStep;
+    Direction backDirection;
+};
+
+Direction getOppositeDirection(const Direction& direction);
+
+#endif //LABYRINTH_RUNNER_HPP
