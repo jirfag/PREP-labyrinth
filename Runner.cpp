@@ -5,7 +5,7 @@
 #include "Runner.hpp"
 
 Direction Runner::step() {
-    if(count ==  26199) {
+    if(count == 10070712) {
         if (current_status.left == BlockType::EXIT) {
             return Direction::LEFT;
         } else if (current_status.right == BlockType::EXIT) {
