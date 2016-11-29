@@ -1,66 +1,159 @@
-#ifndef LABYRINTH_RUNNER_HPP
-#define LABYRINTH_RUNNER_HPP
+#include "Runner.hpp"
+#include <vector>
+#include <cstdlib>
+#include "utils.hpp"
+Runner::Runner(){
+    isForwardDirection = true;
+
+    x = 4;
+    y = 3;
+}
+
+Direction Runner::step(){
+
+    if (isForwardDirection) {
+
+        if (history.size()){
+            Cell currCell = Cell(current_status, lastChoice);
+            history.push(currCell);
+        } else {
+            Cell currCell = Cell(current_status);
+            history.push(currCell);
+        }
+    } else {
+
+    }
+
+    Cell& c = history.top();
+
+    Direction nextDirection;
+    bool haveChoice = false;
+
+    while (!haveChoice){
+        if (c.isDeadlock()) {
+
+            nextDirection = c.getBackDirection();
+            haveChoice = true;
+
+            history.pop();
+            isForwardDirection = false;
+        } else {
+
+            nextDirection = c.chooseNextDirection();
+            c.setDirectionState(nextDirection, true);
+
+            haveChoice = !checkForDeadlock(nextDirection);
+            isForwardDirection = true;
+        }
+    }
+
+    if (c.isDeadlock()){
+        addDeadlock(x, y);
+    }
+
+    x = x - 2*(nextDirection == Direction::LEFT) + 2*(nextDirection == Direction::RIGHT);
+    y = y - 1*(nextDirection == Direction::UP) + 1*(nextDirection == Direction::DOWN);
+    lastChoice = nextDirection;
+
+    return nextDirection;
+}
+
+bool Runner::checkForDeadlock(int x, int y) const{
+    return std::find(deadlocks.crbegin(), deadlocks.crend(), std::make_pair(x, y)) != deadlocks.crend();
+}
+
+bool Runner::checkForDeadlock(const Direction& direction) const{
+    int nx = x - 2*(direction == Direction::LEFT) + 2*(direction == Direction::RIGHT);
+    int ny = y - (direction == Direction::UP) + (direction == Direction::DOWN);
+
+    return checkForDeadlock(nx, ny);
+}
+
+void Runner::addDeadlock(int x, int y){
+    deadlocks.push_back(std::make_pair(x, y));
+}
+
+Direction getOppositeDirection(const Direction& direction){
+    switch (direction){
+        case Direction::UP:    return Direction::DOWN;
+        case Direction::DOWN:  return Direction::UP;
+        case Direction::LEFT:  return Direction::RIGHT;
+        case Direction::RIGHT: return Direction::LEFT;
+    }
+    return Direction::UP;
+}
 
 
-#include <stack>
-#include <list>
-#include <algorithm>
+Cell::Cell(){
 
-#include "RunnerBase.hpp"
-class Cell;
+}
 
-class Runner: public RunnerBase {
-public:
-    // Constructors
-    Runner();
+Cell::Cell(const Status& status, const Direction& prevDirection)
+        : Cell(status){
+    prevStep = prevDirection;
+    backDirection = getOppositeDirection(prevStep);
 
-    Direction step();
+    isStart = false;
+    setDirectionState(backDirection, true);
+}
 
-private:
-    std::stack<Cell> history;
-    std::list<std::pair<int, int>> deadlocks;
+Cell::Cell(const Status& status){
+    state = status;
 
-    Direction lastChoice;
-    bool isForwardDirection;
+    upDone   = state.up == BlockType::WALL;
+    downDone  = state.down == BlockType::WALL;
+    leftDone  = state.left == BlockType::WALL;
+    rightDone = state.right == BlockType::WALL;
 
-    int x;
-    int y;
+    isStart = true;
+}
 
-    bool checkForDeadlock(int x, int y) const;
-    bool checkForDeadlock(const Direction&) const;
+bool Cell::isDeadlock() const{
+    return upDone && downDone && leftDone && rightDone;
+}
 
-    void addDeadlock(int x, int y);
-};
+Direction Cell::getBackDirection() const{
+    return backDirection;
+}
 
+bool Cell::getDirectionState(const Direction& direction) const{
+    switch (direction){
+        case Direction::UP    : return upDone;
+        case Direction::DOWN  : return downDone;
+        case Direction::LEFT  : return leftDone;
+        case Direction::RIGHT : return rightDone;
+    }
+    return upDone;
+}
 
-class Cell{
-public:
-    Cell();
-    Cell(const Status& state, const Direction& prevStep);
-    Cell(const Status& state);
+void Cell::setDirectionState(const Direction& direction, bool value){
+    switch (direction){
+        case Direction::UP:
+            upDone = value;
+            break;
+        case Direction::DOWN:
+            downDone = value;
+            break;
+        case Direction::LEFT:
+            leftDone = value;
+            break;
+        case Direction::RIGHT:
+            rightDone = value;
+            break;
+    }
+}
 
-    bool isDeadlock() const;
-    Direction getBackDirection() const;
+Direction Cell::chooseNextDirection() const{
+    if (state.up    == BlockType::EXIT) return Direction::UP;
+    if (state.down  == BlockType::EXIT) return Direction::DOWN;
+    if (state.left  == BlockType::EXIT) return Direction::LEFT;
+    if (state.right == BlockType::EXIT) return Direction::RIGHT;
 
-    Direction chooseNextDirection() const;
+    if (!rightDone) return Direction::RIGHT;
+    if (!downDone)  return Direction::DOWN;
+    if (!upDone)    return Direction::UP;
+    if (!leftDone)  return Direction::LEFT;
 
-    bool getDirectionState(const Direction&) const;
-    void setDirectionState(const Direction&, bool value);
+    return backDirection;
+}
 
-private:
-    bool leftDone;
-    bool rightDone;
-    bool upDone;
-    bool downDone;
-
-    Status state;
-
-    bool isStart;
-
-    Direction prevStep;
-    Direction backDirection;
-};
-
-Direction getOppositeDirection(const Direction& direction);
-
-#endif //LABYRINTH_RUNNER_HPP
