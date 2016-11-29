@@ -18,6 +18,7 @@ struct position {
     bool down = false;
     bool right = false;
     bool left = false;
+    Direction prevDirection;
 
     position( long x, long y ) {
         this->x = x;
@@ -46,7 +47,8 @@ Direction Runner::step() {
         stack.push( node );
     }
 
-/*
+    bool b = false;
+    Direction d;
     for ( auto it = pos.end(); it != pos.begin(); --it ) {
         if ( it.base()->x == X ) {
             if ( it.base()->y == Y ) {
@@ -62,18 +64,49 @@ Direction Runner::step() {
                 if ( it.base()->down ) {
                     stack.top().down = true;
                 }
+                d = it.base()->prevDirection;
+                b = true;
             }
         }
     }
-    */
 
-    position pos1( X, Y );
-    pos.push_back( pos1 );
+    if (stack.size() > 1) {
+        position pos1( X, Y );
+        cell top = stack.top();
+        stack.pop();
+        pos1.prevDirection = stack.top().direction;
+        stack.push( top );
+        pos.push_back( pos1 );
+    } else {
+        position pos1( X, Y );
+        pos.push_back( pos1 );
+    }
 
     if ( ( stack.top().right || current_status.right != BlockType::FREE ) &&
          ( stack.top().up || current_status.up != BlockType::FREE ) &&
          ( stack.top().left || current_status.left != BlockType::FREE ) &&
          ( stack.top().down || current_status.down != BlockType::FREE ) ) {
+        if (b) {
+            switch ( d ) {
+                case Direction::DOWN : {
+                    stack.top().up = false;
+                    break;
+                }
+                case Direction::RIGHT : {
+                    stack.top().left = false;
+                    break;
+                }
+                case Direction::LEFT : {
+                    stack.top().right = false;
+                    break;
+                }
+                default: {
+                    stack.top().down = false;
+                    break;
+                }
+            }
+            goto AAAAAA;
+        }
         stack.pop();
         switch ( stack.top().direction ) {
             case Direction::DOWN : {
@@ -94,6 +127,7 @@ Direction Runner::step() {
             }
         }
     } else {
+        AAAAAA:
         if ( !stack.top().right && current_status.right == BlockType::FREE ) {
             stack.top().right = true;
             stack.top().direction = Direction::RIGHT;
