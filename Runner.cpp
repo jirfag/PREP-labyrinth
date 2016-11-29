@@ -14,15 +14,44 @@ int napravlenie = R;
 int i = 0;
 
 Direction Runner::step()
-{	
-	if (i == 0)
+{
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
 		{
 			napravlenie = R;
 			i++;
 			return Direction::RIGHT;
 		}
-	else
-	{
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = R;
+			i++;
+			return Direction::RIGHT;
+		}
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = R;
+			i++;
+			return Direction::RIGHT;
+		}
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = R;
+			i++;
+			return Direction::RIGHT;
+		}
+	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = R;
+			i++;
+			return Direction::RIGHT;
+		}
+	
+	
 		switch (napravlenie)
 		{
 			case R: 
@@ -118,6 +147,6 @@ Direction Runner::step()
 				}
 			}
 		}
-	}
 }
+
 
