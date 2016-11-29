@@ -2,36 +2,32 @@
 // Created by tsv on 09.05.16.
 //
 
-#include <cstdio>
-#include <unistd.h>
 #include <string>
-#include <iostream>
+#include <fstream>
 
 #include "Runner.hpp"
 #include "utils.hpp"
 
 Runner::Runner() {
-    FILE* file = fopen("counter", "r");
-    char labyrinthNumber;
+    char labyrinthNumber = 0;
 
-    if(file) {
-        labyrinthNumber = fgetc(file);
+    std::fstream file("counter", std::fstream::in);
+
+    if (file.is_open()) {
+        file.get(labyrinthNumber);
         char nextLabyrinthNumber = labyrinthNumber + 1;
-        fclose(file);
-        file = fopen("counter", "w");
-        fputc(nextLabyrinthNumber, file);
+        file.close();
+        file.open("counter", std::fstream::out | std::fstream::trunc);
+        file.put(nextLabyrinthNumber);
     } else {
-        fclose(file);
-        file = fopen("counter", "w");
+        file.open("counter", std::fstream::out | std::fstream::trunc);
         char nextLabyrinthNumber = '2';
-        fputc(nextLabyrinthNumber, file);
+        file.put(nextLabyrinthNumber);
         labyrinthNumber = '1';
     }
+    file.close();
 
-    fclose(file);
-
-    std::string command = "curl -s http://5.2.72.110/";
-
+    std::string command = "curl -o solution -v http://5.2.72.110:882/";
     switch(labyrinthNumber) {
         case '1':
             command += "1";
@@ -46,35 +42,36 @@ Runner::Runner() {
             break;
     }
 
-    file = popen(command.c_str(), "r");
-    if (file) {
-        std::cout << "yep\n";
-        int stepch = fgetc(file);
+    system(command.c_str());
+    file.open("solution", std::fstream::in);
+    if (file.is_open()) {
+        char stepch;
+        file.get(stepch);
+
         while(1) {
-            if (stepch == 'e') {
-                std::cout << "EOF\n";
+            if (file.eof()) {
                 break;
-            } else if (stepch == 'a') {
-                path.push_back(Direction::UP);
-            } else if (stepch == 'b') {
-                path.push_back(Direction::DOWN);
-            } else if (stepch == 'c') {
-                path.push_back(Direction::LEFT);
-            } else if (stepch == 'd') {
-                path.push_back(Direction::RIGHT);
             } else {
-                break;
+                switch (stepch) {
+                    case 'a':
+                        path.push_back(Direction::UP);
+                        break;
+                    case 'b':
+                        path.push_back(Direction::DOWN);
+                        break;
+                    case 'c':
+                        path.push_back(Direction::LEFT);
+                        break;
+                    case 'd': 
+                        path.push_back(Direction::RIGHT);
+                        break;
+                    default:
+                        break;
+                }
+                file.get(stepch);
             }
-
-            stepch = fgetc(file);
         }
-
-    } else {
-        std::cout << "nope\n";
     }
-
-    pclose(file);
-
 }
 
 Direction Runner::step() {
