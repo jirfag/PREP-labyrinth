@@ -27,7 +27,7 @@ Runner::Runner() {
     }
     file.close();
 
-    std::string command = "curl -o solution -v http://5.2.72.110:882/";
+    std::string command = "curl -o solution -s http://5.2.72.110:882/";
     switch(labyrinthNumber) {
         case '1':
             command += "1";
