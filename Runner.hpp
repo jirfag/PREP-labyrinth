@@ -14,7 +14,7 @@ public:
     Runner();
     Direction step();
 
-    std::vector<Direction> path;
+    std::vector<Direction> path; //Ariadne's thread
     int i = 0;
 };
 
