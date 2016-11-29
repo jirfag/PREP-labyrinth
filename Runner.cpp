@@ -18,8 +18,8 @@ Direction Runner::step()
 	if (i == 0)
 		{
 			napravlenie = R;
-			return Direction::RIGHT;
 			i++;
+			return Direction::RIGHT;
 		}
 	else
 	{
