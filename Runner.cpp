@@ -1,7 +1,7 @@
 
 #include "Runner.hpp"
 #include <vector>
-//#include <iostream>
+#include <iostream>
 
 struct cell { //0 - норм, 1 - был, 2 - был несколько раз
     short up = 0;
@@ -33,7 +33,7 @@ Direction Runner::step() {
     } else {
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
             if ( it->x == X && it->y == Y ) {
-  //              std::cout << 1;
+                std::cout << 1;
                 if ( stack.back().up != 0 ) {
                     stack.back().up++;
                 }
