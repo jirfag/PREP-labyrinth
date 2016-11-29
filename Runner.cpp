@@ -266,5 +266,5 @@ Direction Runner::step() {
 
     }
 
-   // return Direction::UP;
+    return Direction::UP;
 }
