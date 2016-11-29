@@ -11,8 +11,8 @@ using namespace std;
 
 class Runner: public RunnerBase {
 	public:
-	Runner() { prev = Direction::UP; }
-	Direction prev;
+//	Runner() { prev = Direction::UP; }
+//	Direction prev;
 	Direction step();
 };
 
