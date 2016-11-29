@@ -94,7 +94,7 @@ Direction Runner::step() {
                 node.down += it.base()->down;
                 node.left += it.base()->left;
                 node.right += it.base()->right;
- //               stack.erase( it - 1, stack.end() );
+        //        stack.erase( it-1, stack.end() );
                 break;
             }
         }
@@ -283,6 +283,73 @@ Direction Runner::step() {
         }
 
         if ( node.up == 3 && current_status.up == BlockType::FREE ) {
+            ++node.up;
+            node.direction = Direction::UP;
+            stack.push_back( node );
+            ++Y;
+            return Direction::UP;
+
+        }
+        if ( node.right == 4 && current_status.right == BlockType::FREE ) {
+            ++node.right;
+            node.direction = Direction::RIGHT;
+            stack.push_back( node );
+            ++X;
+            return Direction::RIGHT;
+        }
+
+        if ( node.down == 4 && current_status.down == BlockType::FREE ) {
+            ++node.down;
+            node.direction = Direction::DOWN;
+            stack.push_back( node );
+            --Y;
+            return Direction::DOWN;
+
+        }
+
+        if ( node.left == 4 && current_status.left == BlockType::FREE ) {
+            ++node.left;
+            node.direction = Direction::LEFT;
+            stack.push_back( node );
+            --X;
+            return Direction::LEFT;
+        }
+
+        if ( node.up == 4 && current_status.up == BlockType::FREE ) {
+            ++node.up;
+            node.direction = Direction::UP;
+            stack.push_back( node );
+            ++Y;
+            return Direction::UP;
+
+        }
+
+        if ( node.right == 5 && current_status.right == BlockType::FREE ) {
+            ++node.right;
+            node.direction = Direction::RIGHT;
+            stack.push_back( node );
+            ++X;
+            return Direction::RIGHT;
+        }
+
+        if ( node.down == 5 && current_status.down == BlockType::FREE ) {
+            ++node.down;
+            node.direction = Direction::DOWN;
+            stack.push_back( node );
+            --Y;
+            return Direction::DOWN;
+
+        }
+
+        if ( node.left == 5 && current_status.left == BlockType::FREE ) {
+            ++node.left;
+            node.direction = Direction::LEFT;
+            stack.push_back( node );
+            --X;
+            return Direction::LEFT;
+        }
+
+        if ( node.up == 5 && current_status.up == BlockType::FREE ) {
             ++node.up;
             node.direction = Direction::UP;
             stack.push_back( node );
