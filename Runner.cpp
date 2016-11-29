@@ -95,7 +95,7 @@ Direction Runner::step() {
                 node.left += it.base()->left;
                 node.right += it.base()->right;
         //        stack.erase( it-1, stack.end() );
-                break;
+        //        break;
             }
         }
 
