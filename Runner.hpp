@@ -5,11 +5,17 @@
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
+#include <vector>
+
 #include "RunnerBase.hpp"
 
 class Runner: public RunnerBase {
-    public:
-        Direction step();
+public:
+    Runner();
+    Direction step();
+
+    std::vector<Direction> path; //Ariadne's thread
+    int i = 0;
 };
 
 
