@@ -1,7 +1,6 @@
-
 #include "Runner.hpp"
 #include <vector>
-#include <iostream>
+//#include <iostream>
 
 struct cell { //0 - норм, 1 - был, 2 - был несколько раз
     short up = 0;
@@ -33,7 +32,7 @@ Direction Runner::step() {
     } else {
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
             if ( it->x == X && it->y == Y ) {
-                std::cout << 1;
+  //              std::cout << 1;
                 if ( stack.back().up != 0 ) {
                     stack.back().up++;
                 }
@@ -50,7 +49,7 @@ Direction Runner::step() {
                 stack.back().down += it.base()->down;
                 stack.back().left += it.base()->left;
                 stack.back().right += it.base()->right;
-                //          stack.erase( it, stack.end() );
+          //      stack.erase( it, stack.end() );
                 break;
             }
         }
@@ -224,47 +223,7 @@ Direction Runner::step() {
         return Direction::UP;
 
     }
-    if ( stack.back().right == 4 && current_status.right == BlockType::FREE ) {
-        stack.back().right = true;
-        cell node;
-        node.left = true;
-        stack.push_back( node );
-
-        ++X;
-        return Direction::RIGHT;
-    }
-
-    if ( stack.back().down == 4 && current_status.down == BlockType::FREE ) {
-        stack.back().down = true;
-        cell node;
-        node.up = true;
-        stack.push_back( node );
-
-        --Y;
-        return Direction::DOWN;
-
-    }
-
-    if ( stack.back().left == 4 && current_status.left == BlockType::FREE ) {
-        stack.back().left = true;
-        cell node;
-        node.right = true;
-        stack.push_back( node );
-
-        --X;
-        return Direction::LEFT;
-    }
-
-    if ( stack.back().up == 4 && current_status.up == BlockType::FREE ) {
-        stack.back().up = true;
-        cell node;
-        node.down = true;
-        stack.push_back( node );
-
-        ++Y;
-        return Direction::UP;
-
-    }
+ 
 
     return Direction::UP;
 }
