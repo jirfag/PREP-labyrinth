@@ -7,10 +7,15 @@
 
 #include "RunnerBase.hpp"
 
+using namespace std;
+
 class Runner: public RunnerBase {
-    public:
-        Direction step();
+	public:
+	Runner() { prev = Direction::UP; }
+	Direction prev;
+	Direction step();
 };
+
 
 
 #endif //LABYRINTH_RUNNER_HPP
