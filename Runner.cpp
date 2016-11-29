@@ -3,120 +3,101 @@
 //
 
 #include "Runner.hpp"
+#include <vector>
 #include <cstdlib>
 #include "utils.hpp"
 
-	
+
 using namespace std;
-
-Direction Runner::step() {
-
-	if (current_status.down == BlockType::EXIT)
-		return Direction::DOWN;
-	if (current_status.right == BlockType::EXIT)
-		return Direction::RIGHT;
-	if (current_status.left == BlockType::EXIT)
-		return Direction::LEFT;
-	if (current_status.up == BlockType::EXIT)
-		return Direction::UP;
+    Direction Runner::step() {
+    if (current_status.down == BlockType::EXIT)
+    return Direction::DOWN;
+    if (current_status.right == BlockType::EXIT)
+    return Direction::RIGHT;
+    if (current_status.left == BlockType::EXIT)
+    return Direction::LEFT;
+    if (current_status.up == BlockType::EXIT)
+    return Direction::UP;
 	
-	static Direction look = Direction::DOWN;
-
-	switch(look) {
-		
-		case(Direction::UP):
-
-			if (current_status.right != BlockType::WALL) {
-				look = Direction::RIGHT;
-				return look;
-
-			} else {
-				if(current_status.up != BlockType::WALL)
-					return look;
-
-				else {
-					if(current_status.left != BlockType::WALL) {
-						look = Direction::LEFT;
-						return look;
-					}
-
-					else {
-						look = Direction::DOWN;
-						return look;
-					}
-				}
-			}
-
-		case(Direction::DOWN):
-
-			if (current_status.left != BlockType::WALL) {
-				look = Direction::LEFT;
-				return look;
-
-			} else {
-				if(current_status.down != BlockType::WALL)
-					return look;
-
-				else {
-					if(current_status.right != BlockType::WALL) {
-						look = Direction::RIGHT;
-						return look;
-					}
-
-					else {
-						look = Direction::UP;
-						return look;
-					}
-				}
-			}
-	
-		case(Direction::LEFT):
-
-			if (current_status.up != BlockType::WALL) {
-				look = Direction::UP;
-				return look;
-
-			} else {
-				if(current_status.left != BlockType::WALL)
-					return look;
-
-				else {
-					if(current_status.down != BlockType::WALL) {
-						look = Direction::DOWN;
-						return look;
-					}
-
-					else {
-						look = Direction::RIGHT;
-						return look;
-					}
-				}
-			}
-	
-		case(Direction::RIGHT):
-
-			if (current_status.down != BlockType::WALL) {
-				look = Direction::DOWN;
-				return look;
-
-			} else {
-				if(current_status.right != BlockType::WALL)
-					return look;
-
-				else {
-					if(current_status.up != BlockType::WALL) {
-						look = Direction::UP;
-						return look;
-					}
-
-					else {
-						look = Direction::LEFT;
-						return look;
-					}
-				}
-			}
-
+	++map[i][j];
+	if (map[i][j] > 5) {
+		const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
+        return directions[std::rand() % directions.size()];
 	}
-	return look;
 
-}
+    switch (prev) {
+
+    case(Direction::UP):
+    if (current_status.left != BlockType::WALL) {
+    --j;
+    return (prev = Direction::LEFT);
+    }
+    if (current_status.up != BlockType::WALL) {
+    --i;
+    return (prev = Direction::UP);
+    }
+    if (current_status.right != BlockType::WALL) {
+    ++j;
+    return (prev = Direction::RIGHT);
+    }
+    if (current_status.down != BlockType::WALL) {
+    ++i;
+    return (prev = Direction::DOWN);
+    }
+
+    case(Direction::DOWN):
+    if (current_status.right != BlockType::WALL) {
+    ++j;
+    return (prev = Direction::RIGHT);
+    }
+    if (current_status.down != BlockType::WALL) {
+    ++i;
+    return (prev = Direction::DOWN);
+    }
+    if (current_status.left != BlockType::WALL) {
+    --j;
+    return (prev = Direction::LEFT);
+    }
+    if (current_status.up != BlockType::WALL) {
+    --i;
+    return (prev = Direction::UP);
+    }
+
+    case(Direction::RIGHT):
+    if (current_status.up != BlockType::WALL) {
+    --i;
+    return (prev = Direction::UP);
+    }
+    if (current_status.right != BlockType::WALL) {
+    ++j;
+    return (prev = Direction::RIGHT);
+    }
+    if (current_status.down != BlockType::WALL) {
+    ++i;
+    return (prev = Direction::DOWN);
+    }
+    if (current_status.left != BlockType::WALL) {
+    --j;
+    return (prev = Direction::LEFT);
+    }
+
+    case(Direction::LEFT):
+    if (current_status.down != BlockType::WALL) {
+    ++i;
+    return (prev = Direction::DOWN);
+    }
+    if (current_status.left != BlockType::WALL) {
+    --j;
+    return (prev = Direction::LEFT);
+    }
+    if (current_status.up != BlockType::WALL) {
+    --i;
+    return (prev = Direction::UP);
+    }
+    if (current_status.right != BlockType::WALL) {
+    ++j;
+    return (prev = Direction::RIGHT);
+    }
+    }
+    return Direction::DOWN;
+    }
