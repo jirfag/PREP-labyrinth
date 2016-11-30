@@ -1,16 +1,179 @@
 //
-// Created by tsv on 09.05.16.
+// Created by Andrey Richter (Savosin) on 13.11.16.
 //
 
 #include "Runner.hpp"
-#include <vector>
-#include <cstdlib>
+#include <iostream>
 #include "utils.hpp"
+
+#define R 1
+#define D 2
+#define L 3
+#define U 4
+
+int napravlenie = R;
+int i = 0;
 
 Direction Runner::step()
 {
-    // TODO: you need to replace the code below with your implementation of labyrinth solver.
-    // Now here is the stupid implementation with random choicing of direction.
-    const std::vector<Direction> directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-    return directions[std::rand() % directions.size()];
+	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == L)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.down == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.down == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
+		if (i == 0)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+		
+		
+		switch (napravlenie)
+		{
+			case R: 
+			{
+				if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+				{
+					napravlenie = U;
+					return Direction::UP;
+				}
+				else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+				{
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+				else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+				else
+				{
+					napravlenie = L;
+					return Direction::LEFT;
+				}
+			}
+			case D: 
+			{
+				if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+				{
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+				else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+				else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+				{
+					napravlenie = L;
+					return Direction::LEFT;
+				}
+				else
+				{
+					napravlenie = U;
+					return Direction::UP;
+				}
+			}
+			case L: 
+			{
+				if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+				else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+				{
+					napravlenie = L;
+					return Direction::LEFT;
+				}
+				else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+				{
+					napravlenie = U;
+					return Direction::UP;
+				}
+				else
+				{
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+			}
+			default: 
+			{
+				if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+				{
+					napravlenie = L;
+					return Direction::LEFT;
+				}
+				else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+				{
+					napravlenie = U;
+					return Direction::UP;
+				}
+				else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+				{
+					napravlenie = R;
+					return Direction::RIGHT;
+				}
+				else
+				{
+					napravlenie = D;
+					return Direction::DOWN;
+				}
+			}
+		}
 }
