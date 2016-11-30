@@ -36,7 +36,7 @@ cell cell::operator =(const cell& c)
 	return *this;
 }
 
-Direction set_where(Status st)
+Direction set_where(Status& st)
 {
 		if (st.right == BlockType::FREE)
 	{
@@ -60,7 +60,7 @@ Direction set_where(Status st)
 return Direction::DOWN;
 
 }
-Direction set_where(Status st, Direction d)
+Direction set_where(Status& st, Direction& d)
 {
 	  	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
     {
@@ -100,7 +100,7 @@ Direction set_where(Status st, Direction d)
 return Direction::DOWN;
 
 }
-Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
+Direction set_where(Status& st, std::vector<Direction>& dir, int a, int n)
 {
 	int k = 0;
 		if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
@@ -173,7 +173,7 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
     return Direction::DOWN;
 }
 
-int set_kol_sv(Status st)
+int set_kol_sv(Status& st)
 {
 	int kol = 0;
     if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
@@ -197,7 +197,7 @@ int set_kol_sv(Status st)
 
 
 
-bool is_enter(Status st, Direction& dir)
+bool is_enter(Status& st, Direction& dir)
 {
 	if (st.down == BlockType::EXIT)
 	{
@@ -222,7 +222,7 @@ bool is_enter(Status st, Direction& dir)
 	return false; 
 }
 
-Direction naob(std::vector<Direction> dir,int i)
+Direction naob(std::vector<Direction>& dir,int i)
 {
     Direction d;// = new Direction;
         switch (dir[i])
