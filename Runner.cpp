@@ -16,68 +16,68 @@ int i = 0;
 
 Direction Runner::step()
 {
-	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
+	if ( (napravlenie == D)&&(current_status.left == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
+	if ( (napravlenie == D)&&(current_status.down == BlockType::FREE)&&(current_status.left == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == D)&&(current_status.left == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
-	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
 		if (i == 0)
 		{
-			napravlenie = L;
+			napravlenie = R;
 			i++;
-			return Direction::LEFT;
+			return Direction::RIGHT;
 		}
 		
 	
