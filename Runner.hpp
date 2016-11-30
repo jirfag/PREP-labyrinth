@@ -12,7 +12,7 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner(){prev_directions = Direction::RIGHT; count = 0;}
+    Runner() {prev_directions = Direction::LEFT; count = 0;}
     Direction step();
 
 private:
