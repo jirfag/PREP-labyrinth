@@ -10,6 +10,7 @@ struct cell { //0 - норм, 1 - был, 2 - был несколько раз
     short left = 0;
     double x = 0;
     double y = 0;
+    Direction direction;
 };
 
 std::vector<cell> stack;
@@ -34,30 +35,22 @@ Direction Runner::step() {
         for ( auto it = stack.end(); it != stack.begin(); --it ) {
             if ( it->x == X && it->y == Y ) {
                 //              std::cout << 1;
-                if ( stack.back().up != 0 ) {
-                    stack.back().up++;
-                }
-                if ( stack.back().down != 0 ) {
-                    stack.back().down++;
-                }
-                if ( stack.back().left != 0 ) {
-                    stack.back().left++;
-                }
-                if ( stack.back().right != 0 ) {
-                    stack.back().right++;
+                if ( stack.back().up != 0 && stack.back().direction == Direction::DOWN ) {
+                    stack.back().up = -10;
+                } else if ( stack.back().down != 0 && stack.back().direction == Direction::UP ) {
+                    stack.back().down = -10;
+                } else if ( stack.back().left != 0 && stack.back().direction == Direction::RIGHT ) {
+                    stack.back().left = -10;
+                } else if ( stack.back().right != 0 && stack.back().direction == Direction::LEFT ) {
+                    stack.back().right = -10;
                 }
 
-                // stack.back().up *= stack.back().up;
-                // stack.back().down *= stack.back().down;
-                // stack.back().left *= stack.back().left;
-                // stack.back().right *= stack.back().right;
                 stack.back().up += it.base()->up;
                 stack.back().down += it.base()->down;
                 stack.back().left += it.base()->left;
                 stack.back().right += it.base()->right;
-                //          if (it-1 != stack.begin()) {
-                //              stack.erase( it, stack.end() );
-                //          }
+                //      stack.back().direction = it.base()->direction;
+
                 break;
             }
         }
@@ -70,16 +63,16 @@ Direction Runner::step() {
     /*  if ( stack.back().left<0 ) {
           int x =1;
       } */
-    std::cout << "coord: " << stack.back().right << stack.back().left << stack.back().down << std::endl;
+    std::cout << "coord: r" << stack.back().right << " l" << stack.back().left << " d" << stack.back().down << " u" << stack.back().up << std::endl;
 
 
-    for (int i = 0; ;i++) {
+    for ( int i = 0; i < 10; i++ ) {
         if ( stack.back().right == i && current_status.right == BlockType::FREE ) {
             ++stack.back().right;
             cell node;
             node.left = 1;
+            node.direction = Direction::RIGHT;
             stack.push_back( node );
-
             ++X;
             return Direction::RIGHT;
         }
@@ -88,6 +81,8 @@ Direction Runner::step() {
             ++stack.back().down;
             cell node;
             node.up = 1;
+            node.direction = Direction::DOWN;
+
             stack.push_back( node );
 
             --Y;
@@ -99,6 +94,8 @@ Direction Runner::step() {
             ++stack.back().left;
             cell node;
             node.right = 1;
+            node.direction = Direction::LEFT;
+
             stack.push_back( node );
 
             --X;
@@ -109,6 +106,8 @@ Direction Runner::step() {
             ++stack.back().up;
             cell node;
             node.down = 1;
+            node.direction = Direction::UP;
+
             stack.push_back( node );
 
             ++Y;
@@ -116,5 +115,5 @@ Direction Runner::step() {
 
         }
     }
-    return Direction::UP;
+//    return Direction::UP;
 }
