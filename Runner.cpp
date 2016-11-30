@@ -38,7 +38,10 @@ cell cell::operator =(const cell& c)
 
 Direction set_where(Status st)
 {
-
+		if (st.right == BlockType::FREE)
+	{
+		return Direction::RIGHT;
+	} 
     if (st.down == BlockType::FREE)
         {
             return Direction::DOWN;
@@ -53,16 +56,20 @@ Direction set_where(Status st)
             }
 
 
-		if (st.right == BlockType::FREE)
-	{
-		return Direction::RIGHT;
-	} 
+
 return Direction::DOWN;
 
 }
 Direction set_where(Status st, Direction d)
 {
-	  
+	  	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
+    {
+        if (d != Direction::RIGHT)
+        {
+            return Direction::RIGHT;
+        }
+    }
+
 		    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
     {
         if (d != Direction::DOWN)
@@ -84,13 +91,6 @@ Direction set_where(Status st, Direction d)
             return Direction::UP;
         }
     }
-	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
-    {
-        if (d != Direction::RIGHT)
-        {
-            return Direction::RIGHT;
-        }
-    }
 
 
 
@@ -103,7 +103,21 @@ return Direction::DOWN;
 Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
-	
+		if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
+	{
+		k = 0;
+        for (int i = a; i < n; i++)
+		{
+			if (dir[i] != Direction::RIGHT)
+			{
+				k++;
+			}
+		}
+        if (k == n)
+		{
+			return Direction::RIGHT;
+		}
+	}
 	if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
     {
         k = 0;
@@ -149,21 +163,7 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 			return Direction::UP;
 		}
 	}
-	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
-	{
-		k = 0;
-        for (int i = a; i < n; i++)
-		{
-			if (dir[i] != Direction::RIGHT)
-			{
-				k++;
-			}
-		}
-        if (k == n)
-		{
-			return Direction::RIGHT;
-		}
-	}
+
 
 
 
