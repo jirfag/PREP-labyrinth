@@ -41,25 +41,32 @@ Direction set_where(Status st)
     if (st.down == BlockType::FREE)
         {
             return Direction::DOWN;
-} else
+	}
 	if (st.right == BlockType::FREE)
 	{
 		return Direction::RIGHT;
 	} 
-    else if (st.left == BlockType::FREE)
-	{
-		return Direction::LEFT;
-	}
-	else
-        if (st.up == BlockType::FREE)
+	        if (st.up == BlockType::FREE)
             {
                 return Direction::UP;
             }
+    if (st.left == BlockType::FREE)
+	{
+		return Direction::LEFT;
+	}
+
 return Direction::DOWN;
 
 }
 Direction set_where(Status st, Direction d)
 {
+	    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        if (d != Direction::DOWN)
+        {
+                return Direction::DOWN;
+        }
+    }
     if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
     {
         if (d != Direction::RIGHT)
@@ -67,13 +74,7 @@ Direction set_where(Status st, Direction d)
             return Direction::RIGHT;
         }
     }
-    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-    {
-        if (d != Direction::DOWN)
-        {
-                return Direction::DOWN;
-        }
-    }
+
 	if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
     {
         if (d != Direction::UP)
@@ -96,21 +97,7 @@ return Direction::DOWN;
 Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
-	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
-	{
-        for (int i = a; i < n; i++)
-		{
-			if (dir[i] != Direction::RIGHT)
-			{
-				k++;
-			}
-		}
-        if (k == n)
-		{
-			return Direction::RIGHT;
-		}
-	}
-    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+	    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
     {
         k = 0;
         for (int i = a; i < n; i++)
@@ -125,21 +112,20 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
             return Direction::DOWN;
         }
     }
-    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
-    {
-        k = 0;
+	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
+	{
         for (int i = a; i < n; i++)
-        {
-            if (dir[i] != Direction::LEFT)
-            {
-                k++;
-            }
-        }
+		{
+			if (dir[i] != Direction::RIGHT)
+			{
+				k++;
+			}
+		}
         if (k == n)
-        {
-            return Direction::LEFT;
-        }
-    }
+		{
+			return Direction::RIGHT;
+		}
+	}
 	if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
 	{
 		k = 0;
@@ -155,6 +141,22 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 			return Direction::UP;
 		}
 	}
+    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = a; i < n; i++)
+        {
+            if (dir[i] != Direction::LEFT)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::LEFT;
+        }
+    }
+
 
 
     return Direction::DOWN;
