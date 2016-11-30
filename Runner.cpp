@@ -1,4 +1,4 @@
-#include "Runner.hpp"
+
 #include <vector>
 //#include <iostream>
 
@@ -49,7 +49,9 @@ Direction Runner::step() {
                 stack.back().down += it.base()->down;
                 stack.back().left += it.base()->left;
                 stack.back().right += it.base()->right;
-          //      stack.erase( it, stack.end() );
+    //            if (it-1 != stack.begin()) {
+                    stack.erase( it, stack.end() );
+    //            }
                 break;
             }
         }
