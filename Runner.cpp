@@ -114,6 +114,7 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
     }
 	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
 	{
+		k = 0;
         for (int i = a; i < n; i++)
 		{
 			if (dir[i] != Direction::RIGHT)
