@@ -426,6 +426,93 @@ if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_stat
 	
 	
 	
+	if (current_status.right == BlockType::EXIT)
+	{
+		return Direction::RIGHT;
+	}
+	else if (current_status.down == BlockType::EXIT)
+	{
+		return Direction::DOWN;
+	}
+	else if (current_status.up == BlockType::EXIT)
+	{
+		return Direction::UP;
+	}
+	else if (current_status.left == BlockType::EXIT)
+	{
+		return Direction::LEFT;
+	}
+	
+	
+	
+if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == L)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == L)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.down == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == R)&&(current_status.down == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	if ( (napravlenie == U)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
+		if (i == 5)
+		{
+			napravlenie = U;
+			i++;
+			return Direction::UP;
+		}
+	
+	
+	
+	
+	
 	
 	switch (napravlenie)
 	{
