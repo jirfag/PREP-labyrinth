@@ -12,7 +12,7 @@
 
 class Runner: public RunnerBase {
 public:
-    Runner() 
+    Runner();
     Direction step();
 
 private:
