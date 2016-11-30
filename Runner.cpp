@@ -7,13 +7,13 @@ struct cell { //0 - норм, 1 - был, 2 - был несколько раз
     short down = 0;
     short right = 0;
     short left = 0;
-    int x = 0;
-    int y = 0;
+    double x = 0;
+    double y = 0;
 };
 
 std::vector<cell> stack;
-int X = 0;
-int Y = 0;
+double X = 0;
+double Y = 0;
 
 Direction Runner::step() {
     if ( current_status.left == BlockType::EXIT ) {
@@ -223,7 +223,7 @@ Direction Runner::step() {
         return Direction::UP;
 
     }
- 
+
 
     return Direction::UP;
 }
