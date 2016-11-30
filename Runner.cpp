@@ -1,6 +1,6 @@
 #include "Runner.hpp"
 #include <vector>
-#include <iostream>
+//#include <iostream>
 //#include <iostream>
 
 struct cell { //0 - норм, 1 - был, 2 - был несколько раз
@@ -63,7 +63,7 @@ Direction Runner::step() {
     /*  if ( stack.back().left<0 ) {
           int x =1;
       } */
-    std::cout << "coord: r" << stack.back().right << " l" << stack.back().left << " d" << stack.back().down << " u" << stack.back().up << std::endl;
+//    std::cout << "coord: r" << stack.back().right << " l" << stack.back().left << " d" << stack.back().down << " u" << stack.back().up << std::endl;
 
 
     for ( int i = 0; i < 10; i++ ) {
@@ -115,5 +115,5 @@ Direction Runner::step() {
 
         }
     }
-//    return Direction::UP;
+    return Direction::DOWN;
 }
