@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include "utils.hpp"
 
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
@@ -16,6 +17,7 @@ public:
     Direction step();
 
 private:
+    std::vector<Direction> dir;
     Direction prev_directions ;
     int count;
 };
