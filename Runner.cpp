@@ -44,13 +44,6 @@ Direction Runner::step()
 			i++;
 			return Direction::RIGHT;
 		}
-	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
-		if (i == 0)
-		{
-			napravlenie = R;
-			i++;
-			return Direction::RIGHT;
-		}
 	if ( (napravlenie == U)&&(current_status.left == BlockType::FREE)&&(current_status.right == BlockType::FREE) )
 		if (i == 0)
 		{
@@ -68,15 +61,6 @@ Direction Runner::step()
 	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
 		if (i == 0)
 		{
-			std::cout << "here1" << std::endl;
-			napravlenie = R;
-			i++;
-			return Direction::RIGHT;
-		}
-	if ( (napravlenie == D)&&(current_status.left == BlockType::FREE)&&(current_status.down == BlockType::FREE) )
-		if (i == 0)
-		{
-			std::cout << "here2" << std::endl;
 			napravlenie = R;
 			i++;
 			return Direction::RIGHT;
@@ -84,7 +68,6 @@ Direction Runner::step()
 	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
 		if (i == 0)
 		{
-			std::cout << "here3" << std::endl;
 			napravlenie = R;
 			i++;
 			return Direction::RIGHT;
@@ -92,7 +75,6 @@ Direction Runner::step()
 	if ( (napravlenie == D)&&(current_status.right == BlockType::FREE)&&(current_status.down == BlockType::FREE)&&(current_status.left == BlockType::FREE) )
 		if (i == 0)
 		{
-			std::cout << "here4" << std::endl;
 			napravlenie = R;
 			i++;
 			return Direction::RIGHT;
