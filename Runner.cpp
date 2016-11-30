@@ -2,8 +2,6 @@
 // Created by Andrey Richter (Savosin) on 13.11.16.
 //
 
-
-
 #include "Runner.hpp"
 #include "utils.hpp"
 
