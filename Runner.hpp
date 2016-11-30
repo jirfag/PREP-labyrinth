@@ -14,18 +14,8 @@ using namespace std;
 
 class Runner: public RunnerBase {
     public:
-	Runner(): prev(Direction::UP), i(15001), j(150001) {
-			map.resize(30001);
-			for (auto& row: map) {
-				row.resize(30001);
-				for (auto& col: row)
-					col = 0;
-			}
-	}
-	vector<vector<int>> map;
+	Runner(): prev(Direction::UP) {}
 	Direction prev;
-	int i;
-	int j;
 	Direction step();
 };
 
