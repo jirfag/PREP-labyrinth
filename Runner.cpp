@@ -39,6 +39,10 @@ cell cell::operator =(const cell& c)
 Direction set_where(Status st)
 {
 
+    if (st.down == BlockType::FREE)
+        {
+            return Direction::DOWN;
+	}
 	    if (st.left == BlockType::FREE)
 	{
 		return Direction::LEFT;
@@ -48,10 +52,6 @@ Direction set_where(Status st)
                 return Direction::UP;
             }
 
-    if (st.down == BlockType::FREE)
-        {
-            return Direction::DOWN;
-	}
 
 		if (st.right == BlockType::FREE)
 	{
@@ -62,7 +62,14 @@ return Direction::DOWN;
 }
 Direction set_where(Status st, Direction d)
 {
-	    
+	  
+		    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        if (d != Direction::DOWN)
+        {
+                return Direction::DOWN;
+        }
+    }  
     if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
         if (d != Direction::LEFT)
@@ -88,13 +95,6 @@ Direction set_where(Status st, Direction d)
 
 
 
-		    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-    {
-        if (d != Direction::DOWN)
-        {
-                return Direction::DOWN;
-        }
-    }
 
 
 return Direction::DOWN;
@@ -103,6 +103,22 @@ return Direction::DOWN;
 Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
+	
+	if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = a; i < n; i++)
+        {
+            if (dir[i] != Direction::DOWN)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::DOWN;
+        }
+    }
 	    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
         k = 0;
@@ -150,21 +166,6 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 	}
 
 
-	if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-    {
-        k = 0;
-        for (int i = a; i < n; i++)
-        {
-            if (dir[i] != Direction::DOWN)
-            {
-                k++;
-            }
-        }
-        if (k == n)
-        {
-            return Direction::DOWN;
-        }
-    }
 
 	    
 
