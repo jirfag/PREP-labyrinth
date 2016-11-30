@@ -30,90 +30,150 @@ Direction Runner::step()
 	{
 		case 1: 
 		{
-			if (current_status.up == BlockType::FREE) 
+			switch (current_status.up)  
 			{
+				case BlockType::FREE:
+				{
 					napravlenie = 4;
 					return Direction::UP;
-			}
-			else if (current_status.right == BlockType::FREE)
-			{
-					return Direction::RIGHT;
-			}
-			else if (current_status.down == BlockType::FREE)
-			{
-				napravlenie = 2;
-				return Direction::DOWN;
-			}
-			else
-			{
-				napravlenie = 3;
-				return Direction::LEFT;
+				}
+				default:	
+				{
+					switch (current_status.right)  
+					{
+						case BlockType::FREE:
+						{
+							return Direction::RIGHT;
+						}
+						default:	
+						{
+							switch (current_status.down)  
+							{
+								case BlockType::FREE:
+								{
+									napravlenie = 2;
+									return Direction::DOWN;
+								}
+								default:	
+								{
+									napravlenie = 3;
+									return Direction::LEFT;
+								}
+							}
+						}	
+					}
+				}
 			}
 		}
 		case 2: 
 		{
-			if (current_status.right == BlockType::FREE)
+			switch (current_status.right)  
 			{
+				case BlockType::FREE:
+				{
 					napravlenie = 1;
 					return Direction::RIGHT;
-			}
-			else if (current_status.down == BlockType::FREE)
-			{
-					return Direction::DOWN;
-			}
-			else if (current_status.left == BlockType::FREE)
-			{
-				napravlenie = 3;
-				return Direction::LEFT;
-			}
-			else
-			{
-				napravlenie = 4;
-				return Direction::UP;
+				}
+				default:	
+				{
+					switch (current_status.down)  
+					{
+						case BlockType::FREE:
+						{
+							return Direction::DOWN;
+						}
+						default:	
+						{
+							switch (current_status.left)  
+							{
+								case BlockType::FREE:
+								{
+									napravlenie = 3;
+									return Direction::LEFT;
+								}
+								default:	
+								{
+									napravlenie = 4;
+									return Direction::UP;
+								}
+							}
+						}	
+					}
+				}
 			}
 		}
 		case 3: 
 		{
-			if (current_status.down == BlockType::FREE)
+			switch (current_status.down)  
 			{
+				case BlockType::FREE:
+				{
 					napravlenie = 2;
 					return Direction::DOWN;
-			}
-			else if (current_status.left == BlockType::FREE)
-			{
-					return Direction::LEFT;
-			}
-			else if (current_status.up == BlockType::FREE)
-			{
-				napravlenie = 4;
-				return Direction::UP;
-			}
-			else
-			{
-				napravlenie = 1;
-				return Direction::RIGHT;
+				}
+				default:	
+				{
+					switch (current_status.left)  
+					{
+						case BlockType::FREE:
+						{
+							return Direction::LEFT;
+						}
+						default:	
+						{
+							switch (current_status.up)  
+							{
+								case BlockType::FREE:
+								{
+									napravlenie = 4;
+									return Direction::UP;
+								}
+								default:	
+								{
+									napravlenie = 1;
+									return Direction::RIGHT;
+								}
+							}
+						}	
+					}
+				}
 			}
 		}
 		default: 
 		{
-			if (current_status.left == BlockType::FREE)
+			switch (current_status.left)  
 			{
+				case BlockType::FREE:
+				{
 					napravlenie = 3;
 					return Direction::LEFT;
-			}
-			else if (current_status.up == BlockType::FREE)
-			{
-					return Direction::UP;
-			}
-			else if (current_status.right == BlockType::FREE)
-			{
-				napravlenie = 1;
-				return Direction::RIGHT;
-			}
-			else
-			{
-				napravlenie = 2;
-				return Direction::DOWN;
+				}
+				default:	
+				{
+					switch (current_status.up)  
+					{
+						case BlockType::FREE:
+						{
+							return Direction::UP;
+						}
+						default:	
+						{
+							switch (current_status.right)  
+							{
+								case BlockType::FREE:
+								{
+									napravlenie = 1;
+									return Direction::RIGHT;
+								}
+								default:	
+								{
+									napravlenie = 2;
+									return Direction::DOWN;
+								}
+							}
+						}	
+					}
+				}
 			}
 		}
 	}
