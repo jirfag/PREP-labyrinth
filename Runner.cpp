@@ -3,7 +3,8 @@
 //
 
 #include "Runner.hpp"
-
+#include "utils.hpp"
+	
 Cell :: Cell()
 {
     left = SAFE;
