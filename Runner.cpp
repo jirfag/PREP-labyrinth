@@ -100,7 +100,7 @@ Direction set_where(Status& st, Direction& d)
 return Direction::DOWN;
 
 }
-Direction set_where(Status& st, std::vector<Direction>& dir, int a, int n)
+Direction set_where(Status& st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
 		if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
@@ -222,7 +222,7 @@ bool is_enter(Status& st, Direction& dir)
 	return false; 
 }
 
-Direction naob(std::vector<Direction>& dir,int i)
+Direction naob(std::vector<Direction> dir,int i)
 {
     Direction d;// = new Direction;
         switch (dir[i])
