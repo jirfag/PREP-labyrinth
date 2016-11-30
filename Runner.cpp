@@ -74,6 +74,13 @@ Direction set_where(Status st, Direction d)
                 return Direction::DOWN;
         }
     }
+	if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
+    {
+        if (d != Direction::UP)
+        {
+            return Direction::UP;
+        }
+    }
     if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
         if (d != Direction::LEFT)
@@ -81,13 +88,7 @@ Direction set_where(Status st, Direction d)
             return Direction::LEFT;
         }
     }
-    if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
-    {
-        if (d != Direction::UP)
-        {
-            return Direction::UP;
-        }
-    }
+
 
 return Direction::DOWN;
 
