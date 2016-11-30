@@ -6,11 +6,37 @@
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
+#include <stack>
 
-class Runner: public RunnerBase {
-    public:
-        Direction step();
+
+
+using namespace std;
+
+
+static const int SAFE = 0;
+static const int WALL = 3333;
+static const int FROM = 77777;
+
+class Cell
+{
+public:
+	int left = SAFE;
+	int right = SAFE;
+	int up = SAFE;
+	int down = SAFE;
+
+    Cell();
+	Cell(const Cell& c);
 };
 
 
-#endif //LABYRINTH_RUNNER_HPP
+
+class Runner : public RunnerBase {
+public:
+	std::stack<Cell> path;
+	int rebellion;
+	bool flag;
+    Direction step();
+};
+
+#endif //LABYRINTH_RUNNER_HP
