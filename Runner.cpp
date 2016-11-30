@@ -9,38 +9,37 @@ short int napravlenie = 1;
 
 Direction Runner::step()
 {	
+	if (current_status.right == BlockType::EXIT)
+	{
+		return Direction::RIGHT;
+	}
+	if (current_status.left == BlockType::EXIT)
+	{
+		return Direction::LEFT;
+	}
+	if (current_status.down == BlockType::EXIT)
+	{
+		return Direction::DOWN;
+	}
+	if (current_status.up == BlockType::EXIT)
+	{
+		return Direction::UP;
+	}
+	
 	switch (napravlenie)
 	{
 		case 1: 
 		{
-			if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))  
+			if (current_status.up == BlockType::FREE) 
 			{
-				if (current_status.right == BlockType::EXIT)
-				{
-					return Direction::RIGHT;
-				}
-				else if (current_status.down == BlockType::EXIT)
-				{
-					return Direction::DOWN;
-				}
-				else
-				{
 					napravlenie = 4;
 					return Direction::UP;
-				}
 			}
-			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			else if (current_status.right == BlockType::FREE)
 			{
-				if (current_status.down == BlockType::EXIT)
-				{
-					return Direction::DOWN;
-				}
-				else
-				{
 					return Direction::RIGHT;
-				}
 			}
-			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			else if (current_status.down == BlockType::FREE)
 			{
 				napravlenie = 2;
 				return Direction::DOWN;
@@ -53,34 +52,16 @@ Direction Runner::step()
 		}
 		case 2: 
 		{
-			if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			if (current_status.right == BlockType::FREE)
 			{
-				if (current_status.down == BlockType::EXIT)
-				{
-					return Direction::DOWN;
-				}
-				else if (current_status.left == BlockType::EXIT)
-				{
-					return Direction::LEFT;
-				}
-				else
-				{	
 					napravlenie = 1;
 					return Direction::RIGHT;
-				}
 			}
-			else if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			else if (current_status.down == BlockType::FREE)
 			{
-				if (current_status.left == BlockType::EXIT)
-				{
-					return Direction::LEFT;
-				}
-				else
-				{
 					return Direction::DOWN;
-				}
 			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			else if (current_status.left == BlockType::FREE)
 			{
 				napravlenie = 3;
 				return Direction::LEFT;
@@ -93,34 +74,16 @@ Direction Runner::step()
 		}
 		case 3: 
 		{
-			if ((current_status.down == BlockType::FREE) | (current_status.down == BlockType::EXIT))
+			if (current_status.down == BlockType::FREE)
 			{
-				if (current_status.left == BlockType::EXIT)
-				{
-					return Direction::LEFT;
-				}
-				else if (current_status.up == BlockType::EXIT)
-				{
-					return Direction::UP;
-				}
-				else
-				{
 					napravlenie = 2;
 					return Direction::DOWN;
-				}
 			}
-			else if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			else if (current_status.left == BlockType::FREE)
 			{
-				if (current_status.up == BlockType::EXIT)
-				{
-					return Direction::UP;
-				}
-				else
-				{
 					return Direction::LEFT;
-				}
 			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			else if (current_status.up == BlockType::FREE)
 			{
 				napravlenie = 4;
 				return Direction::UP;
@@ -133,34 +96,16 @@ Direction Runner::step()
 		}
 		default: 
 		{
-			if ((current_status.left == BlockType::FREE) | (current_status.left == BlockType::EXIT))
+			if (current_status.left == BlockType::FREE)
 			{
-				if (current_status.up == BlockType::EXIT)
-				{
-					return Direction::UP;
-				}
-				else if (current_status.right == BlockType::EXIT)
-				{
-					return Direction::RIGHT;
-				}
-				else
-				{
 					napravlenie = 3;
 					return Direction::LEFT;
-				}
 			}
-			else if ((current_status.up == BlockType::FREE) | (current_status.up == BlockType::EXIT))
+			else if (current_status.up == BlockType::FREE)
 			{
-				if (current_status.right == BlockType::EXIT)
-				{
-					return Direction::RIGHT;
-				}
-				else
-				{
 					return Direction::UP;
-				}
 			}
-			else if ((current_status.right == BlockType::FREE) | (current_status.right == BlockType::EXIT))
+			else if (current_status.right == BlockType::FREE)
 			{
 				napravlenie = 1;
 				return Direction::RIGHT;
