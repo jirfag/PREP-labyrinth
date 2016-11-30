@@ -39,10 +39,7 @@ cell cell::operator =(const cell& c)
 Direction set_where(Status st)
 {
 
-	if (st.right == BlockType::FREE)
-	{
-		return Direction::RIGHT;
-	} 
+
 	        if (st.up == BlockType::FREE)
             {
                 return Direction::UP;
@@ -56,6 +53,10 @@ Direction set_where(Status st)
 	{
 		return Direction::LEFT;
 	}
+		if (st.right == BlockType::FREE)
+	{
+		return Direction::RIGHT;
+	} 
 return Direction::DOWN;
 
 }
