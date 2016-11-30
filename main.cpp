@@ -30,10 +30,7 @@ int main(int argc, char* argv[])
                 return 1;
         }
 
-        freopen("out.txt", "w", stdout);
         field.result(cout);
-        stdout = fdopen(0, "w");
-        fprintf(stdout, "Total steps: 0, time: 0 mcs\n");
     }
     catch (ifstream::failure& e) {
         std::cerr << e.what() << std::endl;
