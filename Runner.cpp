@@ -47,13 +47,14 @@ Direction set_where(Status st)
             {
                 return Direction::UP;
             }
-    if (st.left == BlockType::FREE)
-	{
-		return Direction::LEFT;
-	}
+
     if (st.down == BlockType::FREE)
         {
             return Direction::DOWN;
+	}
+	    if (st.left == BlockType::FREE)
+	{
+		return Direction::LEFT;
 	}
 return Direction::DOWN;
 
@@ -75,19 +76,20 @@ Direction set_where(Status st, Direction d)
             return Direction::UP;
         }
     }
-	    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-    {
-        if (d != Direction::DOWN)
-        {
-                return Direction::DOWN;
-        }
-    }
+
     
     if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
         if (d != Direction::LEFT)
         {
             return Direction::LEFT;
+        }
+    }
+		    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        if (d != Direction::DOWN)
+        {
+                return Direction::DOWN;
         }
     }
 
@@ -128,21 +130,7 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 			return Direction::UP;
 		}
 	}
-	    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
-    {
-        k = 0;
-        for (int i = a; i < n; i++)
-        {
-            if (dir[i] != Direction::DOWN)
-            {
-                k++;
-            }
-        }
-        if (k == n)
-        {
-            return Direction::DOWN;
-        }
-    }
+
 	
     if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
@@ -159,7 +147,21 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
             return Direction::LEFT;
         }
     }
-
+	    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = a; i < n; i++)
+        {
+            if (dir[i] != Direction::DOWN)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::DOWN;
+        }
+    }
 
 
     return Direction::DOWN;
