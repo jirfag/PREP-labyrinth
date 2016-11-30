@@ -6,21 +6,27 @@
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
+
 #include <vector>
+#include <memory>
 
 class cell
 {
 public:
 	cell() 
 	{
-        d_where = new Direction[12];
+        for (int i = 0; i < 7; i++)
+        {
+            Direction d;
+            d_where.push_back(d);
+        }
 	}
 	~cell()
 	{
-        if(d_where != nullptr) delete[] d_where;
+       // if(d_where != nullptr) delete[] d_where;
 	}
 	cell(const cell& c);
-	Direction* d_where;
+    std::vector<Direction> d_where;
 
 	int n = 0;
 	int kol = 0;
@@ -32,11 +38,12 @@ public:
 class Runner: public RunnerBase {
 
     public:
-		std::vector<std::vector<cell> > quarter1;//x>=0 y>=0
-		std::vector<std::vector<cell> > quarter2;//x<0 y>=0
-		std::vector<std::vector<cell> > quarter3;//x<0 y<0
-		std::vector<std::vector<cell> > quarter4;//x>=0 y<0 0 0 âőîä
-		bool way = 0;//0 - ďđ˙ěî, 1 - îáđŕňíî
+   // std::shared_ptr<int> a;
+        std::vector<std::vector<std::shared_ptr<cell> > > quarter1;//x>=0 y>=0
+        std::vector<std::vector<std::shared_ptr<cell> > > quarter2;//x<0 y>=0
+        std::vector<std::vector<std::shared_ptr<cell> > > quarter3;//x<0 y<0
+        std::vector<std::vector<std::shared_ptr<cell> > > quarter4;//x>=0 y<0 0 0 âõîä
+		bool way = 0;//0 - īđ˙ėî, 1 - îáđāōíî
 		bool first = true;
         bool per = false;
         bool tup = false;
