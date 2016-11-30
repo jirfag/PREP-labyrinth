@@ -273,7 +273,7 @@ Direction Runner::step()
 	
 	
 	
-	if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
+	/*if ( (napravlenie == R)&&(current_status.right == BlockType::FREE)&&(current_status.up == BlockType::FREE) )
 		if (i == 3)
 		{
 			napravlenie = R;
@@ -335,7 +335,7 @@ Direction Runner::step()
 			napravlenie = R;
 			i++;
 			return Direction::RIGHT;
-		}
+		} */
 	
 	
 	
