@@ -17,7 +17,7 @@ public:
     Direction step();
 
 private:
-    std::vector<Direction> dir;
+    std::vector<int> dir;
     Direction prev_directions ;
     int count;
 };
