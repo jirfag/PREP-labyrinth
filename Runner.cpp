@@ -101,17 +101,11 @@ Direction Runner::step()
 		path.push(c1);
 		return Direction::DOWN;
 	}
-	if ((current_status.right == BlockType::FREE || current_status.right == BlockType::EXIT) && path.top().right != WALL)
-	{
 		path.pop();
 		Cell c1 = path.top();
 		c1.left = WALL;
 		path.pop();
 		path.push(c1);
 		return Direction::RIGHT;
-	}
-
-
-
-
+	
 }
