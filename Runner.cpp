@@ -3,28 +3,32 @@
 //
 
 #include "Runner.hpp"
+//#include <iostream>
 #include <vector>
 #include <cstdlib>
 #include "utils.hpp"
+#include <memory>
 
 cell::cell(const cell& c)
 {
-
-    d_where = new Direction[12];
 	for (int i = 0; i < c.n; i++)
 	{
-		d_where[i] = c.d_where[i];
+        d_where.push_back(c.d_where[i]);
 	}
+    while (d_where.size() < 7)
+    {
+        Direction d;
+        d_where.push_back(d);
+    }
 	n = c.n;
 	kol = c.kol;
 	kol_sv = c.kol_sv;
 }
 cell cell::operator =(const cell& c)
 {
-    d_where = new Direction[12];
 	for (int i = 0; i < c.n; i++)
 	{
-		d_where[i] = c.d_where[i];
+        d_where[i] = c.d_where[i];
 	}
 	n = c.n;
 	kol = c.kol;
@@ -54,12 +58,46 @@ Direction set_where(Status st)
 return Direction::DOWN;
 
 }
-Direction set_where(Status st, Direction* dir, int n)
+Direction set_where(Status st, Direction d)
+{
+    if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
+    {
+        if (d != Direction::RIGHT)
+        {
+            return Direction::RIGHT;
+        }
+    }
+    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
+    {
+        if (d != Direction::DOWN)
+        {
+                return Direction::DOWN;
+        }
+    }
+    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
+    {
+        if (d != Direction::LEFT)
+        {
+            return Direction::LEFT;
+        }
+    }
+    if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
+    {
+        if (d != Direction::UP)
+        {
+            return Direction::UP;
+        }
+    }
+
+return Direction::DOWN;
+
+}
+Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
 	if (st.right == BlockType::FREE || st.right == BlockType::ENTER)
 	{
-		for (int i = 0; i < n; i++)
+        for (int i = a; i < n; i++)
 		{
 			if (dir[i] != Direction::RIGHT)
 			{
@@ -74,7 +112,7 @@ Direction set_where(Status st, Direction* dir, int n)
     if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
     {
         k = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = a; i < n; i++)
         {
             if (dir[i] != Direction::DOWN)
             {
@@ -89,7 +127,7 @@ Direction set_where(Status st, Direction* dir, int n)
     if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
     {
         k = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = a; i < n; i++)
         {
             if (dir[i] != Direction::LEFT)
             {
@@ -104,7 +142,7 @@ Direction set_where(Status st, Direction* dir, int n)
 	if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
 	{
 		k = 0;
-		for (int i = 0; i < n; i++)
+        for (int i = a; i < n; i++)
 		{
 			if (dir[i] != Direction::UP)
 			{
@@ -170,28 +208,24 @@ bool is_enter(Status st, Direction& dir)
 	return false; 
 }
 
-Direction* naob(Direction* dir,int n)
+Direction naob(std::vector<Direction> dir,int i)
 {
-    Direction* d = new Direction[4];
-	for (int i = 0; i < n; i++)
-	{
-
+    Direction d;// = new Direction;
         switch (dir[i])
 		{
 		case Direction::LEFT:
-			d[i] = Direction::RIGHT;
+            d = Direction::RIGHT;
 			break;
 		case Direction::RIGHT:
-			d[i] = Direction::LEFT;
+            d = Direction::LEFT;
 			break;
 		case Direction::UP:
-			d[i] = Direction::DOWN;
+            d = Direction::DOWN;
 			break;
 		case Direction::DOWN:
-			d[i] = Direction::UP;
+            d = Direction::UP;
 			break;
 		}
-	}
 	return d;
 }
 
@@ -235,7 +269,8 @@ Direction Runner::step_direct()
         {
             while(!add_cell(x, y, ch11, true) && ch11.n <= ch11.kol_sv)
             {
-                ch11.d_where[ch11.n] = set_where(current_status, ch11.d_where, ch11.n);
+                Direction dd = set_where(current_status, ch11.d_where, 0, ch11.n);
+                ch11.d_where[ch.n] = (dd);
 
                 ch11.n++;
                 ch11.kol_sv = set_kol_sv(current_status);
@@ -243,7 +278,8 @@ Direction Runner::step_direct()
             if (ch11.n > ch11.kol_sv)
             {
                 kol -= 2;
-                ch11.d_where[0] = *naob(ch11.d_where, 1);
+                Direction dd = naob(ch11.d_where, 0);
+                ch11.d_where[0] = dd;
                 add_cell(x, y, ch11, false);
                 way = false;
                 return step_back();
@@ -270,8 +306,10 @@ Direction Runner::step_direct()
 		{
 			way = true;
             ch.kol_sv = 0;
-            ch.d_where[0] = *naob(ch11.d_where + ch11.n - 1, 1);
-            ch.d_where[1] = *(naob(ch11.d_where + ch11.n - 1, 1));
+            Direction dd = naob(ch11.d_where, ch11.n - 1);
+            ch.d_where[0] = dd;
+            dd = (naob(ch11.d_where, ch11.n - 1));
+            ch.d_where[1] = dd;
             ch.n = 2;
             add_cell(x, y, ch, false);
             tup = true;
@@ -280,19 +318,22 @@ Direction Runner::step_direct()
 		else
 		{
 			ch.kol_sv = kol1;
-            ch.d_where[1] = set_where(current_status, naob(ch11.d_where + ch11.n - 1, 1), 1);
+            Direction dd = set_where(current_status, naob(ch11.d_where , ch11.n-1));
+            ch.d_where[1] = dd;
             (ch.n) = 2;
-            ch.d_where[0] = *(ch11.d_where + ch11.n - 1);
+            ch.d_where[0] = ch11.d_where[ch11.n - 1];
             if (!add_cell(x, y, ch, true))
 			{
                 if (ch.kol_sv > ch.n)
                 {
                     per = true;
                     kol--;
-                    ch.d_where[0] = *naob(ch.d_where, 1);
+                    dd = naob(ch.d_where, 0);
+                    ch.d_where[0] = dd;
                     do
                    {
-                        ch.d_where[ch.n] = set_where(current_status, ch.d_where, ch.n);
+                        dd = set_where(current_status, ch.d_where,0, ch.n);
+                        ch.d_where[ch.n] = dd;
                         (ch.n)++ ;
                         add_cell(x, y, ch, false);
                     }while(!add_cell(x, y, ch, true) && ch.kol_sv >= ch.n);
@@ -301,12 +342,14 @@ Direction Runner::step_direct()
                     {
                             return step_direct();
                     }
-                    ch.d_where[0] = *naob(ch.d_where, 1);
+                    dd = naob(ch.d_where, 0);
+                    ch.d_where[0] = dd;
                     kost = true;
                 }
 				way = true;
                 tup = true;
-                ch.d_where[ch.n] = *naob(ch.d_where, 1);
+                dd = naob(ch.d_where, 0);
+                ch.d_where[ch.n] = dd;
                 ch.n++;
                 add_cell(x, y, ch, false);
                 return step_back();
@@ -325,7 +368,8 @@ Direction Runner::step_back()
         first = false;
         do
         {
-            c.d_where[c.n] = set_where(current_status, c.d_where+1, c.n - 1);
+            Direction dd = set_where(current_status, c.d_where,0, c.n);
+            c.d_where[c.n] = dd;
             c.n++;
         }while (!add_cell(x, y, c, true));
         change_xy(c);
@@ -358,13 +402,15 @@ Direction Runner::step_back()
 		way = false;
         per = true;
         kol--;
+        Direction dd = naob(c.d_where,0);
         if ( c.n == 2)
         {
-            c.d_where[0] = *naob(c.d_where,1);
+            c.d_where[0] = dd;
         }
         do
         {
-            c.d_where[c.n] = set_where(current_status, c.d_where, c.n);
+            dd = set_where(current_status, c.d_where, 0, c.n);
+            c.d_where[c.n] = dd;
 
             c.n++;
             c.kol_sv = set_kol_sv(current_status);
@@ -377,14 +423,16 @@ Direction Runner::step_back()
 	}
 	else
 	{
+        Direction dd;
         per = false;
         if (c.kol_sv == 2)
         {
-            c.d_where[c.n] = *naob(c.d_where, 1);
+            dd = naob(c.d_where, 0);
+            c.d_where[c.n]  = dd;
         }
         else
         {
-            c.d_where[c.n] = *(c.d_where);
+            c.d_where[c.n] = (c.d_where[0]);
         }
 
 		kol--;
@@ -414,15 +462,15 @@ bool Runner::add_cell(int nx, int ny, cell& c, bool v)
 
         while (nnx >= quarter1.size())
 		{
-			std::vector<cell> a;
+            std::vector<std::shared_ptr<cell>> a;
 			quarter1.push_back(a);
 		}
         while (nny >= quarter1[nnx].size())
 		{
-			cell a;
+            std::shared_ptr<cell> a(new cell);
             quarter1[nnx].push_back(a);
 		}
-        quarter1[nnx][nny] = c;
+        *quarter1[nnx][nny] = c;
 	}
 	else if (nx >= 0 && ny < 0)
 	{
@@ -430,15 +478,15 @@ bool Runner::add_cell(int nx, int ny, cell& c, bool v)
 
         while (nnx >= quarter4.size())
 		{
-			std::vector<cell> a;
+            std::vector<std::shared_ptr<cell>> a;
 			quarter4.push_back(a);
 		}
         while (nny >= quarter4[nnx].size())
 		{
-			cell a;
+            std::shared_ptr<cell> a(new cell);
             quarter4[nnx].push_back(a);
 		}
-        quarter4[nnx][nny] = c;
+        *quarter4[nnx][nny] = c;
 
 	}
 	else if (nx < 0 && ny < 0)
@@ -446,30 +494,30 @@ bool Runner::add_cell(int nx, int ny, cell& c, bool v)
         unsigned int nnx = abs(nx) - 1, nny = abs(ny) - 1;
         while (nnx >= quarter3.size())
 		{
-			std::vector<cell> a;
+            std::vector<std::shared_ptr<cell>> a;
 			quarter3.push_back(a);
 		}
         while (nny >= quarter3[nnx].size())
 		{
-			cell a;
+            std::shared_ptr<cell> a(new cell);
             quarter3[nnx].push_back(a);
 		}
-        quarter3[nnx][nny] = c;
+        *quarter3[nnx][nny] = c;
 	}
 	else
 	{
         unsigned int nnx = abs(nx) - 1, nny = ny;
         while (nnx >= quarter2.size())
 		{
-			std::vector<cell> a;
+            std::vector<std::shared_ptr<cell>> a;
 			quarter2.push_back(a);
 		}
         while (nny >= quarter2[nnx].size())
 		{
-			cell a;
+            std::shared_ptr<cell> a(new cell);
             quarter2[nnx].push_back(a);
 		}
-        quarter2[nnx][nny] = c;
+        *quarter2[nnx][nny] = c;
 	}
     change_xy(c.d_where[c.n - 1]);
     cell c12 = know_teck();
@@ -549,25 +597,25 @@ cell Runner::know_teck()
 	{
         unsigned int nx = x, ny = y;
         if(quarter1.size() > nx && quarter1[x].size() > ny)
-		return quarter1[x][y];
+        return *quarter1[x][y];
 	}
 	if (x >= 0 && y < 0)
 	{
         unsigned int nx = x, ny = abs(y) - 1;
         if (quarter4.size() > nx && quarter4[x].size() > ny)
-		return quarter4[x][abs(y) - 1];
+        return *quarter4[x][abs(y) - 1];
 	}
 	if (x < 0 && y < 0)
 	{
         unsigned int nx = abs(x) - 1, ny = abs(y) - 1;
         if (quarter3.size() > nx && quarter3[abs(x) - 1].size() > ny)
-		return quarter3[abs(x) - 1][abs(y) - 1];
+        return *quarter3[abs(x) - 1][abs(y) - 1];
 	}
 	if (x < 0 && y >= 0)
 	{
         unsigned int nx = abs(x) - 1, ny = y;
         if (quarter2.size() > nx && quarter2[abs(x) - 1].size() > ny)
-		return quarter2[abs(x) - 1][y];
+        return *quarter2[abs(x) - 1][y];
 	}
     cell asd;
     return asd;
@@ -578,81 +626,81 @@ cell Runner::know_prev_q1()
 {
 	if (x == 0 && y == 0)
 	{
-		if (quarter1.size() > 1 && quarter1[1].size() > 0 && quarter1[1][0].kol == kol - 1)
+        if (quarter1.size() > 1 && quarter1[1].size() > 0 && quarter1[1][0]->kol == kol - 1)
 		{
-			return quarter1[1][0];
+            return *quarter1[1][0];
 		}
-		if (quarter1.size() > 0 && quarter1[0].size() > 1 && quarter1[0][1].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > 1 && quarter1[0][1]->kol == kol - 1)
 		{
-			return quarter1[0][1];
+            return *quarter1[0][1];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > 0 && quarter2[0][0].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > 0 && quarter2[0][0]->kol == kol - 1)
 		{
-			return quarter2[0][0];
+            return *quarter2[0][0];
 		}
-		if (quarter4.size() > 0 && quarter4[0].size() > 0 && quarter4[0][0].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > 0 && quarter4[0][0]->kol == kol - 1)
 		{
-			return quarter4[0][0];
+            return *quarter4[0][0];
 		}
 	} 
 	if (x == 0)
 	{
         unsigned int ny = y;
-        if (quarter1.size() > 1 && quarter1[1].size() > ny && quarter1[1][y].kol == kol - 1)
+        if (quarter1.size() > 1 && quarter1[1].size() > ny && quarter1[1][y]->kol == kol - 1)
 		{
-			return quarter1[1][y];
+            return *quarter1[1][y];
 		}
-        if (quarter1.size() > 0 && quarter1[0].size() > ny + 1 && quarter1[0][y + 1].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > ny + 1 && quarter1[0][y + 1]->kol == kol - 1)
 		{
-			return quarter1[0][y + 1];
+            return *quarter1[0][y + 1];
 		}
-        if (quarter2.size() > 0 && quarter2[0].size() > ny && quarter2[0][y].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > ny && quarter2[0][y]->kol == kol - 1)
 		{
-			return quarter2[0][y];
+            return *quarter2[0][y];
 		}
-        if (quarter1.size() > 0 && quarter1[0].size() > ny - 1 && quarter1[0][y - 1].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > ny - 1 && quarter1[0][y - 1]->kol == kol - 1)
 		{
-			return quarter1[0][y - 1];
+            return *quarter1[0][y - 1];
 		}
 	}
 	if (y == 0)
 	{
         unsigned int nx = x;
-        if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > 0 && quarter1[x + 1][0].kol == kol - 1)
+        if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > 0 && quarter1[x + 1][0]->kol == kol - 1)
 		{
-			return quarter1[x + 1][0];
+            return *quarter1[x + 1][0];
 		}
-        if (quarter1.size() > nx && quarter1[x].size() > 1 && quarter1[x][1].kol == kol - 1)
+        if (quarter1.size() > nx && quarter1[x].size() > 1 && quarter1[x][1]->kol == kol - 1)
 		{
-			return quarter1[x][1];
+            return *quarter1[x][1];
 		}
 
-        if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > 0 && quarter1[x - 1][0].kol == kol - 1)
+        if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > 0 && quarter1[x - 1][0]->kol == kol - 1)
 		{
-			return quarter1[x - 1][0];
+            return *quarter1[x - 1][0];
 		}
-        if (quarter4.size() > nx && quarter4[x].size() > 0 && quarter4[x][0].kol == kol - 1)
+        if (quarter4.size() > nx && quarter4[x].size() > 0 && quarter4[x][0]->kol == kol - 1)
 		{
-			return quarter4[x][0];
+            return *quarter4[x][0];
 		}
 	}
     unsigned int ny = y;
     unsigned int nx = x;
-    if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > (ny) && quarter1[x + 1][y].kol == kol - 1)
+    if (quarter1.size() > nx + 1 && quarter1[x + 1].size() > (ny) && quarter1[x + 1][y]->kol == kol - 1)
 	{
-		return quarter1[x + 1][y];
+        return *quarter1[x + 1][y];
 	}
-    if (quarter1.size() > nx && quarter1[x].size() > (ny + 1) && quarter1[x][y + 1].kol == kol - 1)
+    if (quarter1.size() > nx && quarter1[x].size() > (ny + 1) && quarter1[x][y + 1]->kol == kol - 1)
 	{
-		return quarter1[x][y + 1];
+        return *quarter1[x][y + 1];
 	}
-    if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > (ny) && quarter1[x - 1][y].kol == kol - 1)
+    if (quarter1.size() > nx - 1 && quarter1[x - 1].size() > (ny) && quarter1[x - 1][y]->kol == kol - 1)
 	{
-		return quarter1[x - 1][y];
+        return *quarter1[x - 1][y];
 	}
-    if (quarter1.size() > nx && quarter1[x].size() > (ny - 1) && quarter1[x][y - 1].kol == kol - 1)
+    if (quarter1.size() > nx && quarter1[x].size() > (ny - 1) && quarter1[x][y - 1]->kol == kol - 1)
 	{
-		return quarter1[x][y - 1];
+        return *quarter1[x][y - 1];
 	}
     cell asd;
     return asd;
@@ -662,76 +710,76 @@ cell Runner::know_prev_q2()
     unsigned int nx = abs(x) - 1, ny = y;
 	if (nx == 0 && ny == 0)
 	{
-		if (quarter1.size() > 0 && quarter1[0].size() > 0 && quarter1[0][0].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > 0 && quarter1[0][0]->kol == kol - 1)
 		{
-			return quarter1[0][0];
+            return *quarter1[0][0];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > 1 && quarter2[0][1].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > 1 && quarter2[0][1]->kol == kol - 1)
 		{
-			return quarter2[0][1];
+            return *quarter2[0][1];
 		}
-		if (quarter2.size() > 1 && quarter2[1].size() > 0 && quarter2[1][0].kol == kol - 1)
+        if (quarter2.size() > 1 && quarter2[1].size() > 0 && quarter2[1][0]->kol == kol - 1)
 		{
-			return quarter2[1][0];
+            return *quarter2[1][0];
 		}
-		if (quarter3.size() > 0 && quarter3[0].size() > 0 && quarter3[0][0].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > 0 && quarter3[0][0]->kol == kol - 1)
 		{
-			return quarter3[0][0];
+            return *quarter3[0][0];
 		}
 	}
 	if (nx == 0)
 	{
-		if (quarter1.size() > 0 && quarter1[0].size() > ny && quarter1[0][ny].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > ny && quarter1[0][ny]->kol == kol - 1)
 		{
-			return quarter1[0][ny];
+            return *quarter1[0][ny];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > ny + 1 && quarter2[0][ny + 1].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > ny + 1 && quarter2[0][ny + 1]->kol == kol - 1)
 		{
-			return quarter2[0][ny + 1];
+            return *quarter2[0][ny + 1];
 		}
-        if (quarter2.size() > 1 && quarter2[1].size() > ny && quarter2[1][ny].kol == kol - 1)
+        if (quarter2.size() > 1 && quarter2[1].size() > ny && quarter2[1][ny]->kol == kol - 1)
 		{
-            return quarter2[1][ny];
+            return *quarter2[1][ny];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > ny - 1 && quarter2[0][ny - 1].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > ny - 1 && quarter2[0][ny - 1]->kol == kol - 1)
 		{
-			return quarter2[0][ny - 1];
+            return *quarter2[0][ny - 1];
 		}
 	}
 	if (y == 0)
 	{
-		if (quarter2.size() > nx - 1 && quarter2[nx - 1].size() > 0 && quarter2[nx - 1][0].kol == kol - 1)
+        if (quarter2.size() > nx - 1 && quarter2[nx - 1].size() > 0 && quarter2[nx - 1][0]->kol == kol - 1)
 		{
-			return quarter2[nx - 1][0];
+            return *quarter2[nx - 1][0];
 		}
-		if (quarter2.size() > nx && quarter2[nx].size() > 1 && quarter2[nx][1].kol == kol - 1)
+        if (quarter2.size() > nx && quarter2[nx].size() > 1 && quarter2[nx][1]->kol == kol - 1)
 		{
-			return quarter2[nx][1];
+            return *quarter2[nx][1];
 		}
-		if (quarter2.size() > nx + 1 && quarter2[nx + 1].size() > 0 && quarter2[nx + 1][0].kol == kol - 1)
+        if (quarter2.size() > nx + 1 && quarter2[nx + 1].size() > 0 && quarter2[nx + 1][0]->kol == kol - 1)
 		{
-            return quarter2[nx + 1][0];
+            return *quarter2[nx + 1][0];
 		}
-		if (quarter3.size() > nx && quarter3[nx].size() > 0 && quarter3[nx][0].kol == kol - 1)
+        if (quarter3.size() > nx && quarter3[nx].size() > 0 && quarter3[nx][0]->kol == kol - 1)
 		{
-			return quarter3[nx][0];
+            return *quarter3[nx][0];
 		}
 	}
-	if (quarter2.size() > nx - 1 && quarter2[nx - 1].size() > ny && quarter2[nx - 1][ny].kol == kol - 1)
+    if (quarter2.size() > nx - 1 && quarter2[nx - 1].size() > ny && quarter2[nx - 1][ny]->kol == kol - 1)
 	{
-		return quarter2[nx - 1][ny];
+        return *quarter2[nx - 1][ny];
 	}
-	if (quarter2.size() > nx && quarter2[nx].size() > (ny + 1) && quarter2[nx][ny + 1].kol == kol - 1)
+    if (quarter2.size() > nx && quarter2[nx].size() > (ny + 1) && quarter2[nx][ny + 1]->kol == kol - 1)
 	{
-		return quarter2[nx][ny + 1];
+        return *quarter2[nx][ny + 1];
 	}
-	if (quarter2.size() > nx + 1 && quarter2[nx + 1].size() > (ny) && quarter2[nx + 1][ny].kol == kol - 1)
+    if (quarter2.size() > nx + 1 && quarter2[nx + 1].size() > (ny) && quarter2[nx + 1][ny]->kol == kol - 1)
 	{
-		return quarter2[nx + 1][ny];
+        return *quarter2[nx + 1][ny];
 	}
-	if (quarter2.size() > nx && quarter2[nx].size() > (ny - 1) && quarter2[nx][ny - 1].kol == kol - 1)
+    if (quarter2.size() > nx && quarter2[nx].size() > (ny - 1) && quarter2[nx][ny - 1]->kol == kol - 1)
 	{
-		return quarter2[nx][ny - 1];
+        return *quarter2[nx][ny - 1];
 	}
     cell asd;
     return asd;
@@ -741,76 +789,76 @@ cell Runner::know_prev_q3()
     unsigned int nx = abs(x) - 1, ny = abs(y) - 1;
 	if(nx == 0 && ny == 0)
 	{
-		if (quarter4.size() > 0 && quarter4[0].size() > 0 && quarter4[0][0].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > 0 && quarter4[0][0]->kol == kol - 1)
 		{
-			return quarter4[0][0];
+            return *quarter4[0][0];
 		}
-		if (quarter2.size() > 0 && quarter2[0].size() > 0 && quarter2[0][0].kol == kol - 1)
+        if (quarter2.size() > 0 && quarter2[0].size() > 0 && quarter2[0][0]->kol == kol - 1)
 		{
-			return quarter2[0][0];
+            return *quarter2[0][0];
 		}
-        if (quarter3.size() > 1 && quarter3[1].size() > 0 && quarter3[1][0].kol == kol - 1)
+        if (quarter3.size() > 1 && quarter3[1].size() > 0 && quarter3[1][0]->kol == kol - 1)
 		{
-			return quarter3[1][0];
+            return *quarter3[1][0];
 		}
-        if (quarter3.size() > 0 && quarter3[0].size() > 1 && quarter3[0][1].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > 1 && quarter3[0][1]->kol == kol - 1)
 		{
-			return quarter3[0][1];
+            return *quarter3[0][1];
 		}
 	}
 	if (nx == 0)
 	{
-        if (quarter4.size() > 0 && quarter4[0].size() > ny && quarter4[0][ny].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > ny && quarter4[0][ny]->kol == kol - 1)
 		{
-			return quarter4[0][ny];
+            return *quarter4[0][ny];
 		}
-		if (quarter3.size() > 0 && quarter3[0].size() > ny - 1 && quarter3[0][ny - 1].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > ny - 1 && quarter3[0][ny - 1]->kol == kol - 1)
 		{
-			return quarter3[0][ny - 1];
+            return *quarter3[0][ny - 1];
 		}
-		if (quarter3.size() > 1 && quarter3[1].size() > ny && quarter3[1][ny].kol == kol - 1)
+        if (quarter3.size() > 1 && quarter3[1].size() > ny && quarter3[1][ny]->kol == kol - 1)
 		{
-			return quarter3[1][ny];
+            return *quarter3[1][ny];
 		}
-		if (quarter3.size() > 0 && quarter3[0].size() > ny + 1 && quarter3[0][ny + 1].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > ny + 1 && quarter3[0][ny + 1]->kol == kol - 1)
 		{
-			return quarter3[0][ny + 1];
+            return *quarter3[0][ny + 1];
 		}
 	}
 	if (ny == 0) 
 	{
-		if (quarter3.size() > nx - 1 && quarter3[nx - 1].size() > 0 && quarter3[nx - 1][0].kol == kol - 1)
+        if (quarter3.size() > nx - 1 && quarter3[nx - 1].size() > 0 && quarter3[nx - 1][0]->kol == kol - 1)
 		{
-			return quarter3[nx - 1][0];
+            return *quarter3[nx - 1][0];
 		}
-		if (quarter2.size() > nx && quarter2[nx].size() > 0 && quarter2[nx][0].kol == kol - 1)
+        if (quarter2.size() > nx && quarter2[nx].size() > 0 && quarter2[nx][0]->kol == kol - 1)
 		{
-			return quarter2[nx][0];
+            return *quarter2[nx][0];
 		}
-		if (quarter3.size() > nx + 1 && quarter3[nx + 1].size() > 0 && quarter3[nx + 1][0].kol == kol - 1)
+        if (quarter3.size() > nx + 1 && quarter3[nx + 1].size() > 0 && quarter3[nx + 1][0]->kol == kol - 1)
 		{
-			return quarter3[nx + 1][0];
+            return *quarter3[nx + 1][0];
 		}
-		if (quarter3.size() > nx && quarter3[nx].size() > 1 && quarter3[nx][1].kol == kol - 1)
+        if (quarter3.size() > nx && quarter3[nx].size() > 1 && quarter3[nx][1]->kol == kol - 1)
 		{
-			return quarter3[nx][1];
+            return *quarter3[nx][1];
 		}
 	}
-	if (quarter3.size() > nx - 1 && quarter3[nx - 1].size() > ny && quarter3[nx - 1][ny].kol == kol - 1)
+    if (quarter3.size() > nx - 1 && quarter3[nx - 1].size() > ny && quarter3[nx - 1][ny]->kol == kol - 1)
 	{
-		return quarter3[nx - 1][ny];
+        return *quarter3[nx - 1][ny];
 	}
-	if (quarter3.size() > nx && quarter3[nx].size() > (ny - 1) && quarter3[nx][ny - 1].kol == kol - 1)
+    if (quarter3.size() > nx && quarter3[nx].size() > (ny - 1) && quarter3[nx][ny - 1]->kol == kol - 1)
 	{
-		return quarter3[nx][ny - 1];
+        return *quarter3[nx][ny - 1];
 	}
-	if (quarter3.size() > nx + 1 && quarter3[nx + 1].size() > ny && quarter3[nx + 1][ny].kol == kol - 1)
+    if (quarter3.size() > nx + 1 && quarter3[nx + 1].size() > ny && quarter3[nx + 1][ny]->kol == kol - 1)
 	{
-		return quarter3[nx + 1][ny];
+        return *quarter3[nx + 1][ny];
 	}
-	if (quarter3.size() > nx && quarter3[nx].size() > (ny + 1) && quarter3[nx][ny + 1].kol == kol - 1)
+    if (quarter3.size() > nx && quarter3[nx].size() > (ny + 1) && quarter3[nx][ny + 1]->kol == kol - 1)
 	{
-		return quarter3[nx][ny + 1];
+        return *quarter3[nx][ny + 1];
 	}
     cell asd;
     return asd;
@@ -821,78 +869,77 @@ cell Runner::know_prev_q4()
     unsigned int ny = abs(y) - 1;
 	if (nx == 0 && ny == 0)
 	{
-		if (quarter4.size() > 1 && quarter4[1].size() > 0 && quarter4[1][0].kol == kol - 1)
+        if (quarter4.size() > 1 && quarter4[1].size() > 0 && quarter4[1][0]->kol == kol - 1)
 		{
-			return quarter4[1][0];
+            return *quarter4[1][0];
 		}
-		if (quarter1.size() > 0 && quarter1[0].size() > 0 && quarter1[0][0].kol == kol - 1)
+        if (quarter1.size() > 0 && quarter1[0].size() > 0 && quarter1[0][0]->kol == kol - 1)
 		{
-			return quarter1[0][0];
+            return *quarter1[0][0];
 		}
-		if (quarter3.size() > 0 && quarter3[0].size() > 0 && quarter3[0][0].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > 0 && quarter3[0][0]->kol == kol - 1)
 		{
-			return quarter3[0][0];
+            return *quarter3[0][0];
 		}
-		if (quarter4.size() > 0 && quarter4[0].size() > 1 && quarter4[0][1].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > 1 && quarter4[0][1]->kol == kol - 1)
 		{
-			return quarter4[0][1];
+            return *quarter4[0][1];
 		}
 	}
 	if (nx == 0)
 	{
-		if (quarter4.size() > 1 && quarter4[1].size() > ny && quarter4[1][ny].kol == kol - 1)
+        if (quarter4.size() > 1 && quarter4[1].size() > ny && quarter4[1][ny]->kol == kol - 1)
 		{
-			return quarter4[1][ny];
+            return *quarter4[1][ny];
 		}
-		if (quarter4.size() > 0 && quarter4[0].size() > (ny - 1) && quarter4[0][ny - 1].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > (ny - 1) && quarter4[0][ny - 1]->kol == kol - 1)
 		{
-			return quarter4[0][ny - 1];
+            return *quarter4[0][ny - 1];
 		}
-		if (quarter3.size() > 0 && quarter3[0].size() > ny && quarter3[0][ny].kol == kol - 1)
+        if (quarter3.size() > 0 && quarter3[0].size() > ny && quarter3[0][ny]->kol == kol - 1)
 		{
-			return quarter3[0][ny];
+            return *quarter3[0][ny];
 		}
-		if (quarter4.size() > 0 && quarter4[0].size() > (ny + 1) && quarter4[0][ny + 1].kol == kol - 1)
+        if (quarter4.size() > 0 && quarter4[0].size() > (ny + 1) && quarter4[0][ny + 1]->kol == kol - 1)
 		{
-			return quarter4[0][ny + 1];
+            return *quarter4[0][ny + 1];
 		}
 	}
 	if (ny == 0)
 	{
-		if (quarter4.size() > (nx + 1) && quarter4[nx+1].size() > 0 && quarter4[nx + 1][0].kol == kol - 1)
+        if (quarter4.size() > (nx + 1) && quarter4[nx+1].size() > 0 && quarter4[nx + 1][0]->kol == kol - 1)
 		{
-			return quarter4[nx + 1][0];
+            return *quarter4[nx + 1][0];
 		}
-		if (quarter1.size() > nx && quarter1[nx].size() > 0 && quarter1[nx][0].kol == kol - 1)
+        if (quarter1.size() > nx && quarter1[nx].size() > 0 && quarter1[nx][0]->kol == kol - 1)
 		{
-			return quarter1[nx][0];
+            return *quarter1[nx][0];
 		}
-		if (quarter4.size() > (nx - 1) && quarter4[nx - 1].size() > 0 && quarter4[nx - 1][0].kol == kol - 1)
+        if (quarter4.size() > (nx - 1) && quarter4[nx - 1].size() > 0 && quarter4[nx - 1][0]->kol == kol - 1)
 		{
-			return quarter4[nx - 1][0];
+            return *quarter4[nx - 1][0];
 		}
-		if (quarter4.size() > nx && quarter4[nx].size() > 1 && quarter4[nx][1].kol == kol - 1)
+        if (quarter4.size() > nx && quarter4[nx].size() > 1 && quarter4[nx][1]->kol == kol - 1)
 		{
-			return quarter4[nx][1];
+            return *quarter4[nx][1];
 		}
 	}
-	if (quarter4.size() > nx + 1 && quarter4[nx + 1].size() > ny && quarter4[nx + 1][ny].kol == kol - 1)
+    if (quarter4.size() > nx + 1 && quarter4[nx + 1].size() > ny && quarter4[nx + 1][ny]->kol == kol - 1)
 	{
-		return quarter4[nx + 1][ny];
+        return *quarter4[nx + 1][ny];
 	}
-	if (quarter4.size() > nx && quarter4[nx].size() > (ny - 1) && quarter4[nx][ny - 1].kol == kol - 1)
+    if (quarter4.size() > nx && quarter4[nx].size() > (ny - 1) && quarter4[nx][ny - 1]->kol == kol - 1)
 	{
-		return quarter4[nx][ny - 1];
+        return *quarter4[nx][ny - 1];
 	}
-	if (quarter4.size() > nx - 1 && quarter4[nx - 1].size() > ny && quarter4[nx - 1][ny].kol == kol - 1)
+    if (quarter4.size() > nx - 1 && quarter4[nx - 1].size() > ny && quarter4[nx - 1][ny]->kol == kol - 1)
 	{
-		return quarter4[nx - 1][ny];
+        return *quarter4[nx - 1][ny];
 	}
-	if (quarter4.size() > nx && quarter4[nx].size() > (ny + 1) && quarter4[nx][ny + 1].kol == kol - 1)
+    if (quarter4.size() > nx && quarter4[nx].size() > (ny + 1) && quarter4[nx][ny + 1]->kol == kol - 1)
 	{
-		return quarter4[nx][ny + 1];
+        return *quarter4[nx][ny + 1];
 	}
     cell ad;
     return ad;
 }
-
