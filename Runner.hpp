@@ -2,26 +2,41 @@
 // Created by tsv on 09.05.16.
 //
 
-
 #ifndef LABYRINTH_RUNNER_HPP
 #define LABYRINTH_RUNNER_HPP
 
 #include "RunnerBase.hpp"
-#include <unordered_map>
-#include <string>
+#include <stack>
 
-class Runner: public RunnerBase {
-    public:
-        Direction step();
-        Runner() : x(0),y(0) {
-          path[foo(0,0)]=1;
-        }
-        std::string foo(int a,int b){
-          return(std::to_string(a)+";"+std::to_string(b));
-        }
-        int x,y;
-        std::unordered_map<std::string,bool> path;
+
+
+using namespace std;
+
+
+static const int SAFE = 0;
+static const int WALL = 3333;
+static const int FROM = 77777;
+
+class Cell
+{
+public:
+	int left = SAFE;
+	int right = SAFE;
+	int up = SAFE;
+	int down = SAFE;
+
+    Cell();
+	Cell(const Cell& c);
 };
 
 
-#endif //LABYRINTH_RUNNER_HPP
+
+class Runner : public RunnerBase {
+public:
+	std::stack<Cell> path;
+	int rebellion;
+	bool flag;
+    Direction step();
+};
+
+#endif //LABYRINTH_RUNNER_HP
