@@ -39,7 +39,10 @@ cell cell::operator =(const cell& c)
 Direction set_where(Status st)
 {
 
-
+	    if (st.left == BlockType::FREE)
+	{
+		return Direction::LEFT;
+	}
 	        if (st.up == BlockType::FREE)
             {
                 return Direction::UP;
@@ -49,10 +52,7 @@ Direction set_where(Status st)
         {
             return Direction::DOWN;
 	}
-	    if (st.left == BlockType::FREE)
-	{
-		return Direction::LEFT;
-	}
+
 		if (st.right == BlockType::FREE)
 	{
 		return Direction::RIGHT;
@@ -62,6 +62,14 @@ return Direction::DOWN;
 }
 Direction set_where(Status st, Direction d)
 {
+	    
+    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
+    {
+        if (d != Direction::LEFT)
+        {
+            return Direction::LEFT;
+        }
+    }
 		if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
     {
         if (d != Direction::UP)
@@ -79,14 +87,7 @@ Direction set_where(Status st, Direction d)
 
 
 
-    
-    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
-    {
-        if (d != Direction::LEFT)
-        {
-            return Direction::LEFT;
-        }
-    }
+
 		    if (st.down == BlockType::FREE || st.down == BlockType::ENTER)
     {
         if (d != Direction::DOWN)
@@ -102,6 +103,21 @@ return Direction::DOWN;
 Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
 {
 	int k = 0;
+	    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
+    {
+        k = 0;
+        for (int i = a; i < n; i++)
+        {
+            if (dir[i] != Direction::LEFT)
+            {
+                k++;
+            }
+        }
+        if (k == n)
+        {
+            return Direction::LEFT;
+        }
+    }
 		if (st.up == BlockType::FREE || st.up == BlockType::ENTER)
 	{
 		k = 0;
@@ -149,21 +165,7 @@ Direction set_where(Status st, std::vector<Direction> dir, int a, int n)
             return Direction::DOWN;
         }
     }
-    if (st.left == BlockType::FREE || st.left == BlockType::ENTER)
-    {
-        k = 0;
-        for (int i = a; i < n; i++)
-        {
-            if (dir[i] != Direction::LEFT)
-            {
-                k++;
-            }
-        }
-        if (k == n)
-        {
-            return Direction::LEFT;
-        }
-    }
+
 	    
 
 
